@@ -19,7 +19,7 @@
             android:layout_height="50dp"
             android:padding="10dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_input"
+            android:background="@drawable/_custom_input"
             android:hint="Username"
             android:inputType="text"/>
 
@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             android:padding="10dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_input"
+            android:background="@drawable/_custom_input"
             android:hint="Password"
             android:inputType="textPassword"/>
 
@@ -37,7 +37,7 @@
             android:layout_height="50dp"
             android:padding="10dp"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/custom_input"
+            android:background="@drawable/_custom_input"
             android:hint="Repeat password"
             android:inputType="textPassword"/>
 
