@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/app_teal_accent_light</item>
         <item name="colorOnPrimary">@color/text_primary_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/app_dark_gray</item>
+        <item name="colorSecondary">@color/text_secondary_white</item>
         <item name="colorOnSecondary">@color/text_secondary_black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>

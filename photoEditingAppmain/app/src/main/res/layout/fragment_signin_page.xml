@@ -22,12 +22,14 @@
         android:inputType="textPassword"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/signinBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="SIGN IN"/>
 
     <TextView
+        android:id="@+id/signUpHyperlink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -36,6 +38,6 @@
         android:textColor="@color/text_primary_black"
         android:textSize="20sp"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"/>
 
 </FrameLayout>

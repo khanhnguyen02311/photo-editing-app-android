@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1044041362772",
+    "project_id": "photo-editing-app-android",
+    "storage_bucket": "photo-editing-app-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044041362772:android:d964aa39528f9584702cc1",
+        "android_client_info": {
+          "package_name": "com.example.photoeditingapp_main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044041362772-t28qnq10mm87ltamcfhb9j9ob03o34aa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.photoeditingapp_main",
+            "certificate_hash": "814becc2d7950d86c0d8b2cf150c92319c9a60ab"
+          }
+        },
+        {
+          "client_id": "1044041362772-qo90il0nqkgst5pgp5im8o99dd6bgidg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm1XobVHvxycgFW2TVh3z0dIPbCKlEWiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044041362772-qo90il0nqkgst5pgp5im8o99dd6bgidg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

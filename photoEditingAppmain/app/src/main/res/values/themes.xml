@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/app_teal_accent_dark</item>
         <item name="colorOnPrimary">@color/text_primary_white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/app_light_gray</item>
+        <item name="colorSecondary">@color/text_secondary_black</item>
         <item name="colorOnSecondary">@color/text_secondary_white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -15,12 +15,4 @@
         <item name="android:textColor">@color/text_primary_black</item>
     </style>
 
-    <style name="Theme.PhotoEditingAppmain.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.PhotoEditingAppmain.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.PhotoEditingAppmain.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
