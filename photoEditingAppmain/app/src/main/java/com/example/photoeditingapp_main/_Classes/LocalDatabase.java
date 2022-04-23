@@ -43,6 +43,4 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
     public void createTable() { onQueryData(SQL_CREATE_TABLE); }
     public void resetTable() { onQueryData(SQL_DROP_TABLE); onQueryData(SQL_CREATE_TABLE); }
-
-
 }
