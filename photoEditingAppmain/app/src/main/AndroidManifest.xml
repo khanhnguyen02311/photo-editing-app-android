@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoEditingAppmain">
         <activity
+            android:name=".Activity_Homepage.MainpageActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity_Login.LoginActivity"
             android:exported="true">
             <intent-filter>

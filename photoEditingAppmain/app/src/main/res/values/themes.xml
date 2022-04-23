@@ -14,4 +14,13 @@
         <item name="android:fontFamily">@font/sourcesans3_medium</item>
         <item name="android:textColor">@color/text_primary_black</item>
     </style>
+
+    <style name="Theme.PhotoEditingAppmain.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PhotoEditingAppmain.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PhotoEditingAppmain.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
