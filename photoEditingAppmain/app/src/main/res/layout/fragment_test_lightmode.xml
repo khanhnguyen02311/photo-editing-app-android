@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".test_lightmode"
+    android:background="@color/app_white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="370dp"
+        android:layout_marginTop="130dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/app_light_gray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="18dp"
+            android:textColor="@color/text_secondary_black"
+            android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/app_teal_accent_light"
+        android:layout_gravity="center"
+        android:layout_marginEnd="100dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/rgb_r_light"
+        android:layout_gravity="center"
+        android:layout_marginEnd="35dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/rgb_g_light"
+        android:layout_gravity="center"
+        android:layout_marginStart="35dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/rgb_b_light"
+        android:layout_gravity="center"
+        android:layout_marginStart="100dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/app_teal_accent_light"
+        android:layout_gravity="center"
+        android:layout_marginEnd="100dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/rgb_r"
+        android:layout_gravity="center"
+        android:layout_marginEnd="35dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/rgb_g"
+        android:layout_gravity="center"
+        android:layout_marginStart="35dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/rgb_b"
+        android:layout_gravity="center"
+        android:layout_marginStart="100dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary_black"
+        android:text="LOREM IPSUM"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="30dp"
+        android:textSize="18dp"
+        android:textColor="@color/text_secondary_black"
+        android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia"/>
+
+</FrameLayout>

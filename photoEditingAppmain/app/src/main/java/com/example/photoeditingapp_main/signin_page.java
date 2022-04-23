@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link mainPage#newInstance} factory method to
+ * Use the {@link signin_page#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class mainPage extends Fragment {
+public class signin_page extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class mainPage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public mainPage() {
+    public signin_page() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class mainPage extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment mainPage.
+     * @return A new instance of fragment signin_page.
      */
     // TODO: Rename and change types and number of parameters
-    public static mainPage newInstance(String param1, String param2) {
-        mainPage fragment = new mainPage();
+    public static signin_page newInstance(String param1, String param2) {
+        signin_page fragment = new signin_page();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class mainPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_page, container, false);
+        return inflater.inflate(R.layout.fragment_signin_page, container, false);
     }
 }

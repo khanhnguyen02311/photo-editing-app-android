@@ -3,11 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainPage">
+    app:startDestination="@id/welcome_page">
 
     <fragment
-        android:id="@+id/mainPage"
-        android:name="com.example.photoeditingapp_main.mainPage"
-        android:label="fragment_main_page"
-        tools:layout="@layout/fragment_main_page" />
+        android:id="@+id/welcome_page"
+        android:name="com.example.photoeditingapp_main.welcome_page"
+        android:label="fragment_welcome_page"
+        tools:layout="@layout/fragment_welcome_page" />
+    <fragment
+        android:id="@+id/signin_page"
+        android:name="com.example.photoeditingapp_main.signin_page"
+        android:label="fragment_signin_page"
+        tools:layout="@layout/fragment_signin_page" />
+    <fragment
+        android:id="@+id/test_lightmode"
+        android:name="com.example.photoeditingapp_main.test_lightmode"
+        android:label="fragment_test_lightmode"
+        tools:layout="@layout/fragment_test_lightmode" />
+    <fragment
+        android:id="@+id/test_darkmode"
+        android:name="com.example.photoeditingapp_main.test_darkmode"
+        android:label="fragment_test_darkmode"
+        tools:layout="@layout/fragment_test_darkmode" />
 </navigation>
