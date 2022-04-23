@@ -3,7 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Login.signin_page">
+    tools:context=".Activity_Login.signup_page">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Already have an account? Sign in"
+        android:textColor="@color/text_primary_black"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true" />
 
     <EditText
         android:layout_width="300dp"
@@ -21,21 +32,18 @@
         android:hint="Password"
         android:inputType="textPassword"/>
 
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:hint="Repeat password"
+        android:inputType="textPassword"/>
+
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="SIGN IN"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="Doesn't have an account? Sign up"
-        android:textColor="@color/text_primary_black"
-        android:textSize="20sp"
-        android:clickable="true"
-        android:focusable="true" />
+        android:text="SIGN UP"/>
 
 </FrameLayout>

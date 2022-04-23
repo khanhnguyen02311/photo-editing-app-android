@@ -3,17 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".welcome_page">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WELCOME"
         android:layout_gravity="center"
-        android:textStyle="bold"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/dmserifdisplay_regular"
-        android:textSize="40dp"
-        android:textColor="@color/text_primary_black"/>
+        android:text="WELCOME"
+        android:textColor="@color/text_primary_black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="GET STARTED"/>
 
 </FrameLayout>

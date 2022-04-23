@@ -9,12 +9,20 @@
         android:id="@+id/welcome_page"
         android:name="com.example.photoeditingapp_main.welcome_page"
         android:label="fragment_welcome_page"
-        tools:layout="@layout/fragment_welcome_page" />
+        tools:layout="@layout/fragment_welcome_page" >
+        <action
+            android:id="@+id/action_welcome_page_to_signin_page"
+            app:destination="@id/signin_page" />
+    </fragment>
     <fragment
         android:id="@+id/signin_page"
-        android:name="com.example.photoeditingapp_main.signin_page"
+        android:name="com.example.photoeditingapp_main.Activity_Login.signin_page"
         android:label="fragment_signin_page"
-        tools:layout="@layout/fragment_signin_page" />
+        tools:layout="@layout/fragment_signin_page" >
+        <action
+            android:id="@+id/action_signin_page_to_signup_page"
+            app:destination="@id/signup_page" />
+    </fragment>
     <fragment
         android:id="@+id/test_lightmode"
         android:name="com.example.photoeditingapp_main.test_lightmode"
@@ -25,4 +33,13 @@
         android:name="com.example.photoeditingapp_main.test_darkmode"
         android:label="fragment_test_darkmode"
         tools:layout="@layout/fragment_test_darkmode" />
+    <fragment
+        android:id="@+id/signup_page"
+        android:name="com.example.photoeditingapp_main.Activity_Login.signup_page"
+        android:label="fragment_signup_page"
+        tools:layout="@layout/fragment_signup_page" >
+        <action
+            android:id="@+id/action_signup_page_to_signin_page2"
+            app:destination="@id/signin_page" />
+    </fragment>
 </navigation>
