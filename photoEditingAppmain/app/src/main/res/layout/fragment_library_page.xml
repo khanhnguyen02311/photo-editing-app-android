@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".library_page">
+    tools:context=".Activity_Mainpage.library_page">
 
     <TextView
         android:id="@+id/testView"

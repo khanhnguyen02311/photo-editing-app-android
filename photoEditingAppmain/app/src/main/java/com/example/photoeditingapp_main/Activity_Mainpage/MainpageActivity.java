@@ -28,16 +28,24 @@ public class MainpageActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
         NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.home_page: pageName.setText("HOMEPAGE"); break;
-                    case R.id.discover_page: pageName.setText("DISCOVER"); break;
-                    case R.id.library_page: pageName.setText("MY LIBRARY"); break;
+                    case R.id.home_page:
+                        navController.navigate(R.id.action_global_home_page);
+                        pageName.setText("HOMEPAGE");
+                        break;
+                    case R.id.discover_page:
+                        navController.navigate(R.id.action_global_discover_page);
+                        pageName.setText("DISCOVER");
+                        break;
+                    case R.id.library_page:
+                        navController.navigate(R.id.action_global_library_page);
+                        pageName.setText("MY LIBRARY");
+                        break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
                 }

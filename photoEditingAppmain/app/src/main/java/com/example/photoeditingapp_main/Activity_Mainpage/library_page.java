@@ -1,4 +1,4 @@
-package com.example.photoeditingapp_main;
+package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.photoeditingapp_main.R;
 
 /**
  * A simple {@link Fragment} subclass.

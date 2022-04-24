@@ -12,12 +12,27 @@
         tools:layout="@layout/fragment_home_page" />
     <fragment
         android:id="@+id/discover_page"
-        android:name="com.example.photoeditingapp_main.discover_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.discover_page"
         android:label="fragment_discover_page"
         tools:layout="@layout/fragment_discover_page" />
     <fragment
         android:id="@+id/library_page"
-        android:name="com.example.photoeditingapp_main.library_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.library_page"
         android:label="fragment_library_page"
         tools:layout="@layout/fragment_library_page" />
+    <action
+        android:id="@+id/action_global_home_page"
+        app:destination="@id/home_page"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+    <action
+        android:id="@+id/action_global_discover_page"
+        app:destination="@id/discover_page"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+    <action
+        android:id="@+id/action_global_library_page"
+        app:destination="@id/library_page"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
 </navigation>

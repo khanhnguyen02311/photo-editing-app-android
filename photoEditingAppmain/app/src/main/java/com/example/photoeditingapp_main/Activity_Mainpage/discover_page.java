@@ -1,12 +1,24 @@
-package com.example.photoeditingapp_main;
+package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.GlobalVariables;
+import com.example.photoeditingapp_main._Classes.PictureItem;
+import com.example.photoeditingapp_main._Classes._DiscoverAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +35,11 @@ public class discover_page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    GlobalVariables gv;
+    _DiscoverAdapter adapter;
+    ArrayList<PictureItem> listDiscoverItem;
+    RecyclerView rv;
 
     public discover_page() {
         // Required empty public constructor
@@ -60,5 +77,22 @@ public class discover_page extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_discover_page, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        gv = (GlobalVariables) requireActivity().getApplication();
+        listDiscoverItem = gv.listDiscoverItem;
+
+        rv = view.findViewById(R.id.recyclerview_discover);
+
+        Log.i("DISCOVER", Integer.toString(listDiscoverItem.size()));
+
+        adapter = new _DiscoverAdapter(gv.listDiscoverItem, gv.tempImageStorage);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
     }
 }
