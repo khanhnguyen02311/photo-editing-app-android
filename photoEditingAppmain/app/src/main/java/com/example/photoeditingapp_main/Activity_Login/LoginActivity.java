@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.photoeditingapp_main.R;
@@ -30,7 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION);
-        if (!allPermissionGranted()) finishAndRemoveTask();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION);
+            if (!allPermissionGranted()) finishAndRemoveTask();
+        }
     }
 }

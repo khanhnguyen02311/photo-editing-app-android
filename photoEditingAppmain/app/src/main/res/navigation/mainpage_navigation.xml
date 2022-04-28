@@ -16,23 +16,26 @@
         android:label="fragment_discover_page"
         tools:layout="@layout/fragment_discover_page" />
     <fragment
-        android:id="@+id/library_page"
-        android:name="com.example.photoeditingapp_main.Activity_Mainpage.library_page"
-        android:label="fragment_library_page"
-        tools:layout="@layout/fragment_library_page" />
+        android:id="@+id/studio_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_page"
+        android:label="fragment_studio_page"
+        tools:layout="@layout/fragment_studio_page" />
     <action
         android:id="@+id/action_global_home_page"
-        app:destination="@id/home_page"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim" />
+        app:destination="@id/home_page"/>
     <action
         android:id="@+id/action_global_discover_page"
-        app:destination="@id/discover_page"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim" />
+        app:destination="@id/discover_page"/>
     <action
-        android:id="@+id/action_global_library_page"
-        app:destination="@id/library_page"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim" />
+        android:id="@+id/action_global_studio_page"
+        app:destination="@id/studio_page"/>
+    <fragment
+        android:id="@+id/account_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.account_page"
+        android:label="fragment_account_page"
+        tools:layout="@layout/fragment_account_page" />
+    <action
+        android:id="@+id/action_global_account_page"
+        app:destination="@id/account_page"/>
+
 </navigation>

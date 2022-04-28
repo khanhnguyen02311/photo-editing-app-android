@@ -16,4 +16,9 @@
         android:enabled="true"
         android:icon="@drawable/ic_clipboard"
         tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/studio_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_gallery_edit"
+        tools:ignore="MenuTitle" />
 </menu>

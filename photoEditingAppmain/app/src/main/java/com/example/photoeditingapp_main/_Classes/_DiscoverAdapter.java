@@ -68,7 +68,7 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
 
                 Bitmap bitmap = BitmapFactory.decodeStream(is);
 
-                float scaledWidth = (float) Resources.getSystem().getDisplayMetrics().widthPixels / 2;
+                float scaledWidth = (float) Resources.getSystem().getDisplayMetrics().widthPixels / 6;
                 float scaledHeight = scaledWidth * (float) bitmap.getHeight() / (float) bitmap.getWidth();
 
                 bitmap = Bitmap.createScaledBitmap(bitmap, Math.round(scaledWidth), Math.round(scaledHeight), true);

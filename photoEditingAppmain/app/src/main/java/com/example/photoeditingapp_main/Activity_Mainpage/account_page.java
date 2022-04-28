@@ -1,7 +1,10 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.photoeditingapp_main.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link library_page#newInstance} factory method to
+ * Use the {@link account_page#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class library_page extends Fragment {
+public class account_page extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +30,7 @@ public class library_page extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public library_page() {
+    public account_page() {
         // Required empty public constructor
     }
 
@@ -36,11 +40,11 @@ public class library_page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment library_page.
+     * @return A new instance of fragment account_page.
      */
     // TODO: Rename and change types and number of parameters
-    public static library_page newInstance(String param1, String param2) {
-        library_page fragment = new library_page();
+    public static account_page newInstance(String param1, String param2) {
+        account_page fragment = new account_page();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +65,29 @@ public class library_page extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_library_page, container, false);
+        return inflater.inflate(R.layout.fragment_account_page, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FloatingActionButton addImageBtn = view.findViewById(R.id.addImageBtn);
+        addImageBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("IntentReset")
+            @Override
+            public void onClick(View view) {
+                /*Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                getIntent.setType("image/*");
+
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                pickIntent.setType("image/*");
+
+                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+                startActivityForResult(chooserIntent, PICK_IMAGE);*/
+            }
+        });
     }
 }

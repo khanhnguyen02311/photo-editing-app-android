@@ -42,9 +42,13 @@ public class MainpageActivity extends AppCompatActivity {
                         navController.navigate(R.id.action_global_discover_page);
                         pageName.setText("DISCOVER");
                         break;
-                    case R.id.library_page:
-                        navController.navigate(R.id.action_global_library_page);
-                        pageName.setText("MY LIBRARY");
+                    case R.id.account_page:
+                        navController.navigate(R.id.action_global_account_page);
+                        pageName.setText("ACCOUNT");
+                        break;
+                    case R.id.studio_page:
+                        navController.navigate(R.id.action_global_studio_page);
+                        pageName.setText("STUDIO");
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
