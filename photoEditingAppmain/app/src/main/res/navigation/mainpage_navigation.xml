@@ -19,7 +19,16 @@
         android:id="@+id/studio_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_page"
         android:label="fragment_studio_page"
-        tools:layout="@layout/fragment_studio_page" />
+        tools:layout="@layout/fragment_studio_page" >
+        <action
+            android:id="@+id/action_studio_page_to_photo_gallery_page"
+            app:destination="@id/photo_gallery_page" />
+    </fragment>
+    <fragment
+        android:id="@+id/account_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.account_page"
+        android:label="fragment_account_page"
+        tools:layout="@layout/fragment_account_page" />
     <action
         android:id="@+id/action_global_home_page"
         app:destination="@id/home_page"/>
@@ -29,13 +38,13 @@
     <action
         android:id="@+id/action_global_studio_page"
         app:destination="@id/studio_page"/>
-    <fragment
-        android:id="@+id/account_page"
-        android:name="com.example.photoeditingapp_main.Activity_Mainpage.account_page"
-        android:label="fragment_account_page"
-        tools:layout="@layout/fragment_account_page" />
     <action
         android:id="@+id/action_global_account_page"
         app:destination="@id/account_page"/>
+    <fragment
+        android:id="@+id/photo_gallery_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.photo_gallery_page"
+        android:label="fragment_photo_gallery_page"
+        tools:layout="@layout/fragment_photo_gallery_page" />
 
 </navigation>

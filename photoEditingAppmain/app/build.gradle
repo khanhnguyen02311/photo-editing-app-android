@@ -56,7 +56,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     //Image Compressor (zetbaitsu/Compressor - github)
+    // Link: https://github.com/zetbaitsu/Compressor
     implementation 'id.zelory:compressor:3.0.1'
+
+    //Expandable Floating Action Button
+    // Link: https://github.com/nambicompany/expandable-fab
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

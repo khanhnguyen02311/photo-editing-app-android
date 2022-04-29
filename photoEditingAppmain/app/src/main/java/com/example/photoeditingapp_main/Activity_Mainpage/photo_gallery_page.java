@@ -1,10 +1,7 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,14 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.photoeditingapp_main.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link account_page#newInstance} factory method to
+ * Use the {@link photo_gallery_page#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class account_page extends Fragment {
+public class photo_gallery_page extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +26,7 @@ public class account_page extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public account_page() {
+    public photo_gallery_page() {
         // Required empty public constructor
     }
 
@@ -40,11 +36,11 @@ public class account_page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment account_page.
+     * @return A new instance of fragment photo_gallery_page.
      */
     // TODO: Rename and change types and number of parameters
-    public static account_page newInstance(String param1, String param2) {
-        account_page fragment = new account_page();
+    public static photo_gallery_page newInstance(String param1, String param2) {
+        photo_gallery_page fragment = new photo_gallery_page();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,11 +61,6 @@ public class account_page extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_page, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_photo_gallery_page, container, false);
     }
 }

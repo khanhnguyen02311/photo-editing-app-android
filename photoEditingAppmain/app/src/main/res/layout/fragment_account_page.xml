@@ -6,23 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity_Mainpage.account_page">
 
-    <TextView
-        android:id="@+id/testView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_gravity="center"
-        android:text="LIBRARY" />
+        android:layout_gravity="top">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addImageBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="20dp"
-        app:maxImageSize="35dp"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/app_teal_accent_light"
-        app:tint="@color/text_primary_white"/>
+    </com.google.android.material.tabs.TabLayout>
+
 </FrameLayout>

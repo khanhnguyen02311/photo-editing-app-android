@@ -12,13 +12,13 @@
         android:icon="@drawable/ic_global_search"
         tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/library_page"
+        android:id="@+id/account_page"
         android:enabled="true"
-        android:icon="@drawable/ic_clipboard"
+        android:icon="@drawable/ic_user_square"
         tools:ignore="MenuTitle" />
     <item
         android:id="@+id/studio_page"
         android:enabled="true"
-        android:icon="@drawable/ic_gallery_edit"
+        android:icon="@drawable/ic_clipboard"
         tools:ignore="MenuTitle" />
 </menu>

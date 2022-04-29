@@ -50,8 +50,6 @@ public class MainpageActivity extends AppCompatActivity {
                         navController.navigate(R.id.action_global_studio_page);
                         pageName.setText("STUDIO");
                         break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + item.getItemId());
                 }
                 return true;
             }

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="28dp"
-                android:layout_gravity="top"
+                android:layout_gravity="center_vertical|start"
                 android:fontFamily="@font/dmserifdisplay_regular"
                 android:text="HOMEPAGE" />
 
@@ -54,7 +54,7 @@
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:elevation="5dp"
-            app:menu="@menu/bottom_navigation_mainpage_menu" />
+            app:menu="@menu/bottom_navigation_mainpage_menu"/>
 
     </LinearLayout>
 
