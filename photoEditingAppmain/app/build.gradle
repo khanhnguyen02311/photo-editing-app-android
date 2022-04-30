@@ -62,6 +62,9 @@ dependencies {
     //Expandable Floating Action Button
     // Link: https://github.com/nambicompany/expandable-fab
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
+
+    //RoundedImageView
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

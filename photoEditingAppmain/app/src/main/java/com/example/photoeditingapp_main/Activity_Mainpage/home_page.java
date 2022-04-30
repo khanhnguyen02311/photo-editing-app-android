@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
@@ -74,5 +76,47 @@ public class home_page extends Fragment {
         /*if (requireActivity().getIntent() != null) {
             tv.setText(requireActivity().getIntent().getStringExtra("username"));
         }*/
+        LinearLayout linearLayout = view.findViewById(R.id.LinearLayoutRecently);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        for(int i = 0; i < 10; i++) {
+            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
+            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
+            textView.setText("Khang Huynh");
+            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
+            if(i%2 == 0) {
+            imageView.setImageResource(R.drawable.welcome_background);}
+            else {
+                imageView.setImageResource(R.drawable.welcome_background2);
+            }
+            linearLayout.addView(view1);
+        }
+
+        linearLayout = view.findViewById(R.id.LinearLayoutTrending);
+        for(int i = 0; i < 10; i++) {
+            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
+            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
+            textView.setText("Khang Huynh");
+            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
+            if(i%2 == 0) {
+                imageView.setImageResource(R.drawable.welcome_background);}
+            else {
+                imageView.setImageResource(R.drawable.welcome_background2);
+            }
+            linearLayout.addView(view1);
+        }
+
+        linearLayout = view.findViewById(R.id.LinearLayoutDiscovery);
+        for(int i = 0; i < 10; i++) {
+            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
+            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
+            textView.setText("Khang Huynh");
+            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
+            if(i%2 == 0) {
+                imageView.setImageResource(R.drawable.welcome_background);}
+            else {
+                imageView.setImageResource(R.drawable.welcome_background2);
+            }
+            linearLayout.addView(view1);
+        }
     }
 }
