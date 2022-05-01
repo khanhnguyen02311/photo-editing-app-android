@@ -4,92 +4,106 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Activity_Mainpage.home_page">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/app_black"
-    android:layout_marginHorizontal="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recently"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        android:paddingStart="17dp"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:id="@+id/LinearLayoutRecently"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </LinearLayout>
-    </HorizontalScrollView>
 
-    <View
+        <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/app_black"
         android:layout_marginHorizontal="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trending"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        android:paddingStart="17dp"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:id="@+id/LinearLayoutTrending"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </LinearLayout>
-    </HorizontalScrollView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/app_black"
-        android:layout_marginHorizontal="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Discovery"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        android:paddingStart="17dp"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:id="@+id/LinearLayoutDiscovery"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recently"
+            android:fontFamily="@font/sourcesans3_bold"
+            android:textSize="25sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"/>
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </LinearLayout>
-    </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none"
+            android:paddingStart="17dp"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutRecently"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_black"
+            android:layout_marginHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trending"
+            android:fontFamily="@font/sourcesans3_bold"
+            android:textSize="25sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none"
+            android:paddingStart="17dp"
+            android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutTrending"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_black"
+            android:layout_marginHorizontal="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discovery"
+            android:fontFamily="@font/sourcesans3_bold"
+            android:textSize="25sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none"
+            android:paddingStart="17dp"
+            android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutDiscovery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+        </HorizontalScrollView>
     </LinearLayout>
 </ScrollView>
