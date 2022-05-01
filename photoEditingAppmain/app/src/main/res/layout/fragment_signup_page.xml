@@ -14,41 +14,86 @@
         android:layout_marginTop="20dp"
         android:layout_gravity="center">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldUsername"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/_custom_input"
-            android:hint="Username"
-            android:inputType="text"/>
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            android:hint="Username">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/_custom_input"
-            android:hint="Email"
-            android:inputType="text"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="text"
+                />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/_custom_input"
-            android:hint="Password"
-            android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldEmail"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/_custom_input"
-            android:hint="Confirm password"
-            android:inputType="textPassword"/>
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            android:hint="Password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            android:hint="Confirm password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signupBtn"
@@ -57,7 +102,7 @@
             android:insetBottom="0dp"
             android:insetTop="0dp"
             app:cornerRadius="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginVertical="30dp"
             android:textSize="16dp"
             android:text="SIGN UP"/>
 

@@ -10,9 +10,11 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +23,8 @@ import com.example.photoeditingapp_main.R;
  */
 public class signup_page extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    TextInputEditText usernameText, emailText, passwordText, confirmPasswordText;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -72,6 +74,11 @@ public class signup_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        usernameText = view.findViewById(R.id.usernameText);
+        emailText = view.findViewById(R.id.emailText);
+        passwordText = view.findViewById(R.id.passwordText);
+        confirmPasswordText = view.findViewById(R.id.confirmPasswordText);
+
         TextView signinHyperlink = view.findViewById(R.id.signInHyperlink);
 
         signinHyperlink.setOnClickListener(new View.OnClickListener() {
@@ -80,5 +87,23 @@ public class signup_page extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
             }
         });
+
+
+    }
+
+    public boolean checkValidAccount() {
+        String usr, email, psw, cfpsw;
+        try {
+            usr = usernameText.getText().toString();
+            email = emailText.getText().toString();
+            psw = passwordText.getText().toString();
+            cfpsw = confirmPasswordText.getText().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (usr.isEmpty() || psw.isEmpty());
+
+        return true;
     }
 }

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +20,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class GlobalVariables extends Application {
-    public FirebaseDatabase firebaseDTB;
     public ArrayList<PictureItem> listDiscoverItem = new ArrayList<>();
     public File tempImageStorage;
+    FirebaseFirestore firestoreDB;
 
     private final int REQUEST_CODE_PERMISSION = 101; //Read, modify and delete storage
     private final String[] REQUIRED_PERMISSIONS = new String[]{
@@ -32,8 +33,8 @@ public class GlobalVariables extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FirebaseApp.initializeApp(this);
-        firebaseDTB = FirebaseDatabase.getInstance();
+
+        firestoreDB = FirebaseFirestore.getInstance();
 
         tempImageStorage = new File(getExternalFilesDir(null) + "/" + "tempImages");
         if (!tempImageStorage.exists()) tempImageStorage.mkdir();
