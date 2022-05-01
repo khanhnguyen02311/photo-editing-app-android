@@ -13,14 +13,30 @@
     android:layout_height="1dp"
     android:background="@color/app_black"
     android:layout_marginHorizontal="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recently"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recently"
+                android:fontFamily="@font/sourcesans3_bold"
+                android:textSize="25sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sourcesans3_medium"
+                android:text="See more"
+                android:textColor="@color/app_teal_accent_dark"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,14 +57,29 @@
         android:layout_height="1dp"
         android:background="@color/app_black"
         android:layout_marginHorizontal="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trending"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sourcesans3_bold"
+                android:text="Trending"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sourcesans3_medium"
+                android:text="See more"
+                android:textColor="@color/app_teal_accent_dark"
+                android:textSize="15sp" />
+        </RelativeLayout>
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,14 +100,29 @@
         android:layout_height="1dp"
         android:background="@color/app_black"
         android:layout_marginHorizontal="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Discovery"
-        android:fontFamily="@font/sourcesans3_bold"
-        android:textSize="25sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sourcesans3_bold"
+                android:text="Discover"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sourcesans3_medium"
+                android:text="See more"
+                android:textColor="@color/app_teal_accent_dark"
+                android:textSize="15sp" />
+        </RelativeLayout>
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
