@@ -19,14 +19,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +49,15 @@ public class signup_page extends Fragment {
             TOO_SHORT_ERROR = "Text too short",
             TOO_LONG_ERROR = "Text too long",
             NOT_VALID_EMAIL = "Email not valid",
-            NOT_IDENTICAL_PASSWORD = "The passwords must be identical";
+            NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
+            USED_USERNAME = "Username has been used",
+            USED_EMAIL = "Email has been used";
 
 
     TextInputLayout usernameLayout, emailLayout, passwordLayout, confirmPasswordLayout;
     TextInputEditText usernameText, emailText, passwordText, confirmPasswordText;
+
+    FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -113,14 +123,35 @@ public class signup_page extends Fragment {
         TextView signinHyperlink = view.findViewById(R.id.signInHyperlink);
 
 
-        //Add EditText listeners when text changed
-        usernameText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override public void afterTextChanged(Editable editable) { }
-
+        //Add EditText listeners when clear focus
+        usernameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                simpleLayourError(usernameLayout, charSequence);
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = usernameText.getText().toString();
+
+                    if (text.isEmpty()) usernameLayout.setError(EMPTY_ERROR);
+                    else if (text.length() <= 6) usernameLayout.setError(TOO_SHORT_ERROR);
+                    else if (text.length() > 25) usernameLayout.setError(TOO_LONG_ERROR);
+                    else {
+                        firestoreDB.collection("users").whereEqualTo("usr", text).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot snapshot) {
+                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                else {
+                                    usernameLayout.setError(null);
+                                    usernameLayout.setErrorEnabled(false);
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("GETDOCS", "Error getting documents: ", e);
+                            }
+                        });
+                    }
+                }
             }
         });
 
@@ -132,7 +163,10 @@ public class signup_page extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) emailLayout.setError(EMPTY_ERROR);
                 else if (!Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()) emailLayout.setError(NOT_VALID_EMAIL);
-                else emailLayout.setError(null);
+                else {
+                    emailLayout.setError(null);
+                    emailLayout.setErrorEnabled(false);
+                }
             }
         });
 
@@ -142,9 +176,16 @@ public class signup_page extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                simpleLayourError(passwordLayout, charSequence);
-                if (!charSequence.equals(confirmPasswordText.getText().toString())) passwordLayout.setError(NOT_IDENTICAL_PASSWORD);
-                else passwordLayout.setError(null);
+                if (charSequence.length() == 0) passwordLayout.setError(EMPTY_ERROR);
+                else if (charSequence.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
+                else if (charSequence.length() > 25) passwordLayout.setError(TOO_LONG_ERROR);
+                else if (!confirmPasswordText.getText().toString().contentEquals(charSequence)) passwordLayout.setError(NOT_IDENTICAL_PASSWORD);
+                else {
+                    passwordLayout.setError(null);
+                    passwordLayout.setErrorEnabled(false);
+                    confirmPasswordLayout.setError(null);
+                    confirmPasswordLayout.setErrorEnabled(false);
+                }
             }
         });
 
@@ -154,9 +195,16 @@ public class signup_page extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                simpleLayourError(confirmPasswordLayout, charSequence);
-                if (!charSequence.equals(passwordText.getText().toString())) confirmPasswordLayout.setError(NOT_IDENTICAL_PASSWORD);
-                else confirmPasswordLayout.setError(null);
+                if (charSequence.length() == 0) confirmPasswordLayout.setError(EMPTY_ERROR);
+                else if (charSequence.length() <= 6) confirmPasswordLayout.setError(TOO_SHORT_ERROR);
+                else if (charSequence.length() > 25) confirmPasswordLayout.setError(TOO_LONG_ERROR);
+                else if (!passwordText.getText().toString().contentEquals(charSequence)) confirmPasswordLayout.setError(NOT_IDENTICAL_PASSWORD);
+                else {
+                    passwordLayout.setError(null);
+                    passwordLayout.setErrorEnabled(false);
+                    confirmPasswordLayout.setError(null);
+                    confirmPasswordLayout.setErrorEnabled(false);
+                }
             }
         });
 
@@ -187,11 +235,13 @@ public class signup_page extends Fragment {
                     user.put("email", email);
                     user.put("psw", psw);
 
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
+                            Snackbar snackbar = Snackbar.make(getView(), "Sign up completed", 1000);
+                            snackbar.show();
+                            Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -208,13 +258,5 @@ public class signup_page extends Fragment {
                 }
             }
         });
-
-    }
-
-    public void simpleLayourError(TextInputLayout layout, CharSequence sqce) {
-        if (sqce.length() == 0) layout.setError(EMPTY_ERROR);
-        else if (sqce.length() <= 6) layout.setError(TOO_SHORT_ERROR);
-        else if (sqce.length() > 25) layout.setError(TOO_LONG_ERROR);
-        else layout.setError(null);
     }
 }
