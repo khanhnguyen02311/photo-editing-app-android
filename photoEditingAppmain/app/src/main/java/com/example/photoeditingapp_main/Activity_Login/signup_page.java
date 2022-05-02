@@ -11,6 +11,8 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -237,11 +239,15 @@ public class signup_page extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    passwordText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    confirmPasswordText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    confirmPasswordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordText.setSelection(passwordText.getText().length());
+                    confirmPasswordText.setSelection(confirmPasswordText.getText().length());
                 } else {
-                    passwordText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    confirmPasswordText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    confirmPasswordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordText.setSelection(passwordText.getText().length());
+                    confirmPasswordText.setSelection(confirmPasswordText.getText().length());
                 }
             }
         });
