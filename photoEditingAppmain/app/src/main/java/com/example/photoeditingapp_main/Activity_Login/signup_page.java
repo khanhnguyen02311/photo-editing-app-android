@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -45,17 +48,18 @@ import java.util.Map;
 
 public class signup_page extends Fragment {
 
-    String EMPTY_ERROR = "Field can't be empty",
-            TOO_SHORT_ERROR = "Text too short",
-            TOO_LONG_ERROR = "Text too long",
-            NOT_VALID_EMAIL = "Email not valid",
-            NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
-            USED_USERNAME = "Username has been used",
-            USED_EMAIL = "Email has been used";
+    final String EMPTY_ERROR = "Field can't be empty",
+                 TOO_SHORT_ERROR = "Text too short",
+                 TOO_LONG_ERROR = "Text too long",
+                 NOT_VALID_EMAIL = "Email not valid",
+                 NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
+                 USED_USERNAME = "Username has been used",
+                 USED_EMAIL = "Email has been used";
 
 
     TextInputLayout usernameLayout, emailLayout, passwordLayout, confirmPasswordLayout;
     TextInputEditText usernameText, emailText, passwordText, confirmPasswordText;
+    CheckBox showPassword;
 
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
@@ -119,6 +123,8 @@ public class signup_page extends Fragment {
         passwordLayout = view.findViewById(R.id.textFieldPassword);
         confirmPasswordLayout = view.findViewById(R.id.textFieldConfirmPassword);
 
+        //showPassword = view.findViewById(R.id.showPasswordChecker);
+
         MaterialButton signupBtn = view.findViewById(R.id.signupBtn);
         TextView signinHyperlink = view.findViewById(R.id.signInHyperlink);
 
@@ -138,7 +144,7 @@ public class signup_page extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot snapshot) {
-                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_EMAIL);
                                 else {
                                     usernameLayout.setError(null);
                                     usernameLayout.setErrorEnabled(false);
@@ -155,59 +161,90 @@ public class signup_page extends Fragment {
             }
         });
 
-        emailText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override public void afterTextChanged(Editable editable) { }
-
+        emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0) emailLayout.setError(EMPTY_ERROR);
-                else if (!Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()) emailLayout.setError(NOT_VALID_EMAIL);
-                else {
-                    emailLayout.setError(null);
-                    emailLayout.setErrorEnabled(false);
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = emailText.getText().toString();
+
+                    if (text.isEmpty()) emailLayout.setError(EMPTY_ERROR);
+                    else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) emailLayout.setError(NOT_VALID_EMAIL);
+                    else {
+                        firestoreDB.collection("users").whereEqualTo("email", text).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot snapshot) {
+                                        if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                        else {
+                                            emailLayout.setError(null);
+                                            emailLayout.setErrorEnabled(false);
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("GETDOCS", "Error getting documents: ", e);
+                            }
+                        });
+                    }
                 }
             }
         });
 
-        passwordText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override public void afterTextChanged(Editable editable) { }
-
+        passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0) passwordLayout.setError(EMPTY_ERROR);
-                else if (charSequence.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
-                else if (charSequence.length() > 25) passwordLayout.setError(TOO_LONG_ERROR);
-                else if (!confirmPasswordText.getText().toString().contentEquals(charSequence)) passwordLayout.setError(NOT_IDENTICAL_PASSWORD);
-                else {
-                    passwordLayout.setError(null);
-                    passwordLayout.setErrorEnabled(false);
-                    confirmPasswordLayout.setError(null);
-                    confirmPasswordLayout.setErrorEnabled(false);
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = passwordText.getText().toString();
+
+                    if (text.isEmpty()) passwordLayout.setError(EMPTY_ERROR);
+                    else if (text.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
+                    else if (text.length() > 25) passwordLayout.setError(TOO_LONG_ERROR);
+                    else if (!confirmPasswordText.getText().toString().equals(text))
+                        passwordLayout.setError(NOT_IDENTICAL_PASSWORD);
+                    else {
+                        passwordLayout.setError(null);
+                        passwordLayout.setErrorEnabled(false);
+                        confirmPasswordLayout.setError(null);
+                        confirmPasswordLayout.setErrorEnabled(false);
+                    }
                 }
             }
         });
 
-        confirmPasswordText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override public void afterTextChanged(Editable editable) { }
-
+        confirmPasswordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0) confirmPasswordLayout.setError(EMPTY_ERROR);
-                else if (charSequence.length() <= 6) confirmPasswordLayout.setError(TOO_SHORT_ERROR);
-                else if (charSequence.length() > 25) confirmPasswordLayout.setError(TOO_LONG_ERROR);
-                else if (!passwordText.getText().toString().contentEquals(charSequence)) confirmPasswordLayout.setError(NOT_IDENTICAL_PASSWORD);
-                else {
-                    passwordLayout.setError(null);
-                    passwordLayout.setErrorEnabled(false);
-                    confirmPasswordLayout.setError(null);
-                    confirmPasswordLayout.setErrorEnabled(false);
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = confirmPasswordText.getText().toString();
+
+                    if (text.isEmpty()) confirmPasswordLayout.setError(EMPTY_ERROR);
+                    else if (text.length() <= 6) confirmPasswordLayout.setError(TOO_SHORT_ERROR);
+                    else if (text.length() > 25) confirmPasswordLayout.setError(TOO_LONG_ERROR);
+                    else if (!passwordText.getText().toString().equals(text))
+                        confirmPasswordLayout.setError(NOT_IDENTICAL_PASSWORD);
+                    else {
+                        passwordLayout.setError(null);
+                        passwordLayout.setErrorEnabled(false);
+                        confirmPasswordLayout.setError(null);
+                        confirmPasswordLayout.setErrorEnabled(false);
+                    }
                 }
             }
         });
 
+        /*showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    passwordText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    confirmPasswordText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passwordText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    confirmPasswordText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });*/
 
         signinHyperlink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,7 +276,7 @@ public class signup_page extends Fragment {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
-                            Snackbar snackbar = Snackbar.make(getView(), "Sign up completed", 1000);
+                            Snackbar snackbar = Snackbar.make(view, "Sign up completed", 2000);
                             snackbar.show();
                             Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
                         }
@@ -247,13 +284,13 @@ public class signup_page extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.w("NEWUSER", "Error adding document", e);
-                            Snackbar snackbar = Snackbar.make(view, "Error. Can't add new user", 600);
+                            Snackbar snackbar = Snackbar.make(view, "Error. Can't add new user", 1000);
                             snackbar.show();
                         }
                     });
                 }
                 else {
-                    Snackbar snackbar = Snackbar.make(view, "Information not valid.", 600);
+                    Snackbar snackbar = Snackbar.make(view, "Information not valid.", 1000);
                     snackbar.show();
                 }
             }
