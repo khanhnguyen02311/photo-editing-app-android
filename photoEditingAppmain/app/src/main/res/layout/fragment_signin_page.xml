@@ -22,14 +22,15 @@
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
-            android:hint="Username">
+            android:hint="Username"
+            app:errorIconDrawable="@null"
+            app:errorEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                />
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,8 +43,10 @@
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="Password">
+            android:hint="Password"
+            app:errorIconDrawable="@null"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/_custom_password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordText"

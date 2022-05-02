@@ -15,6 +15,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,10 @@ public class signup_page extends Fragment {
     TextInputEditText usernameText, emailText, passwordText, confirmPasswordText;
     CheckBox showPassword;
 
+    MaterialButton signupBtn;
+    TextView signinHyperlink;
+
+
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
     private static final String ARG_PARAM1 = "param1";
@@ -71,6 +76,8 @@ public class signup_page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
 
     public signup_page() {
         // Required empty public constructor
@@ -114,6 +121,22 @@ public class signup_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //NOT WORK
+        /*//clear layout focus when press device's back button -> start layout listener
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                    usernameLayout.clearFocus();
+                    emailLayout.clearFocus();
+                    passwordLayout.clearFocus();
+                    confirmPasswordLayout.clearFocus();
+                    return true;
+                }
+                return false;
+            }
+        });*/
+
         //Binding components
         usernameText = view.findViewById(R.id.usernameText);
         emailText = view.findViewById(R.id.emailText);
@@ -127,8 +150,8 @@ public class signup_page extends Fragment {
 
         showPassword = view.findViewById(R.id.showPasswordChecker);
 
-        MaterialButton signupBtn = view.findViewById(R.id.signupBtn);
-        TextView signinHyperlink = view.findViewById(R.id.signInHyperlink);
+        signupBtn = view.findViewById(R.id.signupBtn);
+        signinHyperlink = view.findViewById(R.id.signInHyperlink);
 
 
         //Add EditText listeners when clear focus
@@ -146,7 +169,7 @@ public class signup_page extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot snapshot) {
-                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_EMAIL);
+                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
                                 else {
                                     usernameLayout.setError(null);
                                     usernameLayout.setErrorEnabled(false);
@@ -159,6 +182,9 @@ public class signup_page extends Fragment {
                             }
                         });
                     }
+                    signupBtn.setEnabled(true);
+                } else {
+                    signupBtn.setEnabled(false);
                 }
             }
         });
@@ -176,7 +202,7 @@ public class signup_page extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot snapshot) {
-                                        if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                        if (!snapshot.isEmpty()) usernameLayout.setError(USED_EMAIL);
                                         else {
                                             emailLayout.setError(null);
                                             emailLayout.setErrorEnabled(false);
@@ -189,6 +215,9 @@ public class signup_page extends Fragment {
                             }
                         });
                     }
+                    signupBtn.setEnabled(true);
+                } else {
+                    signupBtn.setEnabled(false);
                 }
             }
         });
@@ -259,10 +288,10 @@ public class signup_page extends Fragment {
             }
         });
 
+
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String usr = usernameText.getText().toString();
                 String email = emailText.getText().toString();
                 String psw = passwordText.getText().toString();
@@ -294,8 +323,7 @@ public class signup_page extends Fragment {
                             snackbar.show();
                         }
                     });
-                }
-                else {
+                } else {
                     Snackbar snackbar = Snackbar.make(view, "Information not valid.", 1000);
                     snackbar.show();
                 }

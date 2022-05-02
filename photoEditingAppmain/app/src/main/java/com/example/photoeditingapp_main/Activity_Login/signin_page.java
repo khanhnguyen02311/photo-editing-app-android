@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.example.photoeditingapp_main.Activity_Mainpage.MainpageActivity;
 import com.example.photoeditingapp_main.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,14 @@ import com.google.android.material.button.MaterialButton;
  * create an instance of this fragment.
  */
 public class signin_page extends Fragment {
+
+    TextInputLayout usernameLayout, passwordLayout;
+    TextInputEditText usernameText, passwordText;
+
+    TextView signupHyperlink;
+    MaterialButton signinBtn;
+
+    FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,8 +86,14 @@ public class signin_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView signupHyperlink = view.findViewById(R.id.signUpHyperlink);
-        MaterialButton signinBtn = view.findViewById(R.id.signinBtn);
+        usernameLayout = view.findViewById(R.id.textFieldUsername);
+        passwordLayout = view.findViewById(R.id.textFieldPassword);
+
+        usernameText = view.findViewById(R.id.usernameText);
+        passwordText = view.findViewById(R.id.passwordText);
+
+        signupHyperlink = view.findViewById(R.id.signUpHyperlink);
+        signinBtn = view.findViewById(R.id.signinBtn);
 
         signupHyperlink.setOnClickListener(new View.OnClickListener() {
             @Override
