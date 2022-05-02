@@ -123,7 +123,7 @@ public class signup_page extends Fragment {
         passwordLayout = view.findViewById(R.id.textFieldPassword);
         confirmPasswordLayout = view.findViewById(R.id.textFieldConfirmPassword);
 
-        //showPassword = view.findViewById(R.id.showPasswordChecker);
+        showPassword = view.findViewById(R.id.showPasswordChecker);
 
         MaterialButton signupBtn = view.findViewById(R.id.signupBtn);
         TextView signinHyperlink = view.findViewById(R.id.signInHyperlink);
@@ -233,7 +233,7 @@ public class signup_page extends Fragment {
             }
         });
 
-        /*showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
@@ -244,7 +244,7 @@ public class signup_page extends Fragment {
                     confirmPasswordText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
-        });*/
+        });
 
         signinHyperlink.setOnClickListener(new View.OnClickListener() {
             @Override
