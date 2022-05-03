@@ -26,4 +26,6 @@
     <color name="text_primary_black">#D7000000</color>
     <color name="text_secondary_black">#A6000000</color>
     <color name="text_disabled_black">#65000000</color>
+
+    <color name="bg_avatar_icon">#e0dfe4</color>
 </resources>

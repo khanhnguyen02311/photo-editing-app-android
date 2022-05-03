@@ -3,3 +3,6 @@ https://viblo.asia/p/tim-hieu-ve-layoutinflater-trong-android-07LKXzL2lV4
 
 // Horizontal ScrollView (for Homepage)
 https://myandroid.site/android-horizontal-scrollview-example/
+
+// Expandable GridView
+https://stackoverflow.com/questions/8481844/gridview-height-gets-cut

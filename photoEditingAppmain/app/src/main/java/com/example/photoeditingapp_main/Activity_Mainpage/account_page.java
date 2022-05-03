@@ -10,9 +10,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
+import android.widget.GridView;
 
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.ExpandableGridView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,5 +77,52 @@ public class account_page extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(R.drawable.welcome_background2);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.welcome_background);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+        list.add(R.drawable.img);
+
+
+
+
+        ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
+        gridView.setExpanded(true);
+        _adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), list);
+        gridView.setAdapter(adapter);
     }
 }
