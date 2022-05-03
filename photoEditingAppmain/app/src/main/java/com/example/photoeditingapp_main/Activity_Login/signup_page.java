@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +51,9 @@ import java.util.Map;
  */
 
 public class signup_page extends Fragment {
+
+    private final Object syncToken1 = new Object();
+    private final Object syncToken2 = new Object();
 
     final String EMPTY_ERROR = "Field can't be empty",
                  TOO_SHORT_ERROR = "Text too short",
@@ -66,7 +70,6 @@ public class signup_page extends Fragment {
 
     MaterialButton signupBtn;
     TextView signinHyperlink;
-
 
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
@@ -165,26 +168,28 @@ public class signup_page extends Fragment {
                     else if (text.length() <= 6) usernameLayout.setError(TOO_SHORT_ERROR);
                     else if (text.length() > 25) usernameLayout.setError(TOO_LONG_ERROR);
                     else {
-                        firestoreDB.collection("users").whereEqualTo("usr", text).get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot snapshot) {
-                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
-                                else {
+                        Thread thread = new Thread(() -> {
+                            firestoreDB.collection("users").whereEqualTo("usr", text).get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                public void onSuccess(QuerySnapshot snapshot) {
+                                    if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                    else {
+                                        usernameLayout.setError(null);
+                                        usernameLayout.setErrorEnabled(false);
+                                    }
+                                }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("GETDOCS", "Error getting documents: ", e);
                                     usernameLayout.setError(null);
                                     usernameLayout.setErrorEnabled(false);
                                 }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("GETDOCS", "Error getting documents: ", e);
-                            }
+                            });
                         });
+                        thread.start();
                     }
-                    signupBtn.setEnabled(true);
-                } else {
-                    signupBtn.setEnabled(false);
                 }
             }
         });
@@ -198,26 +203,28 @@ public class signup_page extends Fragment {
                     if (text.isEmpty()) emailLayout.setError(EMPTY_ERROR);
                     else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) emailLayout.setError(NOT_VALID_EMAIL);
                     else {
-                        firestoreDB.collection("users").whereEqualTo("email", text).get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onSuccess(QuerySnapshot snapshot) {
-                                        if (!snapshot.isEmpty()) usernameLayout.setError(USED_EMAIL);
-                                        else {
-                                            emailLayout.setError(null);
-                                            emailLayout.setErrorEnabled(false);
+                        Thread thread = new Thread(() -> {
+                            firestoreDB.collection("users").whereEqualTo("email", text).get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot snapshot) {
+                                            if (!snapshot.isEmpty()) emailLayout.setError(USED_EMAIL);
+                                            else {
+                                                emailLayout.setError(null);
+                                                emailLayout.setErrorEnabled(false);
+                                            }
                                         }
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("GETDOCS", "Error getting documents: ", e);
-                            }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("GETDOCS", "Error getting documents: ", e);
+                                    emailLayout.setError(null);
+                                    emailLayout.setErrorEnabled(false);
+                                }
+                            });
                         });
+                        thread.start();
                     }
-                    signupBtn.setEnabled(true);
-                } else {
-                    signupBtn.setEnabled(false);
                 }
             }
         });
@@ -270,14 +277,12 @@ public class signup_page extends Fragment {
                 if (checked) {
                     passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     confirmPasswordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordText.setSelection(passwordText.getText().length());
-                    confirmPasswordText.setSelection(confirmPasswordText.getText().length());
                 } else {
                     passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     confirmPasswordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordText.setSelection(passwordText.getText().length());
-                    confirmPasswordText.setSelection(confirmPasswordText.getText().length());
                 }
+                passwordText.setSelection(passwordText.getText().length());
+                confirmPasswordText.setSelection(confirmPasswordText.getText().length());
             }
         });
 
@@ -288,18 +293,31 @@ public class signup_page extends Fragment {
             }
         });
 
-
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Snackbar cancelBar = Snackbar.make(view, "Information not valid.", 1000);
+                Snackbar acceptBar = Snackbar.make(view, "Sign up completed", 2000);
+                Snackbar errorBar = Snackbar.make(view, "Error. Can't add new user", 1000);
+
+                usernameText.clearFocus();
+                emailText.clearFocus();
+                passwordText.clearFocus();
+                confirmPasswordText.clearFocus();
+
                 String usr = usernameText.getText().toString();
                 String email = emailText.getText().toString();
                 String psw = passwordText.getText().toString();
 
-                if (usernameLayout.getError() == null &&
-                        emailLayout.getError() == null &&
-                        passwordLayout.getError() == null &&
-                        confirmPasswordLayout.getError() == null &&
+                Log.d("LAYOUT", usernameLayout.getError() != null ? usernameLayout.getError().toString() : "No error");
+                Log.d("LAYOUT", emailLayout.getError() != null ? emailLayout.getError().toString() : "No error");
+                Log.d("LAYOUT", passwordLayout.getError() != null ? passwordLayout.getError().toString() : "No error");
+                Log.d("LAYOUT", confirmPasswordLayout.getError() != null ? confirmPasswordLayout.getError().toString() : "No error");
+
+                if (TextUtils.isEmpty(usernameLayout.getError()) &&
+                        TextUtils.isEmpty(emailLayout.getError()) &&
+                        TextUtils.isEmpty(passwordLayout.getError()) &&
+                        TextUtils.isEmpty(confirmPasswordLayout.getError()) &&
                         !usr.isEmpty() && !email.isEmpty() && !psw.isEmpty()) {
 
                     Map<String, Object> user = new HashMap<>();
@@ -311,22 +329,17 @@ public class signup_page extends Fragment {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
-                            Snackbar snackbar = Snackbar.make(view, "Sign up completed", 2000);
-                            snackbar.show();
+                            acceptBar.show();
                             Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.w("NEWUSER", "Error adding document", e);
-                            Snackbar snackbar = Snackbar.make(view, "Error. Can't add new user", 1000);
-                            snackbar.show();
+                            errorBar.show();
                         }
                     });
-                } else {
-                    Snackbar snackbar = Snackbar.make(view, "Information not valid.", 1000);
-                    snackbar.show();
-                }
+                } else cancelBar.show();
             }
         });
     }
