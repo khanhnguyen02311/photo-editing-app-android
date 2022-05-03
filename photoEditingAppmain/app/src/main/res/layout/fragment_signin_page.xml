@@ -11,35 +11,61 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="50dp"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldUsername"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/_custom_input"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             android:hint="Username"
-            android:inputType="text"/>
+            app:errorIconDrawable="@null"
+            app:errorEnabled="false">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/textFieldPassword"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/_custom_input"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            app:errorIconDrawable="@null"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/_custom_password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signinBtn"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:insetBottom="0dp"
             android:insetTop="0dp"
             app:cornerRadius="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginVertical="30dp"
             android:textSize="16dp"
             android:text="SIGN IN"/>
 
@@ -50,7 +76,7 @@
             android:gravity="center"
             android:text="Doesn't have an account? Sign up"
             android:textColor="@color/text_primary_black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:clickable="true"
             android:focusable="true"/>
 
