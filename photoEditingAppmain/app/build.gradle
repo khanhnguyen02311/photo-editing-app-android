@@ -64,8 +64,10 @@ dependencies {
     // Link: https://github.com/nambicompany/expandable-fab
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 
-    //RoundedImageView
-    implementation 'com.makeramen:roundedimageview:2.3.0'
+    //ViewPager2 and Tablayout
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta04'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha04'
+    implementation 'com.google.android.material:material:1.1.0-alpha10'
 }
 
 apply plugin: 'com.google.gms.google-services'

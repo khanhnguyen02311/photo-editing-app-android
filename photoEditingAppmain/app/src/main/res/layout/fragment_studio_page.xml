@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity_Mainpage.studio_page">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_studio_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:tabMode="scrollable"
+            style="@style/CustomTabLayout" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_studio_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp" />
+    </LinearLayout>
 
     <com.nambimobile.widgets.efab.ExpandableFabLayout
         android:layout_width="match_parent"
@@ -23,37 +41,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            app:efab_color="@color/app_teal_accent_light"
+            app:borderWidth="0dp"
             app:efab_closingAnimationDurationMs="200"
-            app:efab_openingAnimationDurationMs="200"
+            app:efab_closingAnticipateTension="0"
+            app:efab_color="@color/app_teal_accent_light"
+            app:efab_firstFabOptionMarginPx="110"
             app:efab_icon="@drawable/ic_add_white"
             app:efab_iconAnimationRotationDeg="-135"
-            app:efab_closingAnticipateTension="0"
-            app:borderWidth="0dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            app:efab_orientation="portrait"
-            app:efab_firstFabOptionMarginPx="110" />
+            app:efab_openingAnimationDurationMs="200"
+            app:efab_orientation="portrait" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="@color/app_light_gray"
             app:fab_icon="@drawable/ic_gallery_add"
-            app:label_text="Import"
             app:label_backgroundColor="#22000000"
-            app:label_textColor="@color/text_secondary_black"/>
+            app:label_text="Import"
+            app:label_textColor="@color/text_secondary_black" />
 
         <com.nambimobile.widgets.efab.FabOption
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="@color/app_light_gray"
             app:fab_icon="@drawable/ic_camera"
-            app:label_text="Take a photo"
             app:label_backgroundColor="#22000000"
-            app:label_textColor="@color/text_secondary_black"/>
+            app:label_text="Take a photo"
+            app:label_textColor="@color/text_secondary_black" />
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 
-</FrameLayout>
+</RelativeLayout>

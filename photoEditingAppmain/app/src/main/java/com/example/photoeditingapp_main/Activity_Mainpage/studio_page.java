@@ -1,14 +1,28 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes._StudioViewPager2Adapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +76,34 @@ public class studio_page extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_studio_page, container, false);
+    }
+
+    TabLayout tabLayout;
+    ViewPager2 viewPager;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tabLayout = view.findViewById(R.id.tab_layout_studio_page);
+        viewPager = view.findViewById(R.id.view_pager_studio_page);
+
+        _StudioViewPager2Adapter adapter = new _StudioViewPager2Adapter(requireActivity());
+        viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("My Album");
+                        break;
+                    case 1:
+                        tab.setText("Recent");
+                        break;
+                    default:
+                        tab.setText("");
+                }
+            }
+        }).attach();
     }
 }

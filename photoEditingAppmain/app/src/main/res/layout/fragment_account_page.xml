@@ -216,7 +216,7 @@
             <com.example.photoeditingapp_main._Classes.ExpandableGridView
                 android:id="@+id/GridViewAccount"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:numColumns="3"
                 android:nestedScrollingEnabled="true"
                 android:scrollbars="none"

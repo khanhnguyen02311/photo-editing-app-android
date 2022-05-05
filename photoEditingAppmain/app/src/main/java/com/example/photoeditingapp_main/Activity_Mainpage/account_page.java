@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
@@ -96,33 +97,11 @@ public class account_page extends Fragment {
         list.add(R.drawable.img);
         list.add(R.drawable.img);
         list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-
-
-
 
         ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
         gridView.setExpanded(true);
         _adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), list);
         gridView.setAdapter(adapter);
+
     }
 }
