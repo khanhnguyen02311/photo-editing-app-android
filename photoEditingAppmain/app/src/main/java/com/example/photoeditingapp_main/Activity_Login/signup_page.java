@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.ThreadLockedTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,16 +53,16 @@ import java.util.Objects;
 
 public class signup_page extends Fragment {
 
-    private final Object syncToken1 = new Object();
-    private final Object syncToken2 = new Object();
+    private boolean tempValid = true;
 
-    final String EMPTY_ERROR = "Field can't be empty",
-                 TOO_SHORT_ERROR = "Text too short",
-                 TOO_LONG_ERROR = "Text too long",
-                 NOT_VALID_EMAIL = "Email not valid",
-                 NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
-                 USED_USERNAME = "Username has been used",
-                 USED_EMAIL = "Email has been used";
+    final String
+            EMPTY_ERROR = "Field can't be empty",
+            TOO_SHORT_ERROR = "Text too short",
+            TOO_LONG_ERROR = "Text too long",
+            NOT_VALID_EMAIL = "Email not valid",
+            NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
+            USED_USERNAME = "Username has been used",
+            USED_EMAIL = "Email has been used";
 
 
     TextInputLayout usernameLayout, emailLayout, passwordLayout, confirmPasswordLayout;
@@ -79,7 +80,6 @@ public class signup_page extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
 
 
     public signup_page() {
@@ -124,22 +124,6 @@ public class signup_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //NOT WORK
-        /*//clear layout focus when press device's back button -> start layout listener
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                    usernameLayout.clearFocus();
-                    emailLayout.clearFocus();
-                    passwordLayout.clearFocus();
-                    confirmPasswordLayout.clearFocus();
-                    return true;
-                }
-                return false;
-            }
-        });*/
-
         //Binding components
         usernameText = view.findViewById(R.id.usernameText);
         emailText = view.findViewById(R.id.emailText);
@@ -168,27 +152,22 @@ public class signup_page extends Fragment {
                     else if (text.length() <= 6) usernameLayout.setError(TOO_SHORT_ERROR);
                     else if (text.length() > 25) usernameLayout.setError(TOO_LONG_ERROR);
                     else {
-                        Thread thread = new Thread(() -> {
-                            firestoreDB.collection("users").whereEqualTo("usr", text).get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                public void onSuccess(QuerySnapshot snapshot) {
-                                    if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
-                                    else {
-                                        usernameLayout.setError(null);
-                                        usernameLayout.setErrorEnabled(false);
-                                    }
-                                }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("GETDOCS", "Error getting documents: ", e);
+                        firestoreDB.collection("users").whereEqualTo("usr", text).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot snapshot) {
+                                if (!snapshot.isEmpty()) usernameLayout.setError(USED_USERNAME);
+                                else {
                                     usernameLayout.setError(null);
                                     usernameLayout.setErrorEnabled(false);
                                 }
-                            });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("DB_ERROR", "Error getting data: ", e);
+                            }
                         });
-                        thread.start();
                     }
                 }
             }
@@ -201,29 +180,25 @@ public class signup_page extends Fragment {
                     String text = emailText.getText().toString();
 
                     if (text.isEmpty()) emailLayout.setError(EMPTY_ERROR);
-                    else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) emailLayout.setError(NOT_VALID_EMAIL);
+                    else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches())
+                        emailLayout.setError(NOT_VALID_EMAIL);
                     else {
-                        Thread thread = new Thread(() -> {
-                            firestoreDB.collection("users").whereEqualTo("email", text).get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot snapshot) {
-                                            if (!snapshot.isEmpty()) emailLayout.setError(USED_EMAIL);
-                                            else {
-                                                emailLayout.setError(null);
-                                                emailLayout.setErrorEnabled(false);
-                                            }
+                        firestoreDB.collection("users").whereEqualTo("email", text).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot snapshot) {
+                                        if (!snapshot.isEmpty()) emailLayout.setError(USED_EMAIL);
+                                        else {
+                                            emailLayout.setError(null);
+                                            emailLayout.setErrorEnabled(false);
                                         }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("GETDOCS", "Error getting documents: ", e);
-                                    emailLayout.setError(null);
-                                    emailLayout.setErrorEnabled(false);
-                                }
-                            });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("DB_ERROR", "Error getting data: ", e);
+                            }
                         });
-                        thread.start();
                     }
                 }
             }
@@ -296,50 +271,79 @@ public class signup_page extends Fragment {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar cancelBar = Snackbar.make(view, "Information not valid.", 1000);
+
+                Snackbar declineBar = Snackbar.make(view, "Information not valid.", 1000);
                 Snackbar acceptBar = Snackbar.make(view, "Sign up completed", 2000);
                 Snackbar errorBar = Snackbar.make(view, "Error. Can't add new user", 1000);
 
-                usernameText.clearFocus();
-                emailText.clearFocus();
-                passwordText.clearFocus();
-                confirmPasswordText.clearFocus();
+                usernameText.getOnFocusChangeListener().onFocusChange(view, false);
 
                 String usr = usernameText.getText().toString();
                 String email = emailText.getText().toString();
                 String psw = passwordText.getText().toString();
+                String cfpsw = confirmPasswordText.getText().toString();
 
-                Log.d("LAYOUT", usernameLayout.getError() != null ? usernameLayout.getError().toString() : "No error");
-                Log.d("LAYOUT", emailLayout.getError() != null ? emailLayout.getError().toString() : "No error");
-                Log.d("LAYOUT", passwordLayout.getError() != null ? passwordLayout.getError().toString() : "No error");
-                Log.d("LAYOUT", confirmPasswordLayout.getError() != null ? confirmPasswordLayout.getError().toString() : "No error");
+                if (!usr.isEmpty() && !email.isEmpty() && !psw.isEmpty() && psw.equals(cfpsw)) {
 
-                if (TextUtils.isEmpty(usernameLayout.getError()) &&
-                        TextUtils.isEmpty(emailLayout.getError()) &&
-                        TextUtils.isEmpty(passwordLayout.getError()) &&
-                        TextUtils.isEmpty(confirmPasswordLayout.getError()) &&
-                        !usr.isEmpty() && !email.isEmpty() && !psw.isEmpty()) {
-
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("usr", usr);
-                    user.put("email", email);
-                    user.put("psw", psw);
-
-                    firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
-                            acceptBar.show();
-                            Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
+                    firestoreDB.collection("users").whereEqualTo("usr", usr).get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot snapshot) {
+                                    if (!snapshot.isEmpty()) tempValid = false;
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w("NEWUSER", "Error adding document", e);
-                            errorBar.show();
+                            Log.d("DB_ERROR", "Error getting data: ", e);
+                            tempValid = false;
                         }
                     });
-                } else cancelBar.show();
+
+                    firestoreDB.collection("users").whereEqualTo("email", email).get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot snapshot) {
+                                    if (!snapshot.isEmpty()) tempValid = false;
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("DB_ERROR", "Error getting data: ", e);
+                            tempValid = false;
+                        }
+                    });
+
+                    if (!tempValid) declineBar.show();
+                    else {
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("usr", usr);
+                        user.put("email", email);
+                        user.put("psw", psw);
+
+                        firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                acceptBar.show();
+                                Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("NEWUSER", "Error adding document", e);
+                                errorBar.show();
+                            }
+                        });
+                    }
+
+                } else declineBar.show();
+
+                tempValid = true;
+
+                usernameLayout.clearFocus();
+                emailLayout.clearFocus();
+                passwordLayout.clearFocus();
+                confirmPasswordLayout.clearFocus();
             }
         });
     }
