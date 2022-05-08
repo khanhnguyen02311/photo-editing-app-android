@@ -84,12 +84,21 @@ public class studio_page extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Initialize the ViewPager and set an adapter
         tabLayout = view.findViewById(R.id.tab_layout_studio_page);
         viewPager = view.findViewById(R.id.view_pager_studio_page);
 
+        // Create an adapter that knows which fragment should be shown on each page
         _StudioViewPager2Adapter adapter = new _StudioViewPager2Adapter(requireActivity());
+
+        // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
 
+        //Disabled the swipe gesture
+        viewPager.setUserInputEnabled(false);
+
+        // Give the TabLayout the ViewPager
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {

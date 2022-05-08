@@ -6,3 +6,7 @@ https://myandroid.site/android-horizontal-scrollview-example/
 
 // Expandable GridView
 https://stackoverflow.com/questions/8481844/gridview-height-gets-cut
+
+// Page Transformer
+https://github.com/arbelkilani/ViewPagerTransformation
+https://medium.com/@arbelkilani/viewpager2-pagetransformer-af989976560e

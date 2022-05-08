@@ -2,13 +2,27 @@ package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.AlbumItem;
+import com.example.photoeditingapp_main._Classes.SliderItem;
+import com.example.photoeditingapp_main._Classes._StudioAlbumAdapter;
+import com.example.photoeditingapp_main._Classes._StudioSliderAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +76,38 @@ public class studio_my_album_page extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_studio_my_album_page, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        List<SliderItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+
+        List<SliderItem> sliderItems1 = new ArrayList<>();
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.welcome_background2));
+        sliderItems1.add(new SliderItem(R.drawable.welcome_background));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+
+        List<AlbumItem> albumItems = new ArrayList<>();
+        albumItems.add(new AlbumItem("Album 1",sliderItems ));
+        albumItems.add(new AlbumItem("Album 2",sliderItems1 ));
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_studio_my_album_page);
+
+        _StudioAlbumAdapter adapter = new _StudioAlbumAdapter(albumItems);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
