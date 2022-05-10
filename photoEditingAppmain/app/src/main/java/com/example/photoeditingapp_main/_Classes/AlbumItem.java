@@ -1,8 +1,9 @@
 package com.example.photoeditingapp_main._Classes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AlbumItem {
+public class AlbumItem implements Serializable {
     private String albumName;
     private List<SliderItem> albumImages;
 

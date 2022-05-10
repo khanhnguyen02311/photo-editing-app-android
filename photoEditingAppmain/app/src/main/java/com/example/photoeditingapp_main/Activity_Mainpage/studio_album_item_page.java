@@ -1,20 +1,12 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,20 +17,13 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AlbumItem;
-import com.example.photoeditingapp_main._Classes.SliderItem;
-import com.example.photoeditingapp_main._Classes._StudioAlbumAdapter;
-import com.example.photoeditingapp_main._Classes._StudioSliderAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link studio_my_album_page#newInstance} factory method to
+ * Use the {@link studio_album_item_page#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class studio_my_album_page extends Fragment {
+public class studio_album_item_page extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +34,7 @@ public class studio_my_album_page extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public studio_my_album_page() {
+    public studio_album_item_page() {
         // Required empty public constructor
     }
 
@@ -59,11 +44,11 @@ public class studio_my_album_page extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment studio_my_album_page.
+     * @return A new instance of fragment studio_album_item_page.
      */
     // TODO: Rename and change types and number of parameters
-    public static studio_my_album_page newInstance(String param1, String param2) {
-        studio_my_album_page fragment = new studio_my_album_page();
+    public static studio_album_item_page newInstance(String param1, String param2) {
+        studio_album_item_page fragment = new studio_album_item_page();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,20 +69,20 @@ public class studio_my_album_page extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_studio_my_album_page, container, false);
+        return inflater.inflate(R.layout.fragment_studio_album_item_page, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.toolbar_studio_album_item_page);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        AlbumItem albumItem= (AlbumItem) getArguments().getSerializable("album");
+        TextView albumName=view.findViewById(R.id.album_title);
+        albumName.setText(albumItem.getAlbumName());
     }
 
-    @SuppressLint("UseRequireInsteadOfGet")
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater= Objects.requireNonNull(getActivity()).getMenuInflater();
-        inflater.inflate(R.menu.toolbar_album_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.toolbar_album_menu, menu);
     }
 }
