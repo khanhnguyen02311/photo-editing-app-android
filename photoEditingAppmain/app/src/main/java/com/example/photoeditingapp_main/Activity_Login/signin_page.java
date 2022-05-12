@@ -163,7 +163,6 @@ public class signin_page extends Fragment {
 
                 if (accountLayout.getError() == null && passwordLayout.getError() == null) {
                     if (!Patterns.EMAIL_ADDRESS.matcher(acc).matches()) {
-                        Log.d("EMAILPATTERN", "false");
                         firestoreDB.collection("users").whereEqualTo("usr", acc).whereEqualTo("psw", psw).get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
@@ -187,7 +186,6 @@ public class signin_page extends Fragment {
                                     }
                         });
                     } else {
-                        Log.d("EMAILPATTERN", "true");
                         firestoreDB.collection("users").whereEqualTo("email", acc).whereEqualTo("psw", psw).get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override

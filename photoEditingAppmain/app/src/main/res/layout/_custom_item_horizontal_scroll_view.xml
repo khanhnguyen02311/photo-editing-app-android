@@ -15,7 +15,7 @@
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/welcome_background"/>
+        android:src="@drawable/img"/>
 </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/TextViewItemHorizontalScrollView"
