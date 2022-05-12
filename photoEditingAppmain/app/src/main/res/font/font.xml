@@ -43,4 +43,14 @@
         android:font="@font/sourcesans3_lightitalic"
         tools:targetApi="o" />
 
+    <font
+        android:fontStyle="normal"
+        android:font="@font/arsenal_regular"
+        tools:targetApi="o" />
+
+    <font
+        android:fontStyle="italic"
+        android:font="@font/arsenal_italic"
+        tools:targetApi="o" />
+
 </font-family>

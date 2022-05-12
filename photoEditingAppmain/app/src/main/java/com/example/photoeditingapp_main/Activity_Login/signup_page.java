@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Login;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,12 +54,9 @@ import java.util.Objects;
 
 public class signup_page extends Fragment {
 
-    private boolean tempValid = true;
-
     final String
             EMPTY_ERROR = "Field can't be empty",
             TOO_SHORT_ERROR = "Text too short",
-            TOO_LONG_ERROR = "Text too long",
             NOT_VALID_EMAIL = "Email not valid",
             NOT_IDENTICAL_PASSWORD = "The passwords must be identical",
             USED_USERNAME = "Username has been used",
@@ -71,8 +69,6 @@ public class signup_page extends Fragment {
 
     MaterialButton signupBtn;
     TextView signinHyperlink;
-
-    volatile boolean checkSync;
 
     FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
@@ -142,6 +138,9 @@ public class signup_page extends Fragment {
         signupBtn = view.findViewById(R.id.signupBtn);
         signinHyperlink = view.findViewById(R.id.signInHyperlink);
 
+        Snackbar declineBar = Snackbar.make(view, "Information not valid.", 1000);
+        Snackbar acceptBar = Snackbar.make(view, "Sign up completed", 2000);
+        Snackbar errorBar = Snackbar.make(view, "Error. Can't add new user", 1000);
 
         //Add EditText listeners when clear focus
         usernameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -152,7 +151,6 @@ public class signup_page extends Fragment {
 
                     if (text.isEmpty()) usernameLayout.setError(EMPTY_ERROR);
                     else if (text.length() <= 6) usernameLayout.setError(TOO_SHORT_ERROR);
-                    else if (text.length() > 25) usernameLayout.setError(TOO_LONG_ERROR);
                     else {
                         usernameLayout.setError(null);
                         usernameLayout.setErrorEnabled(false);
@@ -186,7 +184,6 @@ public class signup_page extends Fragment {
 
                     if (text.isEmpty()) passwordLayout.setError(EMPTY_ERROR);
                     else if (text.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
-                    else if (text.length() > 25) passwordLayout.setError(TOO_LONG_ERROR);
                     else if (!confirmPasswordText.getText().toString().equals(text))
                         passwordLayout.setError(NOT_IDENTICAL_PASSWORD);
                     else {
@@ -207,7 +204,6 @@ public class signup_page extends Fragment {
 
                     if (text.isEmpty()) confirmPasswordLayout.setError(EMPTY_ERROR);
                     else if (text.length() <= 6) confirmPasswordLayout.setError(TOO_SHORT_ERROR);
-                    else if (text.length() > 25) confirmPasswordLayout.setError(TOO_LONG_ERROR);
                     else if (!passwordText.getText().toString().equals(text))
                         confirmPasswordLayout.setError(NOT_IDENTICAL_PASSWORD);
                     else {
@@ -245,76 +241,81 @@ public class signup_page extends Fragment {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Snackbar declineBar = Snackbar.make(view, "Information not valid.", 1000);
-                Snackbar acceptBar = Snackbar.make(view, "Sign up completed", 2000);
-                Snackbar errorBar = Snackbar.make(view, "Error. Can't add new user", 1000);
-
-                String usr = usernameText.getText().toString();
-                String email = emailText.getText().toString();
-                String psw = passwordText.getText().toString();
-                String cfpsw = confirmPasswordText.getText().toString();
-
-                checkSync = false;
+                ProgressDialog pd = new ProgressDialog(view.getContext());
+                pd.setMessage("Loading");
+                pd.show();
 
                 usernameLayout.clearFocus();
                 emailLayout.clearFocus();
                 passwordLayout.clearFocus();
                 confirmPasswordLayout.clearFocus();
 
-                while (!checkSync);
+                String usr = usernameText.getText().toString();
+                String email = emailText.getText().toString();
+                String psw = passwordText.getText().toString();
 
-                if (!usr.isEmpty() && !email.isEmpty() && !psw.isEmpty() && psw.equals(cfpsw)) {
+                if (usernameLayout.getError() == null &&
+                        emailLayout.getError() == null &&
+                        passwordLayout.getError() == null &&
+                        confirmPasswordLayout.getError() == null) {
 
-                    firestoreDB.collection("users").whereEqualTo("usr", usr).get()
+                    firestoreDB.collection("users").whereEqualTo("usr", usr).whereEqualTo("email", email).get()
                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot snapshot) {
+                        @Override
+                        public void onSuccess(QuerySnapshot snapshot) {
+                            if (snapshot.isEmpty()) {
+                                firestoreDB.collection("users").whereEqualTo("email", email).get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot snapshot) {
+                                        if (snapshot.isEmpty()) {
+                                            Map<String, Object> user = new HashMap<>();
+                                            user.put("usr", usr);
+                                            user.put("email", email);
+                                            user.put("psw", psw);
 
-                                    if (snapshot.isEmpty()) {
-                                        usernameLayout.setError(null);
-                                        usernameLayout.setErrorEnabled(false);
-                                        firestoreDB.collection("users").whereEqualTo("email", email).get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot snapshot) {
-                                                        if (snapshot.isEmpty()) {
-
-                                                            Map<String, Object> user = new HashMap<>();
-                                                            user.put("usr", usr);
-                                                            user.put("email", email);
-                                                            user.put("psw", psw);
-
-                                                            firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                                @Override
-                                                                public void onSuccess(DocumentReference documentReference) {
-                                                                    Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                                                    acceptBar.show();
-                                                                    Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
-                                                                }
-                                                            }).addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Log.w("NEWUSER", "Error adding document", e);
-                                                                    errorBar.show();
-                                                                }
-                                                            });
-                                                        }
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.d("DB_ERROR", "Error getting data: ", e);
-                                                tempValid = false;
-                                            }
-                                        });
-                                    } else usernameLayout.setError(USED_USERNAME);
-                                }
+                                            firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Log.d("NEWUSER", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                    pd.dismiss();
+                                                    acceptBar.show();
+                                                    Navigation.findNavController(view).navigate(R.id.action_signup_page_to_signin_page);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("NEWUSER", "Error adding document", e);
+                                                    errorBar.show();
+                                                    pd.dismiss();
+                                                }
+                                            });
+                                        } else {
+                                            emailLayout.setError(USED_EMAIL);
+                                            pd.dismiss();
+                                            declineBar.show();
+                                        }
+                                    }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("DB_ERROR", "Error getting data: ", e);
+                                        errorBar.show();
+                                        pd.dismiss();
+                                    }
+                                });
+                            } else {
+                                usernameLayout.setError(USED_USERNAME);
+                                pd.dismiss();
+                                declineBar.show();
+                            }
+                        }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d("DB_ERROR", "Error getting data: ", e);
-                            tempValid = false;
+                            errorBar.show();
+                            pd.dismiss();
                         }
                     });
                 } else declineBar.show();
