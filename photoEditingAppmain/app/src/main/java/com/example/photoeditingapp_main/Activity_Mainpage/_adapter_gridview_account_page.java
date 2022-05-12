@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import com.example.photoeditingapp_main.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class _adapter_gridview_account_page extends ArrayAdapter<Integer> {
 
     Context context;
-    ArrayList<Integer> image;
+    List<Integer> image;
 
-    public _adapter_gridview_account_page(Context context, ArrayList<Integer> image) {
+    public _adapter_gridview_account_page(Context context, List<Integer> image) {
         super(context, R.layout._custom_item_gridview_accountpage, image);
         this.context = context;
         this.image = image;

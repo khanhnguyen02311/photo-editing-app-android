@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_photo"
+        android:icon="@drawable/ic_add"
+        android:title="    Add Photo"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/zoom_in"
+        android:icon="@drawable/ic_search_zoom_in"
+        android:title="    Zoom In"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/zoom_out"
+        android:icon="@drawable/ic_search_zoom_out"
+        android:title="    Zoom Out"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/rename_album"
+        android:icon="@drawable/ic_edit_2"
+        android:title="    Rename Album"
+        app:showAsAction="never" />
+
+</menu>

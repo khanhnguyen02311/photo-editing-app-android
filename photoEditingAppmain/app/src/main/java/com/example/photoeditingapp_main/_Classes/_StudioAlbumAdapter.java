@@ -61,7 +61,7 @@ public class _StudioAlbumAdapter extends RecyclerView.Adapter<_StudioAlbumAdapte
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("album", _AlbumList.get(position));
-                Navigation.findNavController(v).navigate(R.id.action_studio_album_list_page_to_studio_album_item_page, bundle);
+                Navigation.findNavController(v).navigate(R.id.action_studio_page_to_studio_album_item_page, bundle);
             }
         });
        /* holder.setData(_AlbumList.get(position),_AlbumList.size());*/

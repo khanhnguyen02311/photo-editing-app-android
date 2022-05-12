@@ -28,6 +28,7 @@
                 android:text="HOMEPAGE" />
 
             <ImageButton
+                android:id="@+id/btn_more"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:scaleType="fitXY"

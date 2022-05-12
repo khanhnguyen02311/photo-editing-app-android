@@ -7,21 +7,10 @@
     android:orientation="vertical"
     tools:context=".Activity_Mainpage.studio_my_album_page">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar_studio_album_item_page"
-        android:background="#00FFFFFF"
-        app:title="Album"
-        />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerViewAlbumItemPage"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_studio_my_album_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/album_navigation" />
-
+        />
 
 </LinearLayout>

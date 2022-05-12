@@ -90,14 +90,33 @@ public class studio_my_album_page extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.toolbar_studio_album_item_page);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        List<SliderItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+        sliderItems.add(new SliderItem(R.drawable.img));
+
+        List<SliderItem> sliderItems1 = new ArrayList<>();
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.welcome_background2));
+        sliderItems1.add(new SliderItem(R.drawable.welcome_background));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+        sliderItems1.add(new SliderItem(R.drawable.img));
+
+        List<AlbumItem> albumItems = new ArrayList<>();
+        albumItems.add(new AlbumItem("Album 1",sliderItems ));
+        albumItems.add(new AlbumItem("Album 2",sliderItems1 ));
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_studio_my_album_page);
+
+        _StudioAlbumAdapter adapter = new _StudioAlbumAdapter(albumItems,getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    @SuppressLint("UseRequireInsteadOfGet")
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater= Objects.requireNonNull(getActivity()).getMenuInflater();
-        inflater.inflate(R.menu.toolbar_album_menu,menu);
-    }
 }
