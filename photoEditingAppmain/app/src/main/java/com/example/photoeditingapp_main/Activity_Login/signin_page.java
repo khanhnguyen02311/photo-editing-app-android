@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,14 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Mainpage.MainpageActivity;
 import com.example.photoeditingapp_main.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 public class signin_page extends Fragment {
 
-    TextInputLayout usernameLayout, passwordLayout;
-    TextInputEditText usernameText, passwordText;
+    final String
+            EMPTY_ERROR = "Field can't be empty",
+            TOO_SHORT_ERROR = "Text too short";
+
+    TextInputLayout accountLayout, passwordLayout;
+    TextInputEditText accountText, passwordText;
 
     TextView signupHyperlink;
     MaterialButton signinBtn;
@@ -86,14 +97,49 @@ public class signin_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        usernameLayout = view.findViewById(R.id.textFieldUsername);
+        accountLayout = view.findViewById(R.id.textFieldAccount);
         passwordLayout = view.findViewById(R.id.textFieldPassword);
 
-        usernameText = view.findViewById(R.id.usernameText);
+        accountText = view.findViewById(R.id.accountText);
         passwordText = view.findViewById(R.id.passwordText);
 
         signupHyperlink = view.findViewById(R.id.signUpHyperlink);
         signinBtn = view.findViewById(R.id.signinBtn);
+
+        Snackbar declineBar = Snackbar.make(view, "Couldn't find the account. Check information.", 1000);
+        Snackbar errorBar = Snackbar.make(view, "Error. Can't search for account", 1000);
+
+        accountText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = accountText.getText().toString();
+
+                    if (text.isEmpty()) accountLayout.setError(EMPTY_ERROR);
+                    else if (text.length() <= 6) accountLayout.setError(TOO_SHORT_ERROR);
+                    else {
+                        accountLayout.setError(null);
+                        accountLayout.setErrorEnabled(false);
+                    }
+                }
+            }
+        });
+
+        passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focused) {
+                if (!focused) {
+                    String text = passwordText.getText().toString();
+
+                    if (text.isEmpty()) passwordLayout.setError(EMPTY_ERROR);
+                    else if (text.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
+                    else {
+                        passwordLayout.setError(null);
+                        passwordLayout.setErrorEnabled(false);
+                    }
+                }
+            }
+        });
 
         signupHyperlink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +151,65 @@ public class signin_page extends Fragment {
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainpageActivity.class);
-                intent.putExtra("username", "Khanh Nguyen");
-                startActivity(intent);
+                ProgressDialog pd = new ProgressDialog(view.getContext());
+                pd.setMessage("Loading");
+                pd.show();
+
+                accountLayout.clearFocus();
+                passwordLayout.clearFocus();
+
+                String acc = accountText.getText().toString();
+                String psw = passwordText.getText().toString();
+
+                if (accountLayout.getError() == null && passwordLayout.getError() == null) {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(acc).matches()) {
+                        firestoreDB.collection("users").whereEqualTo("usr", acc).whereEqualTo("psw", psw).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot snapshot) {
+                                        if (!snapshot.isEmpty()) {
+                                            pd.dismiss();
+                                            Intent intent = new Intent(getActivity(), MainpageActivity.class);
+                                            intent.putExtra("usr", acc);
+                                            startActivity(intent);
+                                        } else {
+                                            pd.dismiss();
+                                            declineBar.show();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        pd.dismiss();
+                                        Log.d("DB_ERROR", "Error getting data: ", e);
+                                        errorBar.show();
+                                    }
+                        });
+                    } else {
+                        firestoreDB.collection("users").whereEqualTo("email", acc).whereEqualTo("psw", psw).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot snapshot) {
+                                        if (!snapshot.isEmpty()) {
+                                            pd.dismiss();
+                                            Intent intent = new Intent(getActivity(), MainpageActivity.class);
+                                            intent.putExtra("usr", snapshot.getDocuments().get(0).get("usr").toString());
+                                            startActivity(intent);
+                                        } else {
+                                            pd.dismiss();
+                                            declineBar.show();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        pd.dismiss();
+                                        Log.d("DB_ERROR", "Error getting data: ", e);
+                                        errorBar.show();
+                                    }
+                        });
+                    }
+                }
             }
         });
     }

@@ -44,5 +44,6 @@
         android:layout_height="match_parent"
         android:paddingStart="0dp"
         android:paddingEnd="50dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginStart="20dp"
+        android:requiresFadingEdge="horizontal"/>
 </LinearLayout>

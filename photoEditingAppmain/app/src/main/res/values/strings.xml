@@ -14,4 +14,5 @@
     <string name="recently">Recently</string>
 
     <string name="account_input_filter">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^*?</string>
+    <string name="acc_mail_combo_input_filter">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^*?._</string>
 </resources>

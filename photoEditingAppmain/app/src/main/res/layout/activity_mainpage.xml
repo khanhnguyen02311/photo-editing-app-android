@@ -22,7 +22,7 @@
                 android:id="@+id/pageName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28dp"
+                android:textSize="28sp"
                 android:layout_gravity="center_vertical|start"
                 android:fontFamily="@font/dmserifdisplay_regular"
                 android:text="HOMEPAGE" />
