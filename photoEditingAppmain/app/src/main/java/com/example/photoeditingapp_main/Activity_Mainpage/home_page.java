@@ -83,11 +83,7 @@ public class home_page extends Fragment {
             TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
             textView.setText("Khang Huynh");
             ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            if(i%2 == 0) {
-            imageView.setImageResource(R.drawable.welcome_background);}
-            else {
-                imageView.setImageResource(R.drawable.welcome_background2);
-            }
+            imageView.setImageResource(R.drawable.img);
             linearLayout.addView(view1);
         }
 
@@ -97,11 +93,7 @@ public class home_page extends Fragment {
             TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
             textView.setText("Khang Huynh");
             ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            if(i%2 == 0) {
-                imageView.setImageResource(R.drawable.welcome_background);}
-            else {
-                imageView.setImageResource(R.drawable.welcome_background2);
-            }
+            imageView.setImageResource(R.drawable.img);
             linearLayout.addView(view1);
         }
 
@@ -111,11 +103,7 @@ public class home_page extends Fragment {
             TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
             textView.setText("Khang Huynh");
             ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            if(i%2 == 0) {
-                imageView.setImageResource(R.drawable.welcome_background);}
-            else {
-                imageView.setImageResource(R.drawable.welcome_background2);
-            }
+            imageView.setImageResource(R.drawable.img);
             linearLayout.addView(view1);
         }
     }

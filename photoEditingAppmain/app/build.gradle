@@ -70,8 +70,9 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.0-beta01'
     implementation 'com.google.android.material:material:1.7.0-alpha01'
 
-    // Polarr PhotoEditorSDK
-    // Link: https://github.com/Polarrco/PolarrPhotoEditorAndroidSDK
+    // FadingEdge layout
+    // Link: https://github.com/bosphere/Android-FadingEdgeLayout
+    implementation 'com.github.bosphere.android-fadingedgelayout:fadingedgelayout:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
