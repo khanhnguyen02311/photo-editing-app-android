@@ -29,6 +29,8 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+
 }
 
 dependencies {
@@ -73,6 +75,14 @@ dependencies {
     // FadingEdge layout
     // Link: https://github.com/bosphere/Android-FadingEdgeLayout
     implementation 'com.github.bosphere.android-fadingedgelayout:fadingedgelayout:1.0.0'
+
+    // Polarr PhotoEditorSDK
+    // Link: https://github.com/Polarrco/PolarrPhotoEditorAndroidSDK
+
+    //RoundedImageView
+    // Link: https://github.com/vinc3m1/RoundedImageView.git
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

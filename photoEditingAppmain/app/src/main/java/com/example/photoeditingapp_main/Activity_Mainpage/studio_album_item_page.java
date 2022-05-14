@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -25,16 +26,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AlbumItem;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
+import com.example.photoeditingapp_main._Classes.SquareImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +135,14 @@ public class studio_album_item_page extends Fragment {
                 bundle.putInt("clicked_photo", (Integer) parent.getAdapter().getItem(position)); // Send image clicked to photo page
                 bundle.putSerializable("album",albumItem);  // Send album item to photo page
                 Navigation.findNavController(view).navigate(R.id.action_studio_album_item_page_to_studio_photo,bundle); // Navigate to photo page
+            }
+        });*/
+
+        /*gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SquareImageView squareImageView= view.findViewById(R.id.imageView_custom_item_gridview_account_page);
+                squareImageView.setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim._animation_selected_image));
             }
         });*/
 

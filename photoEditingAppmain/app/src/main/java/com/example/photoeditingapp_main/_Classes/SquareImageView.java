@@ -6,7 +6,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-public class SquareImageView extends androidx.appcompat.widget.AppCompatImageView {
+import com.makeramen.roundedimageview.RoundedImageView;
+
+public class SquareImageView extends RoundedImageView {
     public SquareImageView(Context context) {
         super(context);
     }
