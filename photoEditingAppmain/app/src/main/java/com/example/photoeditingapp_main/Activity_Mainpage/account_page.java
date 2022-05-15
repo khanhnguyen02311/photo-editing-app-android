@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
+import com.example.photoeditingapp_main._Classes.SliderItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -79,24 +80,23 @@ public class account_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(R.drawable.welcome_background2);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.welcome_background);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
-        list.add(R.drawable.img);
+        ArrayList<SliderItem> list = new ArrayList<>();
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+        list.add(new SliderItem(R.drawable.img));
+
 
         ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
         gridView.setExpanded(true);

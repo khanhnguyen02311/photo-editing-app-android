@@ -84,6 +84,7 @@ public class home_page extends Fragment {
             textView.setText("Khang Huynh");
             ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
             imageView.setImageResource(R.drawable.img);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             linearLayout.addView(view1);
         }
 

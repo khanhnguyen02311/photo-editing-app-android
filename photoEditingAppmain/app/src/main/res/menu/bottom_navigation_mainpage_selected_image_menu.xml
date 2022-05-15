@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/edit"
+        android:enabled="true"
+        android:icon="@drawable/ic_gallery_edit"
+        android:title="Edit"
+        />
+    <item
+        android:id="@+id/save"
+        android:enabled="true"
+        android:icon="@drawable/ic_save"
+        android:title="Save"/>
+    <item
+        android:id="@+id/share"
+        android:enabled="true"
+        android:icon="@drawable/ic_share"
+        android:title="Share"/>
+    <item
+        android:id="@+id/delete"
+        android:enabled="true"
+        android:icon="@drawable/ic_trash"
+        android:title="Delete"/>
+</menu>
