@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/blank"
+        android:title=""
+        android:enabled="false" />
+
     <item
-        android:id="@+id/edit"
+        android:id="@+id/edit_photo"
         android:enabled="true"
         android:icon="@drawable/ic_gallery_edit"
         android:title="Edit"
         />
     <item
-        android:id="@+id/save"
+        android:id="@+id/save_photo"
         android:enabled="true"
         android:icon="@drawable/ic_save"
         android:title="Save"/>
     <item
-        android:id="@+id/share"
+        android:id="@+id/share_photo"
         android:enabled="true"
         android:icon="@drawable/ic_share"
         android:title="Share"/>
     <item
-        android:id="@+id/delete"
+        android:id="@+id/delete_photo"
         android:enabled="true"
         android:icon="@drawable/ic_trash"
         android:title="Delete"/>

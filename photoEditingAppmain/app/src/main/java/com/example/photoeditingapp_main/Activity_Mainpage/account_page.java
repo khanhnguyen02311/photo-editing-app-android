@@ -1,6 +1,5 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,15 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
-import com.example.photoeditingapp_main._Classes.SliderItem;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.photoeditingapp_main._Classes.ImageItem;
 
 import java.util.ArrayList;
 
@@ -80,22 +74,22 @@ public class account_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<SliderItem> list = new ArrayList<>();
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
-        list.add(new SliderItem(R.drawable.img));
+        ArrayList<ImageItem> list = new ArrayList<>();
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
+        list.add(new ImageItem(R.drawable.img));
 
 
         ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);

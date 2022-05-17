@@ -1,37 +1,24 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AlbumItem;
-import com.example.photoeditingapp_main._Classes.SliderItem;
+import com.example.photoeditingapp_main._Classes.ImageItem;
 import com.example.photoeditingapp_main._Classes._StudioAlbumAdapter;
-import com.example.photoeditingapp_main._Classes._StudioSliderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,23 +77,44 @@ public class studio_my_album_page extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<SliderItem> sliderItems = new ArrayList<>();
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
-        sliderItems.add(new SliderItem(R.drawable.img));
+        List<ImageItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
+        sliderItems.add(new ImageItem(R.drawable.img));
 
-        List<SliderItem> sliderItems1 = new ArrayList<>();
-        sliderItems1.add(new SliderItem(R.drawable.img));
-        sliderItems1.add(new SliderItem(R.drawable.welcome_background2));
-        sliderItems1.add(new SliderItem(R.drawable.welcome_background));
-        sliderItems1.add(new SliderItem(R.drawable.img));
-        sliderItems1.add(new SliderItem(R.drawable.img));
-        sliderItems1.add(new SliderItem(R.drawable.img));
-        sliderItems1.add(new SliderItem(R.drawable.img));
+        List<ImageItem> sliderItems1 = new ArrayList<>();
+        sliderItems1.add(new ImageItem(R.drawable.img));
+        sliderItems1.add(new ImageItem(R.drawable.welcome_background2));
+        sliderItems1.add(new ImageItem(R.drawable.welcome_background));
+        sliderItems1.add(new ImageItem(R.drawable.img));
+        sliderItems1.add(new ImageItem(R.drawable.img));
+        sliderItems1.add(new ImageItem(R.drawable.img));
+        sliderItems1.add(new ImageItem(R.drawable.img));
 
         List<AlbumItem> albumItems = new ArrayList<>();
         albumItems.add(new AlbumItem("Album 1",sliderItems ));

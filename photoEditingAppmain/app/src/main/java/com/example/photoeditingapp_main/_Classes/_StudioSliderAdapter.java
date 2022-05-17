@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.photoeditingapp_main.R;
 
@@ -15,9 +14,9 @@ import java.util.List;
 
 public class _StudioSliderAdapter extends RecyclerView.Adapter<_StudioSliderAdapter.StudioSliderViewHolder> {
 
-    private List<SliderItem> sliderItems;
+    private List<ImageItem> sliderItems;
 
-    public _StudioSliderAdapter(List<SliderItem> sliderItems) {
+    public _StudioSliderAdapter(List<ImageItem> sliderItems) {
         this.sliderItems = sliderItems;
     }
 
@@ -45,7 +44,7 @@ public class _StudioSliderAdapter extends RecyclerView.Adapter<_StudioSliderAdap
             sliderItemImage = itemView.findViewById(R.id.image_view_slider_item);
         }
 
-        public void setSliderItemImage(SliderItem sliderItem) {
+        public void setSliderItemImage(ImageItem sliderItem) {
             sliderItemImage.setImageResource(sliderItem.getImage());
         }
     }
