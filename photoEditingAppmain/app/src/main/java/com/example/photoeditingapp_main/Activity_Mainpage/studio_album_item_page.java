@@ -114,7 +114,7 @@ public class studio_album_item_page extends Fragment {
         imageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_studio_album_item_page_to_studio_page);
+                Navigation.findNavController(v).popBackStack();
             }
         });
 

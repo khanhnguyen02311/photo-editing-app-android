@@ -75,15 +75,17 @@ public class account_page extends Fragment {
         return inflater.inflate(R.layout.fragment_account_page, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TextView pageName = requireActivity().findViewById(R.id.pageName);
+        pageName.setText("ACCOUNT");
+
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(R.drawable.welcome_background2);
         list.add(R.drawable.img);
         list.add(R.drawable.img);
-        list.add(R.drawable.welcome_background);
         list.add(R.drawable.img);
         list.add(R.drawable.img);
         list.add(R.drawable.img);

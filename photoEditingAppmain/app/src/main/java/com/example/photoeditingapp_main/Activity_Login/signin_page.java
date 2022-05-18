@@ -114,9 +114,7 @@ public class signin_page extends Fragment {
             public void onFocusChange(View view, boolean focused) {
                 if (!focused) {
                     String text = accountText.getText().toString();
-
                     if (text.isEmpty()) accountLayout.setError(EMPTY_ERROR);
-                    else if (text.length() <= 6) accountLayout.setError(TOO_SHORT_ERROR);
                     else {
                         accountLayout.setError(null);
                         accountLayout.setErrorEnabled(false);
@@ -130,7 +128,6 @@ public class signin_page extends Fragment {
             public void onFocusChange(View view, boolean focused) {
                 if (!focused) {
                     String text = passwordText.getText().toString();
-
                     if (text.isEmpty()) passwordLayout.setError(EMPTY_ERROR);
                     else if (text.length() <= 6) passwordLayout.setError(TOO_SHORT_ERROR);
                     else {
@@ -161,7 +158,8 @@ public class signin_page extends Fragment {
                 String acc = accountText.getText().toString();
                 String psw = passwordText.getText().toString();
 
-                if (accountLayout.getError() == null && passwordLayout.getError() == null) {
+                if ( !acc.isEmpty() && !psw.isEmpty() &&
+                        accountLayout.getError() == null && passwordLayout.getError() == null) {
                     if (!Patterns.EMAIL_ADDRESS.matcher(acc).matches()) {
                         firestoreDB.collection("users").whereEqualTo("usr", acc).whereEqualTo("psw", psw).get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -209,6 +207,9 @@ public class signin_page extends Fragment {
                                     }
                         });
                     }
+                } else {
+                    pd.dismiss();
+                    declineBar.show();
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.GlobalVariables;
@@ -79,9 +81,13 @@ public class discover_page extends Fragment {
         return inflater.inflate(R.layout.fragment_discover_page, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView pageName = requireActivity().findViewById(R.id.pageName);
+        pageName.setText("DISCOVER");
 
         gv = (GlobalVariables) requireActivity().getApplication();
         listDiscoverItem = gv.listDiscoverItem;

@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,9 +72,13 @@ public class home_page extends Fragment {
         return inflater.inflate(R.layout.fragment_home_page, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView pageName = requireActivity().findViewById(R.id.pageName);
+        pageName.setText("HOMEPAGE");
 
         /*if (requireActivity().getIntent() != null) {
             tv.setText(requireActivity().getIntent().getStringExtra("username"));

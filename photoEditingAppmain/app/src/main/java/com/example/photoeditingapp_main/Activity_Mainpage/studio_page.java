@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes._StudioViewPager2Adapter;
@@ -81,9 +83,13 @@ public class studio_page extends Fragment {
     TabLayout tabLayout;
     ViewPager2 viewPager;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView pageName = requireActivity().findViewById(R.id.pageName);
+        pageName.setText("STUDIO");
 
         // Initialize the ViewPager and set an adapter
         tabLayout = view.findViewById(R.id.tab_layout_studio_page);

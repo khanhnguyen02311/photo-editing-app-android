@@ -253,8 +253,10 @@ public class signup_page extends Fragment {
                 String usr = usernameText.getText().toString();
                 String email = emailText.getText().toString();
                 String psw = passwordText.getText().toString();
+                String cfpsw = confirmPasswordText.getText().toString();
 
-                if (usernameLayout.getError() == null &&
+                if ( !usr.isEmpty() && !email.isEmpty() && !psw.isEmpty() && !cfpsw.isEmpty() &&
+                        usernameLayout.getError() == null &&
                         emailLayout.getError() == null &&
                         passwordLayout.getError() == null &&
                         confirmPasswordLayout.getError() == null) {

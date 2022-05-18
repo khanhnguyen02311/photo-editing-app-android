@@ -32,18 +32,6 @@
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.account_page"
         android:label="fragment_account_page"
         tools:layout="@layout/fragment_account_page" />
-    <action
-        android:id="@+id/action_global_home_page"
-        app:destination="@id/home_page"/>
-    <action
-        android:id="@+id/action_global_discover_page"
-        app:destination="@id/discover_page"/>
-    <action
-        android:id="@+id/action_global_studio_page"
-        app:destination="@id/studio_page"/>
-    <action
-        android:id="@+id/action_global_account_page"
-        app:destination="@id/account_page"/>
     <fragment
         android:id="@+id/photo_gallery_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.photo_gallery_page"
@@ -54,9 +42,6 @@
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_album_item_page"
         android:label="fragment_studio_album_item_page"
         tools:layout="@layout/fragment_studio_album_item_page" >
-        <action
-            android:id="@+id/action_studio_album_item_page_to_studio_page"
-            app:destination="@id/studio_page" />
         <action
             android:id="@+id/action_studio_album_item_page_to_studio_photo"
             app:destination="@id/studio_photo" />
