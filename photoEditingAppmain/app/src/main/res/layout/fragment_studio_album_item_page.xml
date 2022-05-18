@@ -13,7 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         >
+        <RelativeLayout
+            android:id="@+id/relativeLayout_studio_album_item_page_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/studio_album_item_page_title_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -38,34 +43,71 @@
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
-            <!--<com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"
-                android:id="@+id/select_button_album_page"
-                android:backgroundTint="@color/app_light_gray"
-                app:cornerRadius="20dp"
-                android:textAllCaps="false"
-                android:textColor="@color/app_dark_gray"
-                android:fontFamily="@font/sourcesans3_bold"
-                />-->
-            <ImageButton
-                android:id="@+id/more_button_album_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_more"
-                android:background="@null"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"/>
-        </LinearLayout>
-    </RelativeLayout>
 
+        <ImageButton
+            android:id="@+id/more_button_album_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:src="@drawable/ic_more" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayout_studio_album_item_page_selected_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deselect_button_album_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/app_light_gray"
+            android:fontFamily="@font/sourcesans3_bold"
+            android:text=" Deselect "
+            android:textAllCaps="false"
+            android:textColor="@color/app_dark_gray"
+            android:textSize="14dp"
+            app:cornerRadius="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/select_button_album_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@color/app_light_gray"
+            android:fontFamily="@font/sourcesans3_bold"
+            android:text="Select All"
+            android:textAllCaps="false"
+            android:textColor="@color/app_dark_gray"
+            android:textSize="14dp"
+            app:cornerRadius="20dp" />
+
+        <TextView
+            android:id="@+id/amount_photos_text_album_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="3dp"
+            android:text="7"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/photos_text_album_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:text="Photos Selected"
+            android:textSize="15dp" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <com.example.photoeditingapp_main._Classes.ExpandableGridView
         android:id="@+id/grid_view_album_item_page"
@@ -75,6 +117,5 @@
         android:nestedScrollingEnabled="true"
         android:scrollbars="none"
         android:layout_marginTop="10dp"/>
-
 
 </LinearLayout>

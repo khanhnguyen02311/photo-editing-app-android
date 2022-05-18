@@ -5,9 +5,9 @@ import java.util.List;
 
 public class AlbumItem implements Serializable {
     private String albumName;
-    private List<SliderItem> albumImages;
+    private List<ImageItem> albumImages;
 
-    public AlbumItem(String albumName, List<SliderItem> albumImages) {
+    public AlbumItem(String albumName, List<ImageItem> albumImages) {
         this.albumName = albumName;
         this.albumImages = albumImages;
     }
@@ -16,7 +16,7 @@ public class AlbumItem implements Serializable {
         return albumName;
     }
 
-    public List<SliderItem> getAlbumImages() {
+    public List<ImageItem> getAlbumImages() {
         return albumImages;
     }
 
@@ -24,7 +24,7 @@ public class AlbumItem implements Serializable {
         this.albumName = albumName;
     }
 
-    public void setAlbumImages(List<SliderItem> albumImages) {
+    public void setAlbumImages(List<ImageItem> albumImages) {
         this.albumImages = albumImages;
     }
 }

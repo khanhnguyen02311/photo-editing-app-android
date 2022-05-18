@@ -1,9 +1,9 @@
 package com.example.photoeditingapp_main._Classes;
 
-public class SliderItem {
+public class ImageItem {
     private int Image;
 
-    public SliderItem(int image) {
+    public ImageItem(int image) {
         Image = image;
     }
 
