@@ -2,8 +2,13 @@ package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,10 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes._StudioViewPager2Adapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.nambimobile.widgets.efab.FabOption;
 
 import java.util.Objects;
 
@@ -32,6 +40,24 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class studio_page extends Fragment {
+
+    TabLayout tabLayout;
+    ViewPager2 viewPager;
+    FabOption importBtn, cameraBtn;
+
+    ActivityResultLauncher<String> imageContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+        new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri uri) {
+                if (uri != null) {
+                    Intent designActivity = new Intent(getActivity(), DesignActivity.class);
+                    designActivity.putExtra("image_uri", uri);
+                    startActivity(designActivity);
+                }
+            }
+        });
+
+    //final int IMAGE_COMPLETED = 200, CAMERA_COMPLETED = 201;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,9 +106,6 @@ public class studio_page extends Fragment {
         return inflater.inflate(R.layout.fragment_studio_page, container, false);
     }
 
-    TabLayout tabLayout;
-    ViewPager2 viewPager;
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -94,6 +117,8 @@ public class studio_page extends Fragment {
         // Initialize the ViewPager and set an adapter
         tabLayout = view.findViewById(R.id.tab_layout_studio_page);
         viewPager = view.findViewById(R.id.view_pager_studio_page);
+        importBtn = view.findViewById(R.id.importBtn);
+        cameraBtn = view.findViewById(R.id.cameraBtn);
 
         // Create an adapter that knows which fragment should be shown on each page
         _StudioViewPager2Adapter adapter = new _StudioViewPager2Adapter(requireActivity());
@@ -120,5 +145,12 @@ public class studio_page extends Fragment {
                 }
             }
         }).attach();
+
+        importBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageContent.launch("image/*");
+            }
+        });
     }
 }

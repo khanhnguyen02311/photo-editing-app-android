@@ -10,14 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.photoeditingapp_main._Classes.ImageItem;
 
 import java.util.ArrayList;
 
@@ -102,8 +99,8 @@ public class account_page extends Fragment {
 
         ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
         gridView.setExpanded(true);
-        _adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), list);
-        gridView.setAdapter(adapter);
+        //_adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), list);
+        //gridView.setAdapter(adapter);
 
     }
 }

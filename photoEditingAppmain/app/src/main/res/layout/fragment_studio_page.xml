@@ -59,20 +59,22 @@
             app:efab_orientation="portrait" />
 
         <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/importBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="@color/app_light_gray"
             app:fab_icon="@drawable/ic_gallery_add"
-            app:label_backgroundColor="#22000000"
+            app:label_backgroundColor="#DDEEEEEE"
             app:label_text="Import"
             app:label_textColor="@color/text_secondary_black" />
 
         <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/cameraBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="@color/app_light_gray"
             app:fab_icon="@drawable/ic_camera"
-            app:label_backgroundColor="#22000000"
+            app:label_backgroundColor="#DDEEEEEE"
             app:label_text="Take a photo"
             app:label_textColor="@color/text_secondary_black" />
 

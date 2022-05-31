@@ -1,6 +1,5 @@
 package com.example.photoeditingapp_main._Classes;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -43,7 +42,7 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
         Context context = parent.getContext();
         am = context.getAssets();
         LayoutInflater li = LayoutInflater.from(context);
-        LinearLayout cardLayout = (LinearLayout) li.inflate(R.layout._custom_pictureview, parent, false);
+        LinearLayout cardLayout = (LinearLayout) li.inflate(R.layout._custom_discover_imageview, parent, false);
         return new ViewHolder(cardLayout);
     }
 
