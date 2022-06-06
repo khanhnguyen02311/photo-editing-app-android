@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="40dp"
+    android:layout_width="65dp"
     android:layout_height="wrap_content"
-    android:paddingVertical="2dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="7dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_gravity="center"
+        android:scaleType="fitCenter"
         android:src="@drawable/_custom_heart"/>
 
     <TextView
@@ -17,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="9sp"
+        android:gravity="center"
+        android:textSize="10sp"
         android:text="Adjust"/>
 
 </LinearLayout>

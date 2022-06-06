@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/parent_ConstraintLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +22,7 @@
             android:icon="@drawable/ic_layer"/>
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/toolsTab"
+            android:id="@+id/adjustTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_setting_4"/>
@@ -34,23 +36,42 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/placeholder"
+        android:id="@+id/recyclerViewDesign"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="10dp"
         android:clipToPadding="false"
         app:layout_constraintBottom_toTopOf="@id/tabLayout"/>
 
-    <jp.co.cyberagent.android.gpuimage.GPUImageView
-        android:id="@+id/gpuimageview"
+    <FrameLayout
+        android:id="@+id/gpuImageFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewDesign"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="50dp"
-        android:layout_marginHorizontal="20dp"
-        app:gpuimage_show_loading="false"
-        app:gpuimage_surface_type="texture_view"
-        app:layout_constraintBottom_toTopOf="@id/placeholder"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginHorizontal="20dp">
+
+        <jp.co.cyberagent.android.gpuimage.GPUImageView
+            android:id="@+id/gpuimageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:gpuimage_show_loading="false"
+            app:gpuimage_surface_type="texture_view"/>
+
+    </FrameLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/controllerFragment"
+        android:translationZ="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

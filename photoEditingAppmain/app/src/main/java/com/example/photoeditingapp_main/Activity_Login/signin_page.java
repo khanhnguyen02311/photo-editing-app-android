@@ -148,7 +148,13 @@ public class signin_page extends Fragment {
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressDialog pd = new ProgressDialog(view.getContext());
+
+                //Remove later
+                Intent intent = new Intent(getActivity(), MainpageActivity.class);
+                intent.putExtra("usr", "DEBUG");
+                startActivity(intent);
+
+                /*ProgressDialog pd = new ProgressDialog(view.getContext());
                 pd.setMessage("Loading");
                 pd.show();
 
@@ -210,7 +216,7 @@ public class signin_page extends Fragment {
                 } else {
                     pd.dismiss();
                     declineBar.show();
-                }
+                }*/
             }
         });
     }
