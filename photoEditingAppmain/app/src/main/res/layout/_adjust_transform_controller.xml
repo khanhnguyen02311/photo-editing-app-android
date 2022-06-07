@@ -11,39 +11,164 @@
     android:paddingBottom="5dp"
     tools:context=".Activity_Design.ControllerView.TransformController">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cropRatioRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:paddingHorizontal="10dp"
-        android:clipToPadding="false"
-        android:orientation="horizontal"/>
 
-    <FrameLayout
-        android:id="@+id/slider_pack1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/slider_text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rotation"
-            android:textSize="15sp"
-            android:layout_marginStart="15dp"/>
-
-        <com.google.android.material.slider.Slider
-            android:id="@+id/slider1"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:valueFrom="-180.0"
-            android:valueTo="180.0"
-            android:value="0.0"
-            app:thumbRadius="8dp"
-            app:trackColor="#ACE5FF"/>
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start">
+
+            <LinearLayout
+                android:id="@+id/flipHorizontalBtn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_fliphorizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:text="Flip\nHorizontal"
+                    android:lines="2"
+                    android:lineSpacingMultiplier="0.75"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/flipVerticalBtn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_flipvertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:text="Flip\nVertical"
+                    android:lines="2"
+                    android:lineSpacingMultiplier="0.75"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rotateBtn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_rotate_right_1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:text="Rotate"
+                    android:lines="2"
+                    android:lineSpacingMultiplier="0.75"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/originalRatioBtn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_ratio"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:text="Original\nRatio"
+                    android:lines="2"
+                    android:lineSpacingMultiplier="0.75"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/customRatioBtn"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_customratio"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    android:text="Custom\nRatio"
+                    android:lines="2"
+                    android:lineSpacingMultiplier="0.75"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

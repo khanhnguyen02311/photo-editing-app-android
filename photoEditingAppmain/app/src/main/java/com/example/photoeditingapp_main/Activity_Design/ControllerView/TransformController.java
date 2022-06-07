@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.TransformFilter;
@@ -39,9 +40,8 @@ public class TransformController extends Fragment {
     TransformFilter currentFilter;
 
     ImageButton cancelBtn, confirmBtn;
+    LinearLayout flipHoriBtn, flipVertiBtn, origRatioBtn, custRatioBtn, rotateBtn;
     TextView adjust_title;
-    RecyclerView cropRatiosView;
-    _AdjustAdapter adjustAdapter;
 
     SliderSimple.SliderPack packList;
 
@@ -71,65 +71,48 @@ public class TransformController extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         currentFilter.getCropImageView().setVisibility(View.VISIBLE);
+        ((DesignActivity) requireActivity()).getImageView().setVisibility(View.GONE);
 
-        cropRatiosView = view.findViewById(R.id.cropRatioRecyclerView);
         cancelBtn = view.findViewById(R.id.cancelBtn);
         confirmBtn = view.findViewById(R.id.confirmBtn);
         adjust_title = view.findViewById(R.id.adjust_title);
-        packList = new SliderSimple.SliderPack(view.findViewById(R.id.slider_pack1), view.findViewById(R.id.slider1), view.findViewById(R.id.slider_text1));
+        flipHoriBtn = view.findViewById(R.id.flipHorizontalBtn);
+        flipVertiBtn = view.findViewById(R.id.flipVerticalBtn);
+        origRatioBtn = view.findViewById(R.id.originalRatioBtn);
+        custRatioBtn = view.findViewById(R.id.customRatioBtn);
+        rotateBtn = view.findViewById(R.id.rotateBtn);
 
-        ArrayList<AdjustItem> listAdjust = new ArrayList<AdjustItem>(Arrays.asList(
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "Square"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "16:9"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "9:16"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "3:2"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "2:3"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "4:3"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_ratio), "3:4"),
-                new AdjustItem(AppCompatResources.getDrawable(view.getContext(), R.drawable.ic_customratio), "Custom")));
-
-        cropRatiosView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        adjustAdapter = new _AdjustAdapter(listAdjust);
-        cropRatiosView.setAdapter(adjustAdapter);
-
-        cropRatiosView.addOnItemTouchListener(new _RecyclerTouchListener(view.getContext(), cropRatiosView, new _RecyclerTouchListener.ClickListener() {
+        rotateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                switch (position) {
-                    case 0: currentFilter.setCropRatio(1, 1);
-                    case 1: currentFilter.setCropRatio(16, 9);
-                    case 2: currentFilter.setCropRatio(9, 16);
-                    case 3: currentFilter.setCropRatio(3, 2);
-                    case 4: currentFilter.setCropRatio(2, 3);
-                    case 5: currentFilter.setCropRatio(4, 3);
-                    case 6: currentFilter.setCropRatio(3, 4);
-                    case 7: currentFilter.setCropRatio(0, 0);
-                }
-            }
+            public void onClick(View view) {currentFilter.rotateImage();}
+        });
 
+        flipHoriBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLongClick(View view, int position) { }
-        }));
+            public void onClick(View view) { currentFilter.flipImage(0); }
+        });
 
-        packList._slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+        flipVertiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartTrackingTouch(@NonNull Slider slider) {
-                slider.addOnChangeListener(new Slider.OnChangeListener() {
-                    @Override
-                    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+            public void onClick(View view) { currentFilter.flipImage(1); }
+        });
 
-                    }
-                });
-            }
+        origRatioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStopTrackingTouch(@NonNull Slider slider) { }
+            public void onClick(View view) { currentFilter.setCropRatio(0); }
+        });
+
+        custRatioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { currentFilter.setCropRatio(1); }
         });
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("CLICKED", "confirmBtn");
-                ((DesignActivity) requireActivity()).onCloseTransformFragment();
+                ((DesignActivity) requireActivity()).getImageView().setVisibility(View.VISIBLE);
+                ((DesignActivity) requireActivity()).onCloseTransformFragment(currentFilter.getCroppedImage());
             }
         });
 
@@ -137,7 +120,8 @@ public class TransformController extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i("CLICKED", "cancelBtn");
-                ((DesignActivity) requireActivity()).onCloseTransformFragment();
+                ((DesignActivity) requireActivity()).getImageView().setVisibility(View.VISIBLE);
+                ((DesignActivity) requireActivity()).onCloseTransformFragment(null);
             }
         });
     }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -65,6 +66,7 @@ public class DesignActivity extends AppCompatActivity {
     GPUImageBrightnessFilter emptyTempFilter = new GPUImageBrightnessFilter();
     CropImageView cropImageView;
     TransformFilter transformFilter;
+    Bitmap imageBitmap = null;
 
     RecyclerView recyclerView;
     _AdjustAdapter adjustAdapter;
@@ -106,7 +108,7 @@ public class DesignActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) image_uri = (Uri) bundle.get("image_uri");
         try {
-            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+            imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
             imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
         } catch (IOException e) { e.printStackTrace(); }
 
@@ -124,7 +126,7 @@ public class DesignActivity extends AppCompatActivity {
                 new ExposureFilter(new ArrayList<>(Collections.singletonList(
                         new AdjustConfig(-0.6f, 0f, 0.6f, sliderHalf, sliderMin, sliderMax)))),     //brightness
                 new WhiteBalanceFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(4000f, 5550f, 10000f, sliderHalf, sliderMin, sliderMax),   //temperature
+                        new AdjustConfig(3600f, 5550f, 12000f, sliderHalf, sliderMin, sliderMax),   //temperature
                         new AdjustConfig(-100f, 0f, 100f, sliderHalf, sliderMin, sliderMax)))),     //tint
                 new ContrastFilter(new ArrayList<>(Collections.singletonList(
                         new AdjustConfig(0.5f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),      //contrast
@@ -183,7 +185,7 @@ public class DesignActivity extends AppCompatActivity {
                                 constraintSet.applyTo(parentLayout);
                                 if (position == 0) {
                                     beforeAfterBtn.setVisibility(View.GONE);
-                                    transformFilter = new TransformFilter(image_uri, cropImageView, imageView.getGPUImage().getBitmapWithFilterApplied());
+                                    transformFilter = new TransformFilter(cropImageView, imageBitmap);
                                     transformController = TransformController.newInstance(transformFilter);
                                     getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, transformController).commit();
                                 } else {
@@ -193,9 +195,7 @@ public class DesignActivity extends AppCompatActivity {
                                 recyclerView.setVisibility(View.GONE);
                                 tabLayout.setClickable(false);
                             }
-
                             @Override  public void onLongClick(View view, int position) { }
-
                         }));
                         break;
 
@@ -259,7 +259,12 @@ public class DesignActivity extends AppCompatActivity {
         imageView.setFilter(gpuImageFilterGroup);
     }
 
-    public void onCloseTransformFragment() {
+    public void onCloseTransformFragment(Bitmap croppedImage) {
+        if (croppedImage != null) {
+            imageView.getGPUImage().deleteImage();
+            imageView.setRatio((float)croppedImage.getWidth() / croppedImage.getHeight());
+            imageView.setImage(croppedImage);
+        }
         tabLayout.setClickable(true);
         recyclerView.setVisibility(View.VISIBLE);
         beforeAfterBtn.setVisibility(View.VISIBLE);
