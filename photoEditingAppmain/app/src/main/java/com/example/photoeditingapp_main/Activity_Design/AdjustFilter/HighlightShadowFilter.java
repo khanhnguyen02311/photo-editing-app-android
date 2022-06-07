@@ -1,5 +1,7 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
+import android.util.Log;
+
 import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
 
 import java.util.ArrayList;

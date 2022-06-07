@@ -1,36 +1,34 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
 import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageExposureFilter;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageContrastFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageOverlayBlendFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImagePixelationFilter;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageSharpenFilter;
 
-public class ExposureFilter extends _ParentFilter {
-    GPUImageExposureFilter filter;
+public class SharpnessFilter extends _ParentFilter {
+    GPUImageSharpenFilter filter;
 
-    public ExposureFilter(ArrayList<AdjustConfig> listCfg) {
-        filterName = "Exposure";
-        filter = new GPUImageExposureFilter();
+    public SharpnessFilter(ArrayList<AdjustConfig> listCfg) {
+        filterName = "Test";
+        filter = new GPUImageSharpenFilter();
         listParameter = new ArrayList<>(Collections.singletonList("Strength"));
         listConfig = listCfg;
     }
 
     @Override
     public void setFilterValue(int index, float sliderIntensity) {
-        filter.setExposure(listConfig.get(index).setAndReturnIntensity(sliderIntensity));
+        filter.setSharpness(listConfig.get(index).setAndReturnIntensity(sliderIntensity));
     }
 
     @Override
     public void undoAllFilterValue() {
         for (AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
-        filter.setExposure(listConfig.get(0).getIntensity());
+        filter.setSharpness(listConfig.get(0).getIntensity());
     }
 
     @Override

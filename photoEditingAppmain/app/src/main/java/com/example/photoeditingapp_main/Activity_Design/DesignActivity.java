@@ -14,19 +14,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
+import com.canhub.cropper.CropImageView;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.ContrastFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.HighlightShadowFilter;
+import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.HueFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.RGBFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.SaturationFilter;
+import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.SharpnessFilter;
+import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.TransformFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.VibranceFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.VignetteFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.WhiteBalanceFilter;
 import com.example.photoeditingapp_main.Activity_Design.ControllerView.SliderSimple;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.ExposureFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter._ParentFilter;
+import com.example.photoeditingapp_main.Activity_Design.ControllerView.TransformController;
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AdjustItem;
 import com.example.photoeditingapp_main._Classes._AdjustAdapter;
@@ -42,6 +49,7 @@ import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageBrightnessFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilterGroup;
 
@@ -54,19 +62,22 @@ public class DesignActivity extends AppCompatActivity {
     Uri image_uri = null;
     GPUImageFilterGroup gpuImageFilterGroup = new GPUImageFilterGroup(null);
     GPUImageView imageView;
-    AdjustConfig activeConfig;
-    Slider slider;
+    GPUImageBrightnessFilter emptyTempFilter = new GPUImageBrightnessFilter();
+    CropImageView cropImageView;
+    TransformFilter transformFilter;
 
     RecyclerView recyclerView;
     _AdjustAdapter adjustAdapter;
     TabLayout tabLayout;
+    ImageButton beforeAfterBtn;
 
     ConstraintLayout parentLayout;
     FrameLayout gpuImageLayout;
     ConstraintSet constraintSet = new ConstraintSet();
 
     FragmentContainerView controllerFragment;
-    SliderSimple currentController;
+    SliderSimple simpleController;
+    TransformController transformController;
 
     ArrayList<_ParentFilter> imageFilterList;
 
@@ -76,11 +87,37 @@ public class DesignActivity extends AppCompatActivity {
     public GPUImageView getImageView() { return imageView; }
     public GPUImageFilterGroup getFilterGroup() { return gpuImageFilterGroup; }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint({"InflateParams", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design);
+
+        parentLayout = findViewById(R.id.parent_ConstraintLayout);
+        gpuImageLayout = findViewById(R.id.gpuImageFrame);
+        tabLayout = findViewById(R.id.tabLayout);
+        recyclerView = findViewById(R.id.recyclerViewDesign);
+        imageView = findViewById(R.id.gpuimageview);
+        cropImageView = findViewById(R.id.cropimageview);
+        beforeAfterBtn = findViewById(R.id.beforeAfterBtn);
+
+        controllerFragment = findViewById(R.id.controllerFragment);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) image_uri = (Uri) bundle.get("image_uri");
+        try {
+            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+            imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
+        } catch (IOException e) { e.printStackTrace(); }
+
+        imageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
+        imageView.setImage(image_uri);
+
+        emptyTempFilter.setBrightness(0f);
+
+        constraintSet.clone(parentLayout);
+        constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 50);
+        constraintSet.applyTo(parentLayout);
 
         imageFilterList = new ArrayList<>(Arrays.asList(
                 null,
@@ -94,17 +131,21 @@ public class DesignActivity extends AppCompatActivity {
                 new SaturationFilter(new ArrayList<>(Collections.singletonList(
                         new AdjustConfig(0f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),        //saturation
                 new VibranceFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),          //vibrance
+                        new AdjustConfig(-0.5f, 0f, 1f, sliderHalf, sliderMin, sliderMax)))),       //vibrance
                 new HighlightShadowFilter(new ArrayList<>(Arrays.asList(
                         new AdjustConfig(1f, 1f, -0.5f, sliderMin, sliderMin, sliderMax),           //highlight
                         new AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //shadow
+                new HueFilter(new ArrayList<>(Collections.singletonList(
+                        new AdjustConfig(0f, 0f, 355f, sliderMin, sliderMin, sliderMax)))),         //hue
                 new RGBFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(0f, 1f, 2f, sliderHalf, sliderMin, sliderMax),             //r
-                        new AdjustConfig(0f, 1f, 2f, sliderHalf, sliderMin, sliderMax),             //g
-                        new AdjustConfig(0f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),          //b
-                null,
-                new VignetteFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax))))         //vignette
+                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //r
+                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //g
+                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),        //b
+                new SharpnessFilter(new ArrayList<>(Collections.singletonList(
+                        new AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //sharpness
+                new VignetteFilter(new ArrayList<>(Arrays.asList(
+                        new AdjustConfig(0.5f, 0.5f, 0f, sliderMin, sliderMin, sliderMax),          //vignette start
+                        new AdjustConfig(1.7f, 1.7f, 0.55f, sliderMin, sliderMin, sliderMax))))     //vignette end
                 ));
 
         ArrayList<AdjustItem> listAdjust = new ArrayList<AdjustItem>(Arrays.asList(
@@ -115,37 +156,14 @@ public class DesignActivity extends AppCompatActivity {
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_saturation), "Saturation"),
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vibrance), "Vibrance"),
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_highlight_shadow), "Highlight Shadow"),
+                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_hue), "Hue"),
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_rgb), "RGB"),
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_sharpness), "Sharpness"),
                 new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vignette), "Vignette")
         ));
 
-        parentLayout = findViewById(R.id.parent_ConstraintLayout);
-        gpuImageLayout = findViewById(R.id.gpuImageFrame);
-        tabLayout = findViewById(R.id.tabLayout);
-        recyclerView = findViewById(R.id.recyclerViewDesign);
-        imageView = findViewById(R.id.gpuimageview);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         adjustAdapter = new _AdjustAdapter(listAdjust);
-
-        controllerFragment = findViewById(R.id.controllerFragment);
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) image_uri = (Uri) bundle.get("image_uri");
-        try {
-            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
-            imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        imageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
-        imageView.setImage(image_uri);
-
-        constraintSet.clone(parentLayout);
-        constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 50);
-        constraintSet.applyTo(parentLayout);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -161,10 +179,17 @@ public class DesignActivity extends AppCompatActivity {
                         recyclerView.addOnItemTouchListener(new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
                             @Override
                             public void onClick(View view, int position) {
-                                currentController = SliderSimple.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
                                 constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, controllerFragment.getId(), ConstraintSet.TOP, 20);
                                 constraintSet.applyTo(parentLayout);
-                                getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, currentController).commit();
+                                if (position == 0) {
+                                    beforeAfterBtn.setVisibility(View.GONE);
+                                    transformFilter = new TransformFilter(image_uri, cropImageView, imageView.getGPUImage().getBitmapWithFilterApplied());
+                                    transformController = TransformController.newInstance(transformFilter);
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, transformController).commit();
+                                } else {
+                                    simpleController = SliderSimple.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, simpleController).commit();
+                                }
                                 recyclerView.setVisibility(View.GONE);
                                 tabLayout.setClickable(false);
                             }
@@ -189,17 +214,33 @@ public class DesignActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) { }
         });
+
+        beforeAfterBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (gpuImageFilterGroup.getFilters().size() != 0) imageView.setFilter(emptyTempFilter);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        if (gpuImageFilterGroup.getFilters().size() != 0) imageView.setFilter(gpuImageFilterGroup);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
 
     //METHODS:
-    public void onCloseControllerFragment(_ParentFilter currentFilter) {
+    public void onCloseSimpleFragment(_ParentFilter currentFilter) {
         updateFilterGroup(currentFilter);
         tabLayout.setClickable(true);
         recyclerView.setVisibility(View.VISIBLE);
         constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, recyclerView.getId(), ConstraintSet.TOP, 20);
         constraintSet.applyTo(parentLayout);
-        getSupportFragmentManager().beginTransaction().remove(currentController).commit();
+        getSupportFragmentManager().beginTransaction().remove(simpleController).commit();
         //Log.i(currentFilter.getFilterName(), Float.toString(imageFilterList.get(1).getListConfig().get(0).intensity));
     }
 
@@ -216,5 +257,15 @@ public class DesignActivity extends AppCompatActivity {
         imageFilterLayer.add(currentFilter.getFilter());
         gpuImageFilterGroup = new GPUImageFilterGroup(imageFilterLayer);
         imageView.setFilter(gpuImageFilterGroup);
+    }
+
+    public void onCloseTransformFragment() {
+        tabLayout.setClickable(true);
+        recyclerView.setVisibility(View.VISIBLE);
+        beforeAfterBtn.setVisibility(View.VISIBLE);
+        cropImageView.setVisibility(View.GONE);
+        constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, recyclerView.getId(), ConstraintSet.TOP, 20);
+        constraintSet.applyTo(parentLayout);
+        getSupportFragmentManager().beginTransaction().remove(transformController).commit();
     }
 }

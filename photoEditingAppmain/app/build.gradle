@@ -38,9 +38,9 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -84,4 +84,8 @@ dependencies {
     // GPUImage
     // Link: https://github.com/cats-oss/android-gpuimage
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+
+    // Image Cropper
+    // Link: https://github.com/CanHub/Android-Image-Cropper
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.2.1'
 }

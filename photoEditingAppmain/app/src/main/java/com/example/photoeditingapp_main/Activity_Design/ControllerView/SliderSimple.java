@@ -106,7 +106,7 @@ public class SliderSimple extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i("CLICKED", "confirmBtn");
-                ((DesignActivity) requireActivity()).onCloseControllerFragment(currentFilter);
+                ((DesignActivity) requireActivity()).onCloseSimpleFragment(currentFilter);
             }
         });
 
@@ -115,7 +115,7 @@ public class SliderSimple extends Fragment {
             public void onClick(View view) {
                 Log.i("CLICKED", "cancelBtn");
                 currentFilter.undoAllFilterValue();
-                ((DesignActivity) requireActivity()).onCloseControllerFragment(currentFilter);
+                ((DesignActivity) requireActivity()).onCloseSimpleFragment(currentFilter);
             }
         });
     }
