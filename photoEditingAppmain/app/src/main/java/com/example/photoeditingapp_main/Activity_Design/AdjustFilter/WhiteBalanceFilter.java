@@ -1,19 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageExposureFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageWhiteBalanceFilter;
 
 public class WhiteBalanceFilter extends _ParentFilter{
     GPUImageWhiteBalanceFilter filter;
 
-    public WhiteBalanceFilter(ArrayList<AdjustConfig> listCfg) {
+    public WhiteBalanceFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "White Balance";
         filter = new GPUImageWhiteBalanceFilter();
         listParameter = new ArrayList<>(Arrays.asList("Temperature", "Tint"));

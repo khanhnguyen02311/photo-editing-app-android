@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main._Classes;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +9,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.photoeditingapp_main.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class _StudioSliderAdapter extends RecyclerView.Adapter<_StudioSliderAdapter.StudioSliderViewHolder> {
+public class _StudioAlbumSliderAdapter extends RecyclerView.Adapter<_StudioAlbumSliderAdapter.StudioSliderViewHolder> {
 
-    private List<ImageItem> sliderItems;
+    private ArrayList<GeneralPictureItem> sliderItems;
+    Context _Context;
 
-    public _StudioSliderAdapter(List<ImageItem> sliderItems) {
+    public _StudioAlbumSliderAdapter(ArrayList<GeneralPictureItem> sliderItems, Context context) {
         this.sliderItems = sliderItems;
+        _Context = context;
     }
 
     @NonNull
@@ -28,7 +32,7 @@ public class _StudioSliderAdapter extends RecyclerView.Adapter<_StudioSliderAdap
 
     @Override
     public void onBindViewHolder(@NonNull StudioSliderViewHolder holder, int position) {
-        holder.sliderItemImage.setImageResource(sliderItems.get(position).getImage());
+        Glide.with(_Context).load(sliderItems.get(position).getImageUri()).into(holder.sliderItemImage);
     }
 
     @Override
@@ -36,16 +40,12 @@ public class _StudioSliderAdapter extends RecyclerView.Adapter<_StudioSliderAdap
         return sliderItems.size();
     }
 
-    class StudioSliderViewHolder extends RecyclerView.ViewHolder {
+    static class StudioSliderViewHolder extends RecyclerView.ViewHolder {
         ImageView sliderItemImage;
 
         public StudioSliderViewHolder(@NonNull View itemView) {
             super(itemView);
             sliderItemImage = itemView.findViewById(R.id.image_view_slider_item);
-        }
-
-        public void setSliderItemImage(ImageItem sliderItem) {
-            sliderItemImage.setImageResource(sliderItem.getImage());
         }
     }
 }

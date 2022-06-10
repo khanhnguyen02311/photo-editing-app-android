@@ -1,11 +1,11 @@
-package com.example.photoeditingapp_main.Activity_Design;
+package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
 import android.util.Log;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class AdjustConfig {
+public class _AdjustConfig {
     float intensity, sliderIntensity;
     float previousIntensity, previousSlider;
     float originIntensity, originSlider;
@@ -17,7 +17,7 @@ public class AdjustConfig {
     public float getIntensity() { return intensity; }
     public float getOriginSlider() { return originSlider; }
 
-    public AdjustConfig(float _minValue, float _originValue, float _maxValue, float _sliderStartPos, float _sliderMin, float _sliderMax) {
+    public _AdjustConfig(float _minValue, float _originValue, float _maxValue, float _sliderStartPos, float _sliderMin, float _sliderMax) {
         minValue = _minValue;
         maxValue = _maxValue;
         originIntensity = _originValue;

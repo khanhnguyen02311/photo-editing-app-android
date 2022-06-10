@@ -1,22 +1,17 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
 import android.graphics.PointF;
-import android.util.Log;
-
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageTransformFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageVignetteFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageWhiteBalanceFilter;
 
 public class VignetteFilter extends _ParentFilter{
     GPUImageVignetteFilter filter;
 
-    public VignetteFilter(ArrayList<AdjustConfig> listCfg) {
+    public VignetteFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Vignette";
         filter = new GPUImageVignetteFilter();
         listParameter = new ArrayList<>(Arrays.asList("Start Position", "End Position"));

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AlbumItem;
-import com.example.photoeditingapp_main._Classes.ImageItem;
+import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes._StudioAlbumAdapter;
 
 import java.util.ArrayList;
@@ -77,48 +77,13 @@ public class studio_my_album_page extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<ImageItem> sliderItems = new ArrayList<>();
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
-        sliderItems.add(new ImageItem(R.drawable.img));
+        ArrayList<GeneralPictureItem> sliderItems1 = new ArrayList<>();
+        ArrayList<GeneralPictureItem> sliderItems2 = new ArrayList<>();
 
-        List<ImageItem> sliderItems1 = new ArrayList<>();
-        sliderItems1.add(new ImageItem(R.drawable.img));
-        sliderItems1.add(new ImageItem(R.drawable.welcome_background2));
-        sliderItems1.add(new ImageItem(R.drawable.welcome_background));
-        sliderItems1.add(new ImageItem(R.drawable.img));
-        sliderItems1.add(new ImageItem(R.drawable.img));
-        sliderItems1.add(new ImageItem(R.drawable.img));
-        sliderItems1.add(new ImageItem(R.drawable.img));
 
-        List<AlbumItem> albumItems = new ArrayList<>();
-        albumItems.add(new AlbumItem("Album 1",sliderItems ));
-        albumItems.add(new AlbumItem("Album 2",sliderItems1 ));
+        ArrayList<AlbumItem> albumItems = new ArrayList<>();
+        albumItems.add(new AlbumItem("Album 1", sliderItems1));
+        albumItems.add(new AlbumItem("Album 2", sliderItems2));
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_studio_my_album_page);
 

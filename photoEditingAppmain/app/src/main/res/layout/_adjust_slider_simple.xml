@@ -9,7 +9,7 @@
     android:background="#FFFFFF"
     android:paddingTop="15dp"
     android:paddingBottom="5dp"
-    tools:context=".Activity_Design.ControllerView.SliderSimple">
+    tools:context=".Activity_Design.ControllerView.SliderController">
 
 <FrameLayout
     android:id="@+id/slider_pack1"

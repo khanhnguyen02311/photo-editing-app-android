@@ -22,11 +22,7 @@ import com.google.android.material.slider.Slider;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilterGroup;
-
-public class SliderSimple extends Fragment {
+public class SliderController extends Fragment {
     int numControl = 1;
     String title = "NO-TITLE";
     _ParentFilter currentFilter = null;
@@ -36,17 +32,17 @@ public class SliderSimple extends Fragment {
 
     ArrayList<SliderPack> packList;
 
-    public SliderSimple() {}
+    public SliderController() {}
 
-    public SliderSimple(int index, String t, _ParentFilter f) {
+    public SliderController(int index, String t, _ParentFilter f) {
         numControl = f.getListConfig().size();
         title = t;
         currentFilter = f;
         currentFilter.setFilterIndex(index);
     }
 
-    public static SliderSimple newInstance(int i, String t, _ParentFilter f) {
-        return new SliderSimple(i, t, f);
+    public static SliderController newInstance(int i, String t, _ParentFilter f) {
+        return new SliderController(i, t, f);
     }
 
     @Override

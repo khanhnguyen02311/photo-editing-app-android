@@ -1,21 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageExposureFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageOverlayBlendFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImagePixelationFilter;
 
 public class ExposureFilter extends _ParentFilter {
     GPUImageExposureFilter filter;
 
-    public ExposureFilter(ArrayList<AdjustConfig> listCfg) {
+    public ExposureFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Exposure";
         filter = new GPUImageExposureFilter();
         listParameter = new ArrayList<>(Collections.singletonList("Strength"));
@@ -29,7 +23,7 @@ public class ExposureFilter extends _ParentFilter {
 
     @Override
     public void undoAllFilterValue() {
-        for (AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
+        for (_AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
         filter.setExposure(listConfig.get(0).getIntensity());
     }
 

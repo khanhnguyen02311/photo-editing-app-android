@@ -1,13 +1,12 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
 import java.util.ArrayList;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 
 public abstract class _ParentFilter {
     String filterName;
     int filterIndex;
-    ArrayList<AdjustConfig> listConfig;
+    ArrayList<_AdjustConfig> listConfig;
     ArrayList<String> listParameter;
 
     public String getFilterName() {return filterName;}
@@ -16,8 +15,8 @@ public abstract class _ParentFilter {
     public int getFilterIndex() {return filterIndex;}
     public void setFilterIndex(int filterIndex) {this.filterIndex = filterIndex;}
 
-    public ArrayList<AdjustConfig> getListConfig() {return listConfig;}
-    public void setListConfig(ArrayList<AdjustConfig> config) {this.listConfig = config;}
+    public ArrayList<_AdjustConfig> getListConfig() {return listConfig;}
+    public void setListConfig(ArrayList<_AdjustConfig> config) {this.listConfig = config;}
 
     public ArrayList<String> getListParameter() {return listParameter;}
     public void setListParameter(ArrayList<String> listParameter) {this.listParameter = listParameter;}
@@ -38,7 +37,7 @@ public abstract class _ParentFilter {
     public abstract GPUImageFilter getFilter();
 
     public void storePreviousFilterIntensity() {
-        for (AdjustConfig cfg: listConfig) {
+        for (_AdjustConfig cfg: listConfig) {
             cfg.rewritePreviousIntensity();
         }
     }

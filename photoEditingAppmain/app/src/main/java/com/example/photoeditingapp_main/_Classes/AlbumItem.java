@@ -1,13 +1,14 @@
 package com.example.photoeditingapp_main._Classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumItem implements Serializable {
     private String albumName;
-    private List<ImageItem> albumImages;
+    private ArrayList<GeneralPictureItem> albumImages;
 
-    public AlbumItem(String albumName, List<ImageItem> albumImages) {
+    public AlbumItem(String albumName, ArrayList<GeneralPictureItem> albumImages) {
         this.albumName = albumName;
         this.albumImages = albumImages;
     }
@@ -16,15 +17,12 @@ public class AlbumItem implements Serializable {
         return albumName;
     }
 
-    public List<ImageItem> getAlbumImages() {
+    public ArrayList<GeneralPictureItem> getAlbumImages() {
         return albumImages;
     }
 
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
-
-    public void setAlbumImages(List<ImageItem> albumImages) {
-        this.albumImages = albumImages;
-    }
+    public void setAlbumImages(ArrayList<GeneralPictureItem> albumImages) {this.albumImages = albumImages;}
 }

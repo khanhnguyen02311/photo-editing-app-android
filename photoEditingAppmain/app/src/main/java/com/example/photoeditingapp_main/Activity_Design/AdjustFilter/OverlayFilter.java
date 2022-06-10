@@ -1,14 +1,10 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilterGroup;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageHighlightShadowFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageOpacityFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageOverlayBlendFilter;
 
@@ -18,7 +14,7 @@ public class OverlayFilter extends _ParentFilter{
 
     GPUImageFilterGroup filterGroup;
 
-    public OverlayFilter(ArrayList<AdjustConfig> listCfg) {
+    public OverlayFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Overlay";
         overlayFilter = new GPUImageOverlayBlendFilter();
         listParameter = new ArrayList<>(Collections.singletonList("Opacity"));
@@ -32,7 +28,7 @@ public class OverlayFilter extends _ParentFilter{
 
     @Override
     public void undoAllFilterValue() {
-        for (AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
+        for (_AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
         opacityFilter.setOpacity(listConfig.get(0).getIntensity());
     }
 

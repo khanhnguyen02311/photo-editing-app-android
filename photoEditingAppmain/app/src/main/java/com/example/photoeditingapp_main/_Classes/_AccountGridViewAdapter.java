@@ -1,31 +1,31 @@
-package com.example.photoeditingapp_main.Activity_Mainpage;
+package com.example.photoeditingapp_main._Classes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.bumptech.glide.Glide;
 import com.example.photoeditingapp_main.R;
-import com.example.photoeditingapp_main._Classes.ImageItem;
-import com.example.photoeditingapp_main._Classes.SquareImageView;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class _adapter_gridview_account_page extends ArrayAdapter<ImageItem> {
+public class _AccountGridViewAdapter extends ArrayAdapter<GeneralPictureItem> {
 
-    Context context;
-    List<ImageItem> image;
+    Context _Context;
+    ArrayList<GeneralPictureItem> listImages;
     List<Boolean> isSelected;
 
-    public _adapter_gridview_account_page(Context context, List<ImageItem> image) {
+    public _AccountGridViewAdapter(Context context, ArrayList<GeneralPictureItem> image) {
         super(context, R.layout._custom_item_gridview_accountpage, image);
-        this.context = context;
-        this.image = image;
+        this._Context = context;
+        this.listImages = image;
         isSelected = new ArrayList<>();
         for (int i = 0; i < image.size(); i++) {
             isSelected.add(false);
@@ -76,13 +76,15 @@ public class _adapter_gridview_account_page extends ArrayAdapter<ImageItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) _Context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("ViewHolder")
         View row = inflater.inflate(R.layout._custom_item_gridview_accountpage, parent, false);
-        SquareImageView imageView = (SquareImageView) row.findViewById(R.id.imageView_custom_item_gridview_account_page);
-        imageView.setImageResource(image.get(position).getImage());
+
+        SquareImageView imageView = row.findViewById(R.id.imageView_custom_item_gridview_account_page);
+        Log.i("URI", listImages.get(position).getImageUri().toString());
+        Glide.with(_Context).load(listImages.get(position).getImageUri()).centerCrop().into(imageView);
         if (isSelected.get(position)) {
-            MaterialCardView cardView = (MaterialCardView) row.findViewById(R.id.cardView_custom_item_gridview_account_page);
+            MaterialCardView cardView = row.findViewById(R.id.cardView_custom_item_gridview_account_page);
             cardView.setStrokeColor(Color.parseColor("#646464"));
         }
         return row;

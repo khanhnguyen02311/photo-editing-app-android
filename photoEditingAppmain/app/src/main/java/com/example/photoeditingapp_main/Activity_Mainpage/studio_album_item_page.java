@@ -3,60 +3,42 @@ package com.example.photoeditingapp_main.Activity_Mainpage;
 import static java.lang.Thread.sleep;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Dialog;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.AlbumItem;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
 import com.example.photoeditingapp_main._Classes.SquareImageView;
+import com.example.photoeditingapp_main._Classes._AccountGridViewAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -172,7 +154,7 @@ public class studio_album_item_page extends Fragment {
 
         // Set grid view
         ExpandableGridView gridView = view.findViewById(R.id.grid_view_album_item_page);
-        _adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), albumItem.getAlbumImages());
+        _AccountGridViewAdapter adapter = new _AccountGridViewAdapter(getContext(), albumItem.getAlbumImages());
         gridView.setAdapter(adapter);
 
         // Item click in grid view
@@ -181,7 +163,7 @@ public class studio_album_item_page extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MaterialCardView cardView = view.findViewById(R.id.cardView_custom_item_gridview_account_page);
                 SquareImageView squareImageView = view.findViewById(R.id.imageView_custom_item_gridview_account_page);
-                _adapter_gridview_account_page adapter1 = ((_adapter_gridview_account_page) adapterView.getAdapter());
+                _AccountGridViewAdapter adapter1 = ((_AccountGridViewAdapter) adapterView.getAdapter());
 
                 // Set animation for image selected
                 if (!adapter1.getSelected(i)) {

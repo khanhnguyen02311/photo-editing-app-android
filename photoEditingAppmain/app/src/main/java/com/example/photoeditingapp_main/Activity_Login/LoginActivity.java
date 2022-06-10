@@ -8,10 +8,8 @@ import androidx.core.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.photoeditingapp_main.R;
-import com.example.photoeditingapp_main._Classes.GlobalVariables;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -7,9 +7,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cardView_custom_item_gridview_account_page"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="10dp"
             android:layout_margin="5dp"
-            app:strokeWidth="7px"
+            app:strokeWidth="2dp"
             app:strokeColor="#00FFFFFF">
         <!--app:strokeColor="#646464"
             app:strokeWidth="3dp"-->
@@ -18,7 +18,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/welcome_background"
-                    android:scaleType="fitXY" />
+                    android:scaleType="centerCrop" />
                     <!--app:riv_corner_radius="12dp"
                     android:layout_margin="4dp"-->
         </com.google.android.material.card.MaterialCardView>

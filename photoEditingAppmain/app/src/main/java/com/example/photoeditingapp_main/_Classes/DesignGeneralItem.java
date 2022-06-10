@@ -2,11 +2,11 @@ package com.example.photoeditingapp_main._Classes;
 
 import android.graphics.drawable.Drawable;
 
-public class AdjustItem {
+public class DesignGeneralItem {
     private Drawable icon;
     private String text;
 
-    public AdjustItem(Drawable i, String t) {
+    public DesignGeneralItem(Drawable i, String t) {
         icon = i; text = t;
     }
 

@@ -1,19 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageRGBFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageVibranceFilter;
 
 public class RGBFilter extends _ParentFilter{
     GPUImageRGBFilter filter;
 
-    public RGBFilter(ArrayList<AdjustConfig> listCfg) {
+    public RGBFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "RGB";
         filter = new GPUImageRGBFilter();
         listParameter = new ArrayList<>(Arrays.asList("Red", "Green", "Blue"));

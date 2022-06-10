@@ -1,19 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageContrastFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageSharpenFilter;
 
 public class SharpnessFilter extends _ParentFilter {
     GPUImageSharpenFilter filter;
 
-    public SharpnessFilter(ArrayList<AdjustConfig> listCfg) {
+    public SharpnessFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Test";
         filter = new GPUImageSharpenFilter();
         listParameter = new ArrayList<>(Collections.singletonList("Strength"));
@@ -27,7 +23,7 @@ public class SharpnessFilter extends _ParentFilter {
 
     @Override
     public void undoAllFilterValue() {
-        for (AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
+        for (_AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
         filter.setSharpness(listConfig.get(0).getIntensity());
     }
 

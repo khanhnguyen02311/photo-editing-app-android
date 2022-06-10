@@ -1,18 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageHueFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageVibranceFilter;
 
 public class VibranceFilter extends _ParentFilter{
     GPUImageVibranceFilter filter;
 
-    public VibranceFilter(ArrayList<AdjustConfig> listCfg) {
+    public VibranceFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Vibrance";
         filter = new GPUImageVibranceFilter();
         listParameter = new ArrayList<>(Collections.singletonList("Strength"));
@@ -26,7 +23,7 @@ public class VibranceFilter extends _ParentFilter{
 
     @Override
     public void undoAllFilterValue() {
-        for (AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
+        for (_AdjustConfig cfg: listConfig) {cfg.undoIntensity();}
         filter.setVibrance(listConfig.get(0).getIntensity());
     }
 

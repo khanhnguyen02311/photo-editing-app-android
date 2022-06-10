@@ -1,8 +1,8 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +19,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,77 +28,63 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes._StudioViewPager2Adapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.nambimobile.widgets.efab.FabOption;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link studio_page#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class studio_page extends Fragment {
 
+    _GlobalVariables gv;
     TabLayout tabLayout;
     ViewPager2 viewPager;
     FabOption importBtn, cameraBtn;
+    ArrayList<Fragment> listViewPagerFragment;
 
     ActivityResultLauncher<String> imageContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
         new ActivityResultCallback<Uri>() {
+            @SuppressLint("Range")
             @Override
             public void onActivityResult(Uri uri) {
+                String name = null;
                 if (uri != null) {
-                    Intent designActivity = new Intent(getActivity(), DesignActivity.class);
+                    Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null);
+                    try {
+                        if (cursor != null && cursor.moveToFirst()) {
+                            name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        }
+                    } finally {
+                        Objects.requireNonNull(cursor).close();
+                    }
+
+                    if (gv.getLocalDB().addImageToStudio(name, uri)) Objects.requireNonNull(viewPager.getAdapter()).notifyItemChanged(0);
+
+                    /*Intent designActivity = new Intent(getActivity(), DesignActivity.class);
                     designActivity.putExtra("image_uri", uri);
-                    startActivity(designActivity);
+                    startActivity(designActivity);*/
                 }
             }
         });
-
-    //final int IMAGE_COMPLETED = 200, CAMERA_COMPLETED = 201;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public studio_page() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment studio_page.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static studio_page newInstance(String param1, String param2) {
-        studio_page fragment = new studio_page();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static studio_page newInstance() {
+        return new studio_page();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        gv = (_GlobalVariables) requireActivity().getApplication();
+        listViewPagerFragment = new ArrayList<>(Arrays.asList(new studio_recent_page(), new studio_my_album_page()));
     }
 
     @Override
@@ -121,7 +109,7 @@ public class studio_page extends Fragment {
         cameraBtn = view.findViewById(R.id.cameraBtn);
 
         // Create an adapter that knows which fragment should be shown on each page
-        _StudioViewPager2Adapter adapter = new _StudioViewPager2Adapter(requireActivity());
+        _StudioViewPager2Adapter adapter = new _StudioViewPager2Adapter(requireActivity(), listViewPagerFragment);
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
@@ -135,10 +123,10 @@ public class studio_page extends Fragment {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
                     case 0:
-                        tab.setText("My Album");
+                        tab.setText("Recent");
                         break;
                     case 1:
-                        tab.setText("Recent");
+                        tab.setText("My Albums");
                         break;
                     default:
                         tab.setText("");
@@ -150,6 +138,10 @@ public class studio_page extends Fragment {
             @Override
             public void onClick(View view) {
                 imageContent.launch("image/*");
+                /*Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");*/
+
             }
         });
     }

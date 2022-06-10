@@ -29,12 +29,12 @@ import java.util.ArrayList;
 
 public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.ViewHolder> {
 
-    private final ArrayList<PictureItem> listItem;
+    private final ArrayList<GeneralPictureItem> listItem;
     AssetManager am;
     InputStream is;
     File tempImageStorage;
 
-    public _DiscoverAdapter(ArrayList<PictureItem> list, File file) {listItem = list; tempImageStorage = file;}
+    public _DiscoverAdapter(ArrayList<GeneralPictureItem> list, File file) {listItem = list; tempImageStorage = file;}
 
     @NonNull
     @Override
@@ -48,19 +48,17 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PictureItem item = listItem.get(position);
+        GeneralPictureItem item = listItem.get(position);
 
         TextView authorHolder = holder.authorView;
         ImageView imageHolder = holder.imageView;
         CheckBox likeBtnHolder = holder.likeBtnView;
 
-        holder.id = item.getId();
+        //authorHolder.setText(item.getAuthor());
 
-        authorHolder.setText(item.getAuthor());
+        //File dir = new File(tempImageStorage.getAbsolutePath() + "/" + item.getImageLink());
 
-        File dir = new File(tempImageStorage.getAbsolutePath() + "/" + item.getImageLink());
-
-        if (dir.exists()) imageHolder.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(dir)));
+        /*if (dir.exists()) imageHolder.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(dir)));
         else {
             try {
                 is = am.open("TestImages/" + item.getImageLink());
@@ -85,10 +83,7 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
                 Log.e("ERROR", e.toString());
                 e.printStackTrace();
             }
-        }
-
-
-        likeBtnHolder.setChecked(item.isLiked());
+        }*/
     }
 
     @Override

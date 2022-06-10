@@ -4,32 +4,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.TransformFilter;
-import com.example.photoeditingapp_main.Activity_Design.AdjustFilter._ParentFilter;
 import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
-import com.example.photoeditingapp_main._Classes.AdjustItem;
-import com.example.photoeditingapp_main._Classes._AdjustAdapter;
-import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
-import com.google.android.material.slider.Slider;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +30,7 @@ public class TransformController extends Fragment {
     LinearLayout flipHoriBtn, flipVertiBtn, origRatioBtn, custRatioBtn, rotateBtn;
     TextView adjust_title;
 
-    SliderSimple.SliderPack packList;
+    SliderController.SliderPack packList;
 
     public TransformController() {}
 

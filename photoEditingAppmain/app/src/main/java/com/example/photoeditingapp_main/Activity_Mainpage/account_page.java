@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
-import com.example.photoeditingapp_main._Classes.ImageItem;
 
 import java.util.ArrayList;
 
@@ -99,7 +98,7 @@ public class account_page extends Fragment {
 
         ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
         gridView.setExpanded(true);
-        //_adapter_gridview_account_page adapter = new _adapter_gridview_account_page(getContext(), list);
+        //_AccountGridViewAdapter adapter = new _AccountGridViewAdapter(getContext(), list);
         //gridView.setAdapter(adapter);
 
     }

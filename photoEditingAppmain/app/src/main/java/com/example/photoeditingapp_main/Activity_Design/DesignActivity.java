@@ -9,18 +9,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.canhub.cropper.CropImageView;
+import com.example.photoeditingapp_main.Activity_Design.AdjustFilter._AdjustConfig;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.ContrastFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.HighlightShadowFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.HueFilter;
@@ -31,22 +38,20 @@ import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.TransformFi
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.VibranceFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.VignetteFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.WhiteBalanceFilter;
-import com.example.photoeditingapp_main.Activity_Design.ControllerView.SliderSimple;
+import com.example.photoeditingapp_main.Activity_Design.ControllerView.SliderController;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.ExposureFilter;
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter._ParentFilter;
 import com.example.photoeditingapp_main.Activity_Design.ControllerView.TransformController;
 import com.example.photoeditingapp_main.R;
-import com.example.photoeditingapp_main._Classes.AdjustItem;
-import com.example.photoeditingapp_main._Classes._AdjustAdapter;
+import com.example.photoeditingapp_main._Classes.DesignGeneralItem;
+import com.example.photoeditingapp_main._Classes._DesignGeneralAdapter;
 import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
-import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
@@ -65,11 +70,11 @@ public class DesignActivity extends AppCompatActivity {
     GPUImageView imageView;
     GPUImageBrightnessFilter emptyTempFilter = new GPUImageBrightnessFilter();
     CropImageView cropImageView;
-    TransformFilter transformFilter;
+    TransformFilter transformFilter = null;
     Bitmap imageBitmap = null;
 
     RecyclerView recyclerView;
-    _AdjustAdapter adjustAdapter;
+    _DesignGeneralAdapter adjustAdapter, optionAdapter;
     TabLayout tabLayout;
     ImageButton beforeAfterBtn;
 
@@ -78,7 +83,7 @@ public class DesignActivity extends AppCompatActivity {
     ConstraintSet constraintSet = new ConstraintSet();
 
     FragmentContainerView controllerFragment;
-    SliderSimple simpleController;
+    SliderController simpleController;
     TransformController transformController;
 
     ArrayList<_ParentFilter> imageFilterList;
@@ -122,50 +127,55 @@ public class DesignActivity extends AppCompatActivity {
         constraintSet.applyTo(parentLayout);
 
         imageFilterList = new ArrayList<>(Arrays.asList(
-                null,
+                null,                                                                                //custom transform filter
                 new ExposureFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(-0.6f, 0f, 0.6f, sliderHalf, sliderMin, sliderMax)))),     //brightness
+                        new _AdjustConfig(-0.6f, 0f, 0.6f, sliderHalf, sliderMin, sliderMax)))),     //brightness
                 new WhiteBalanceFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(3600f, 5550f, 12000f, sliderHalf, sliderMin, sliderMax),   //temperature
-                        new AdjustConfig(-100f, 0f, 100f, sliderHalf, sliderMin, sliderMax)))),     //tint
+                        new _AdjustConfig(3600f, 5550f, 12000f, sliderHalf, sliderMin, sliderMax),   //temperature
+                        new _AdjustConfig(-100f, 0f, 100f, sliderHalf, sliderMin, sliderMax)))),     //tint
                 new ContrastFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0.5f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),      //contrast
+                        new _AdjustConfig(0.5f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),      //contrast
                 new SaturationFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),        //saturation
+                        new _AdjustConfig(0f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),        //saturation
                 new VibranceFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(-0.5f, 0f, 1f, sliderHalf, sliderMin, sliderMax)))),       //vibrance
+                        new _AdjustConfig(-0.5f, 0f, 1f, sliderHalf, sliderMin, sliderMax)))),       //vibrance
                 new HighlightShadowFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(1f, 1f, -0.5f, sliderMin, sliderMin, sliderMax),           //highlight
-                        new AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //shadow
+                        new _AdjustConfig(1f, 1f, -0.5f, sliderMin, sliderMin, sliderMax),           //highlight
+                        new _AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //shadow
                 new HueFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0f, 0f, 355f, sliderMin, sliderMin, sliderMax)))),         //hue
+                        new _AdjustConfig(0f, 0f, 355f, sliderMin, sliderMin, sliderMax)))),         //hue
                 new RGBFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //r
-                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //g
-                        new AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),        //b
+                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //r
+                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //g
+                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),        //b
                 new SharpnessFilter(new ArrayList<>(Collections.singletonList(
-                        new AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //sharpness
+                        new _AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //sharpness
                 new VignetteFilter(new ArrayList<>(Arrays.asList(
-                        new AdjustConfig(0.5f, 0.5f, 0f, sliderMin, sliderMin, sliderMax),          //vignette start
-                        new AdjustConfig(1.7f, 1.7f, 0.55f, sliderMin, sliderMin, sliderMax))))     //vignette end
+                        new _AdjustConfig(0.5f, 0.5f, 0f, sliderMin, sliderMin, sliderMax),          //vignette start
+                        new _AdjustConfig(1.7f, 1.7f, 0.55f, sliderMin, sliderMin, sliderMax))))     //vignette end
                 ));
 
-        ArrayList<AdjustItem> listAdjust = new ArrayList<AdjustItem>(Arrays.asList(
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_adjust_size), "Transform"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_exposure), "Exposure"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_temperature), "White Balance"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_contrast), "Contrast"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_saturation), "Saturation"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vibrance), "Vibrance"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_highlight_shadow), "Highlight Shadow"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_hue), "Hue"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_rgb), "RGB"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_sharpness), "Sharpness"),
-                new AdjustItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vignette), "Vignette")
+        ArrayList<DesignGeneralItem> listAdjust = new ArrayList<DesignGeneralItem>(Arrays.asList(
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_adjust_size), "Transform"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_exposure), "Exposure"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_temperature), "White Balance"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_contrast), "Contrast"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_saturation), "Saturation"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vibrance), "Vibrance"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_highlight_shadow), "Highlight Shadow"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_hue), "Hue"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_rgb), "RGB"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_sharpness), "Sharpness"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_vignette), "Vignette")
         ));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        adjustAdapter = new _AdjustAdapter(listAdjust);
+        ArrayList<DesignGeneralItem> listOption = new ArrayList<>(Arrays.asList(
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_arrow_down), "Save to Studio"),
+                new DesignGeneralItem(AppCompatResources.getDrawable(DesignActivity.this, R.drawable.ic_close_circle), "Discard changes")
+        ));
+
+        adjustAdapter = new _DesignGeneralAdapter(listAdjust, R.layout._custom_design_adjust_itemview);
+        optionAdapter = new _DesignGeneralAdapter(listOption, R.layout._custom_design_option_itemview);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -173,10 +183,12 @@ public class DesignActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
+                        recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         recyclerView.setAdapter(null);
                         break;
 
                     case 1:
+                        recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         recyclerView.setAdapter(adjustAdapter);
                         recyclerView.addOnItemTouchListener(new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
                             @Override
@@ -189,7 +201,7 @@ public class DesignActivity extends AppCompatActivity {
                                     transformController = TransformController.newInstance(transformFilter);
                                     getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, transformController).commit();
                                 } else {
-                                    simpleController = SliderSimple.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
+                                    simpleController = SliderController.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
                                     getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, simpleController).commit();
                                 }
                                 recyclerView.setVisibility(View.GONE);
@@ -200,7 +212,20 @@ public class DesignActivity extends AppCompatActivity {
                         break;
 
                     case 2:
-                        recyclerView.setAdapter(null);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.VERTICAL, false));
+                        recyclerView.setAdapter(optionAdapter);
+                        recyclerView.addOnItemTouchListener(new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                switch (position) {
+                                    case 0: break;
+                                    case 1: DesignActivity.this.onBackPressed(); break;
+                                }
+                            }
+
+                            @Override
+                            public void onLongClick(View view, int position) { }
+                        }));
                         break;
 
                     default:
@@ -232,6 +257,12 @@ public class DesignActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (gpuImageFilterGroup.getFilters().size() != 0 || transformFilter != null) {
+            showConfirmationDialog();
+        } else super.onBackPressed();
+    }
 
     //METHODS:
     public void onCloseSimpleFragment(_ParentFilter currentFilter) {
@@ -272,5 +303,47 @@ public class DesignActivity extends AppCompatActivity {
         constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, recyclerView.getId(), ConstraintSet.TOP, 20);
         constraintSet.applyTo(parentLayout);
         getSupportFragmentManager().beginTransaction().remove(transformController).commit();
+    }
+
+    private void showConfirmationDialog() {
+        final Dialog dialog = new Dialog(DesignActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout._dialog_rename_album);
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        EditText editText = dialog.findViewById(R.id.editTextRenameAlbum);
+        editText.setVisibility(View.GONE);
+        TextView title = dialog.findViewById(R.id.titleText);
+        TextView confirmBtn = dialog.findViewById(R.id.textViewRenameAlbumSave);
+        TextView cancelBtn = dialog.findViewById(R.id.textViewRenameAlbumCancel);
+
+        title.setText("Are you sure to discard?");
+        confirmBtn.setText("Confirm");
+        cancelBtn.setText("Cancel");
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                DesignActivity.super.onBackPressed();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

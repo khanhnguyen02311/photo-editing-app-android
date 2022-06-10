@@ -1,20 +1,15 @@
 package com.example.photoeditingapp_main.Activity_Design.AdjustFilter;
 
-import android.util.Log;
-
-import com.example.photoeditingapp_main.Activity_Design.AdjustConfig;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageHighlightShadowFilter;
-import jp.co.cyberagent.android.gpuimage.filter.GPUImageWhiteBalanceFilter;
 
 public class HighlightShadowFilter extends _ParentFilter{
     GPUImageHighlightShadowFilter filter;
 
-    public HighlightShadowFilter(ArrayList<AdjustConfig> listCfg) {
+    public HighlightShadowFilter(ArrayList<_AdjustConfig> listCfg) {
         filterName = "Highlight Shadow";
         filter = new GPUImageHighlightShadowFilter();
         listParameter = new ArrayList<>(Arrays.asList("Highlight", "Shadow"));
