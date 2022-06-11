@@ -45,13 +45,16 @@ import com.example.photoeditingapp_main.Activity_Design.ControllerView.Transform
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.DesignGeneralItem;
 import com.example.photoeditingapp_main._Classes._DesignGeneralAdapter;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
@@ -63,7 +66,7 @@ public class DesignActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
 
-    public float sliderMin = -50f, sliderMax = 50f, sliderHalf = 0f;
+    _GlobalVariables gv;
 
     Uri image_uri = null;
     GPUImageFilterGroup gpuImageFilterGroup = new GPUImageFilterGroup(null);
@@ -100,6 +103,8 @@ public class DesignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design);
 
+        gv = (_GlobalVariables) getApplication();
+
         parentLayout = findViewById(R.id.parent_ConstraintLayout);
         gpuImageLayout = findViewById(R.id.gpuImageFrame);
         tabLayout = findViewById(R.id.tabLayout);
@@ -127,32 +132,32 @@ public class DesignActivity extends AppCompatActivity {
         constraintSet.applyTo(parentLayout);
 
         imageFilterList = new ArrayList<>(Arrays.asList(
-                null,                                                                                //custom transform filter
+                null,                                                                               //custom transform filter
                 new ExposureFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(-0.6f, 0f, 0.6f, sliderHalf, sliderMin, sliderMax)))),     //brightness
+                        new _AdjustConfig(-0.6f, 0f, 0.6f, 0f, -50f, 50f)))),                       //brightness
                 new WhiteBalanceFilter(new ArrayList<>(Arrays.asList(
-                        new _AdjustConfig(3600f, 5550f, 12000f, sliderHalf, sliderMin, sliderMax),   //temperature
-                        new _AdjustConfig(-100f, 0f, 100f, sliderHalf, sliderMin, sliderMax)))),     //tint
+                        new _AdjustConfig(3600f, 5550f, 12000f, 0f, -50f, 50f),                     //temperature
+                        new _AdjustConfig(-100f, 0f, 100f, 0f, -50f, 50f)))),                       //tint
                 new ContrastFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(0.5f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),      //contrast
+                        new _AdjustConfig(0.5f, 1f, 1.7f, 0f, -50f, 50f)))),                        //contrast
                 new SaturationFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(0f, 1f, 1.7f, sliderHalf, sliderMin, sliderMax)))),        //saturation
+                        new _AdjustConfig(0f, 1f, 1.7f, 0f, -50f, 50f)))),                          //saturation
                 new VibranceFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(-0.5f, 0f, 1f, sliderHalf, sliderMin, sliderMax)))),       //vibrance
+                        new _AdjustConfig(-0.5f, 0f, 1f, 0f, -50f, 50f)))),                         //vibrance
                 new HighlightShadowFilter(new ArrayList<>(Arrays.asList(
-                        new _AdjustConfig(1f, 1f, -0.5f, sliderMin, sliderMin, sliderMax),           //highlight
-                        new _AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //shadow
+                        new _AdjustConfig(1f, 1f, -0.5f, 0f, 0f, 100f),                             //highlight
+                        new _AdjustConfig(0f, 0f, 1.5f, 0f, 0f, 100f)))),                           //shadow
                 new HueFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(0f, 0f, 355f, sliderMin, sliderMin, sliderMax)))),         //hue
+                        new _AdjustConfig(0f, 0f, 355f, 0f, 0f, 100f)))),                           //hue
                 new RGBFilter(new ArrayList<>(Arrays.asList(
-                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //r
-                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax),           //g
-                        new _AdjustConfig(0.1f, 1f, 2f, sliderHalf, sliderMin, sliderMax)))),        //b
+                        new _AdjustConfig(0.1f, 1f, 2f, 0f, -50f, 50f),                             //r
+                        new _AdjustConfig(0.1f, 1f, 2f, 0f, -50f, 50f),                             //g
+                        new _AdjustConfig(0.1f, 1f, 2f, 0f, -50f, 50f)))),                          //b
                 new SharpnessFilter(new ArrayList<>(Collections.singletonList(
-                        new _AdjustConfig(0f, 0f, 1.5f, sliderMin, sliderMin, sliderMax)))),         //sharpness
+                        new _AdjustConfig(0f, 0f, 1.5f, 0f, 0f, 100f)))),                           //sharpness
                 new VignetteFilter(new ArrayList<>(Arrays.asList(
-                        new _AdjustConfig(0.5f, 0.5f, 0f, sliderMin, sliderMin, sliderMax),          //vignette start
-                        new _AdjustConfig(1.7f, 1.7f, 0.55f, sliderMin, sliderMin, sliderMax))))     //vignette end
+                        new _AdjustConfig(0.5f, 0.5f, 0f, 0f, 0f, 100f),                            //vignette start
+                        new _AdjustConfig(1.7f, 1.7f, 0.55f, 0f, 0f, 100f))))                       //vignette end
                 ));
 
         ArrayList<DesignGeneralItem> listAdjust = new ArrayList<DesignGeneralItem>(Arrays.asList(
@@ -333,6 +338,8 @@ public class DesignActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                //Long.toString(Calendar.getInstance().getTimeInMillis())
+                //gv.getLocalDB().addImageToStudio()
                 DesignActivity.super.onBackPressed();
             }
         });

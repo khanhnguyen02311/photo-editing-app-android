@@ -47,7 +47,7 @@ public class studio_page extends Fragment {
     FabOption importBtn, cameraBtn;
     ArrayList<Fragment> listViewPagerFragment;
 
-    ActivityResultLauncher<String> imageContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+    ActivityResultLauncher<String[]> imageContent = registerForActivityResult(new ActivityResultContracts.OpenDocument(),
         new ActivityResultCallback<Uri>() {
             @SuppressLint("Range")
             @Override
@@ -63,12 +63,15 @@ public class studio_page extends Fragment {
                         Objects.requireNonNull(cursor).close();
                     }
 
-                    if (gv.getLocalDB().addImageToStudio(name, uri)) Objects.requireNonNull(viewPager.getAdapter()).notifyItemChanged(0);
-
-                    /*Intent designActivity = new Intent(getActivity(), DesignActivity.class);
-                    designActivity.putExtra("image_uri", uri);
-                    startActivity(designActivity);*/
+                    if (gv.getLocalDB().addImageToStudio(name, uri)) {
+                        Snackbar snackbar = Snackbar.make(requireView(), "Add image successful.", 1000);
+                        snackbar.show();
+                    }
                 }
+
+                /*Intent designActivity = new Intent(getActivity(), DesignActivity.class);
+                designActivity.putExtra("image_uri", Objects.requireNonNull(uri).toString());
+                startActivity(designActivity);*/
             }
         });
 
@@ -137,11 +140,7 @@ public class studio_page extends Fragment {
         importBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageContent.launch("image/*");
-                /*Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");*/
-
+                imageContent.launch(new String[]{"image/*"});
             }
         });
     }

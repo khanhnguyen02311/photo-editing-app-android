@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/blank"
-        android:title=""
+        android:title="@null"
         android:enabled="false" />
 
     <item

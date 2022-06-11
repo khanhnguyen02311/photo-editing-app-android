@@ -16,6 +16,8 @@ public class _AdjustConfig {
     public float getSliderIntensity() { return sliderIntensity; }
     public float getIntensity() { return intensity; }
     public float getOriginSlider() { return originSlider; }
+    public float getMinSlider() { return sliderMin; }
+    public float getMaxSlider() { return sliderMax; }
 
     public _AdjustConfig(float _minValue, float _originValue, float _maxValue, float _sliderStartPos, float _sliderMin, float _sliderMax) {
         minValue = _minValue;

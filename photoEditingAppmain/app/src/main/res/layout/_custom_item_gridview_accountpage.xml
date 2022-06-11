@@ -7,9 +7,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cardView_custom_item_gridview_account_page"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="5dp"
             android:layout_margin="5dp"
             app:strokeWidth="2dp"
+            app:cardElevation="4dp"
             app:strokeColor="#00FFFFFF">
         <!--app:strokeColor="#646464"
             app:strokeWidth="3dp"-->

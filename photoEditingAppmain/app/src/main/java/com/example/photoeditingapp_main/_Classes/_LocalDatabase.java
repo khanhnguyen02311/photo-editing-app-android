@@ -76,7 +76,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public ArrayList<GeneralPictureItem> getImagesFromStudio() {
         ArrayList<GeneralPictureItem> list = new ArrayList<>();
-        Cursor cursor = onGetData(SQL_SELECT_TABLE + STUDIO_TABLE /*+ " ORDER BY " + COLUMN_Studio_ID + " DESC"*/);
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + STUDIO_TABLE + " ORDER BY " + COLUMN_Studio_ID + " DESC");
         if (cursor.moveToFirst()) { //move to first item, if have return true, else return false
             do {
                 GeneralPictureItem item = getItemFromCursor(cursor);

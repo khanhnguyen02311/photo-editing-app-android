@@ -37,7 +37,7 @@ public class _GlobalVariables extends Application {
     public void onCreate() {
         super.onCreate();
         localDB = new _LocalDatabase(this);
-        //localDB.resetTables();  for test database
+        //localDB.resetTables();
 
         firestoreDB = FirebaseFirestore.getInstance();
         if (!studioLocation.exists()) studioLocation.mkdirs();

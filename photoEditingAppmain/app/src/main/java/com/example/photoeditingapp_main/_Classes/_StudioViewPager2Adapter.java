@@ -26,6 +26,6 @@ public class _StudioViewPager2Adapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return listFragment.size();
     }
 }

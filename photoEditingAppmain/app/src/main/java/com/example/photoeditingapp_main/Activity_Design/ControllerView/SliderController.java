@@ -73,8 +73,8 @@ public class SliderController extends Fragment {
 
         for (int i=0; i<numControl; ++i) {
             packList.get(i)._pack.setVisibility(View.VISIBLE);
-            packList.get(i)._slider.setValueFrom(((DesignActivity) requireActivity()).sliderMin);
-            packList.get(i)._slider.setValueTo(((DesignActivity) requireActivity()).sliderMax);
+            packList.get(i)._slider.setValueFrom(currentFilter.getListConfig().get(i).getMinSlider());
+            packList.get(i)._slider.setValueTo(currentFilter.getListConfig().get(i).getMaxSlider());
             packList.get(i)._slider.setValue(currentFilter.getSliderValue(i));
             packList.get(i)._text.setText(currentFilter.getListParameter().get(i));
 

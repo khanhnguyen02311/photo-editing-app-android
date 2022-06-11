@@ -71,7 +71,7 @@
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:elevation="5dp"
-            app:menu="@menu/bottom_navigation_mainpage_selected_image_menu"
+            app:menu="@menu/bottom_navigation_mainpage_selected_image"
             android:visibility="invisible" />
         </RelativeLayout>
     </LinearLayout>

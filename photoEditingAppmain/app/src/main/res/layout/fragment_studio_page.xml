@@ -13,7 +13,6 @@
             android:id="@+id/tab_layout_studio_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="20dp"
             style="@style/CustomTabLayout"
             app:tabMode="scrollable"/>
