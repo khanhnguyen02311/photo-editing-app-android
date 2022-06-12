@@ -265,7 +265,7 @@ public class studio_album_item_page extends Fragment {
             public void onClick(View v) {
                 List<Integer> positionDeselectedItems = adapter.getPositionDeselectedItems();
                 for (int i = 0; i < positionDeselectedItems.size(); i++) {
-                    View view= (View) gridView.getChildAt(positionDeselectedItems.get(i));
+                    View view = gridView.getChildAt(positionDeselectedItems.get(i));
                     if (view != null) {
                         startAnimation(view.findViewById(R.id.imageView_custom_item_gridview_account_page), view.findViewById(R.id.cardView_custom_item_gridview_account_page));
                     }
@@ -313,7 +313,7 @@ public class studio_album_item_page extends Fragment {
     private void showBottomNavSelectImage() {
         bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView2.setVisibility(View.VISIBLE);
-        bottomNavigationView2.setSelectedItemId(R.id.blank);
+        bottomNavigationView2.setSelectedItemId(View.NO_ID);
     }
 
     private void showBottomNavMainPage() {

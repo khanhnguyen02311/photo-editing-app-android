@@ -6,7 +6,7 @@ public class GeneralPictureItem {
     private int id;
     private Uri imageUri;
     private String imageName;
-    //private ConfigParameters imageConfigs;
+    private ConfigParameters imageConfigs;
 
     public int getId() {return id;}
 
@@ -16,19 +16,19 @@ public class GeneralPictureItem {
     public Uri getImageUri() {return imageUri;}
     public void setImageUri(Uri imageUri) { this.imageUri = imageUri; }
 
-    //public ConfigParameters getImageConfigs() { return imageConfigs; }
+    public ConfigParameters getImageConfigs() { return imageConfigs; }
 
     public GeneralPictureItem() {
         id = -1;
         imageName = null;
         imageUri = null;
+        imageConfigs = null;
     }
 
-    public GeneralPictureItem(int i, String n, Uri u) {
+    public GeneralPictureItem(int i, String n, Uri u, ConfigParameters cfg) {
         id = i;
         imageName = n;
         imageUri = u;
+        imageConfigs = cfg;
     }
-
-    //public void getImage() {}
 }

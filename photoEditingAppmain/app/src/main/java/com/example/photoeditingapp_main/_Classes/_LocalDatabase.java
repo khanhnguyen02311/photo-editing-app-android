@@ -6,23 +6,73 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class _LocalDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "DATABASE_Stewdio";
-    public static final String STUDIO_TABLE = "TABLE_Studio";
+    public static final String TABLE_STUDIO = "TABLE_ImageStudio";
+    public static final String TABLE_CONFIG = "TABLE_ImageConfig";
 
     public static final String COLUMN_Studio_ID = "ID";
     public static final String COLUMN_Studio_ImageName = "NAME";
     public static final String COLUMN_Studio_ImageUri = "URI";
+    public static final String COLUMN_Studio_ImageConfig = "CONFIG_REFERENCE";
 
-    public static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
+    public static final String COLUMN_Config_ID = "ID";
+    public static final String[] COLUMN_Configs;
+
+    static { COLUMN_Configs = new String[] {
+                "EXPOSURE",
+                "TEMPERATURE",
+                "TINT",
+                "CONTRAST",
+                "SATURATION",
+                "VIBRANCE",
+                "HIGHLIGHT",
+                "SHADOW",
+                "HUE",
+                "RGB_R",
+                "RGB_G",
+                "RGB_B",
+                "SHARPNESS",
+                "VIGNETTE_START",
+                "VIGNETTE_END"
+    };}
+
     public static final String SQL_DROP_TABLE = "DROP TABLE IF EXISTS ";
     public static final String SQL_SELECT_TABLE = "SELECT * FROM ";
+    public static final String SQL_CREATE_TABLE_CONFIG =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_CONFIG + " (" +
+            COLUMN_Config_ID + " INTEGER PRIMARY KEY, " +
+            COLUMN_Configs[0] + " FLOAT, " +
+            COLUMN_Configs[1] + " FLOAT, " +
+            COLUMN_Configs[2] + " FLOAT, " +
+            COLUMN_Configs[3] + " FLOAT, " +
+            COLUMN_Configs[4] + " FLOAT, " +
+            COLUMN_Configs[5] + " FLOAT, " +
+            COLUMN_Configs[6] + " FLOAT, " +
+            COLUMN_Configs[7] + " FLOAT, " +
+            COLUMN_Configs[8] + " FLOAT, " +
+            COLUMN_Configs[9] + " FLOAT, " +
+            COLUMN_Configs[10] + " FLOAT, " +
+            COLUMN_Configs[11] + " FLOAT, " +
+            COLUMN_Configs[12] + " FLOAT, " +
+            COLUMN_Configs[13] + " FLOAT, " +
+            COLUMN_Configs[14] + " FLOAT)";
+    public static final String SQL_CREATE_TABLE_STUDIO =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_STUDIO + " (" +
+            COLUMN_Studio_ID + " INTEGER PRIMARY KEY, " +
+            COLUMN_Studio_ImageName + " NVARCHAR(255), " +
+            COLUMN_Studio_ImageUri + " NVARCHAR(255), " +
+            COLUMN_Studio_ImageConfig + " INTEGER, " +
+            "FOREIGN KEY (" + COLUMN_Studio_ImageConfig + ") REFERENCES " + TABLE_CONFIG + "(" + COLUMN_Config_ID + "))";
+
 
     public _LocalDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -30,15 +80,14 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(SQL_CREATE_TABLE + STUDIO_TABLE + " (" +
-                COLUMN_Studio_ID + " INTEGER PRIMARY KEY, " +
-                COLUMN_Studio_ImageName + " NVARCHAR(255), " +
-                COLUMN_Studio_ImageUri + " NVARCHAR(255))");
+        sqLiteDatabase.execSQL(SQL_CREATE_TABLE_CONFIG);
+        sqLiteDatabase.execSQL(SQL_CREATE_TABLE_STUDIO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVer, int newVer) {
-        sqLiteDatabase.execSQL(SQL_DROP_TABLE + STUDIO_TABLE);
+        sqLiteDatabase.execSQL(SQL_DROP_TABLE + TABLE_STUDIO);
+        sqLiteDatabase.execSQL(SQL_DROP_TABLE + TABLE_CONFIG);
         onCreate(sqLiteDatabase);
     }
 
@@ -55,49 +104,132 @@ public class _LocalDatabase extends SQLiteOpenHelper {
     }
 
     public void createTables() {
-        onQueryData(SQL_CREATE_TABLE + STUDIO_TABLE + " (" +
-                COLUMN_Studio_ID + " INTEGER PRIMARY KEY, " +
-                COLUMN_Studio_ImageName + " NVARCHAR(255), " +
-                COLUMN_Studio_ImageUri + " NVARCHAR(255))");
+        onQueryData(SQL_CREATE_TABLE_CONFIG);
+        onQueryData(SQL_CREATE_TABLE_STUDIO);
     }
 
     public void resetTables() {
-        onQueryData(SQL_DROP_TABLE + STUDIO_TABLE);
+        onQueryData(SQL_DROP_TABLE + TABLE_STUDIO);
+        onQueryData(SQL_DROP_TABLE + TABLE_CONFIG);
         createTables();
+    }
+
+    public GeneralPictureItem getLastAddedImage() {
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_STUDIO + " ORDER BY " + COLUMN_Studio_ID + " DESC LIMIT 1");
+        GeneralPictureItem item = getImageItemFromCursor(cursor);
+        cursor.close();
+        return item;
+    }
+
+    public ConfigParameters getLastAddedConfig() {
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_CONFIG + " ORDER BY " + COLUMN_Config_ID + " DESC LIMIT 1");
+        ConfigParameters config = getConfigItemFromCursor(cursor);
+        cursor.close();
+        return config;
+    }
+
+    public GeneralPictureItem getImageFromTable(int id) {
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_STUDIO + " WHERE " + COLUMN_Studio_ID + " = " + id);
+        GeneralPictureItem item = getImageItemFromCursor(cursor);
+        cursor.close();
+        return item;
+    }
+
+    public ConfigParameters getConfigFromTable(int id) {
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_CONFIG + " WHERE " + COLUMN_Config_ID + " = " + id);
+        ConfigParameters config = getConfigItemFromCursor(cursor);
+        cursor.close();
+        return config;
+    }
+
+    public int getImageStudioSize() {
+        Cursor cursor = onGetData("SELECT COUNT(*) FROM " + TABLE_STUDIO);
+        cursor.moveToFirst();
+        int temp = cursor.getInt(0);
+        cursor.close();
+        return temp;
+    }
+
+    public int getConfigStudioSize() {
+        Cursor cursor = onGetData("SELECT COUNT(*) FROM " + TABLE_CONFIG);
+        cursor.moveToFirst();
+        int temp = cursor.getInt(0);
+        cursor.close();
+        return temp;
     }
 
     public boolean addImageToStudio(String name, Uri _uri) {
         String uri = _uri.toString();
         SQLiteDatabase dtb = getWritableDatabase();
-        long insert = dtb.insert(STUDIO_TABLE, null, createContentPicture(name, uri));
+        long insert = dtb.insert(TABLE_STUDIO, null, createContentImage(name, uri));
         return insert != -1;
         //onQueryData("INSERT INTO " + STUDIO_TABLE + " (" + COLUMN_Studio_ImageName + ", " + COLUMN_Studio_ImageUri + ") VALUES ('" + name + "', '" + uri + "')");
     }
 
-    public ArrayList<GeneralPictureItem> getImagesFromStudio() {
+    public ArrayList<GeneralPictureItem> getImagesFromStudio(boolean isFlipped) {
         ArrayList<GeneralPictureItem> list = new ArrayList<>();
-        Cursor cursor = onGetData(SQL_SELECT_TABLE + STUDIO_TABLE + " ORDER BY " + COLUMN_Studio_ID + " DESC");
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_STUDIO);
         if (cursor.moveToFirst()) { //move to first item, if have return true, else return false
             do {
-                GeneralPictureItem item = getItemFromCursor(cursor);
-                list.add(item);
-            } while (cursor.moveToNext());
+                GeneralPictureItem item = getImageItemFromCursor(cursor);
+                Log.i(Integer.toString(cursor.getPosition()), Objects.requireNonNull(item).getImageUri().toString());
+                if (isFlipped) list.add(0, item); else list.add(item);
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
         }
+        cursor.close();
         return list;
     }
 
+    public boolean updateConfigToImage(int studioImageID, ConfigParameters cfg) {
+        SQLiteDatabase dtb = getWritableDatabase();
+        long insert = dtb.insert(TABLE_CONFIG, null, createConfigImage(cfg));
+        if (insert != -1) {
+            Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_CONFIG + " ORDER BY " + COLUMN_Config_ID + " DESC LIMIT 1");
+            if (cursor.moveToFirst()) {
+                ContentValues foreignKey = new ContentValues();
+                foreignKey.put(COLUMN_Studio_ImageConfig, cursor.getInt(0));
+                long update = dtb.update(TABLE_STUDIO, foreignKey, COLUMN_Studio_ID+"=?", new String[]{Integer.toString(studioImageID)});
+                cursor.close();
+                return update == -1;
+            } else {
+                cursor.close();
+                return false;
+            }
+        } else return false;
+    }
 
-    public ContentValues createContentPicture(String name, String uriString) {
+
+    private ContentValues createContentImage(String name, String uriString) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_Studio_ImageName, name);
         cv.put(COLUMN_Studio_ImageUri, uriString);
         return cv;
     }
 
-    public GeneralPictureItem getItemFromCursor(Cursor cursor) {
+    private ContentValues createConfigImage(ConfigParameters cfg) {
+        ContentValues cv = new ContentValues();
+        for (int i=0; i<cfg.getConfigs().length; ++i)
+            cv.put(COLUMN_Configs[i], cfg.getConfig(i));
+        return cv;
+    }
+
+    private GeneralPictureItem getImageItemFromCursor(Cursor cursor) {
         int ID = cursor.getInt(0);
         String name = cursor.getString(1);
-        String _uri = cursor.getString(2);
-        return new GeneralPictureItem(ID, name, Uri.parse(_uri));
+        Uri uri = Uri.parse(cursor.getString(2));
+        if (cursor.isNull(3)) return new GeneralPictureItem(ID, name, uri, null);
+        else {
+            int configID = cursor.getInt(3);
+            ConfigParameters configParameters = getConfigFromTable(configID);
+            return new GeneralPictureItem(ID, name, uri, configParameters);
+        }
+    }
+
+    private ConfigParameters getConfigItemFromCursor(Cursor cursor) {
+        float[] listCfg = new float[15];
+        int ID = cursor.getInt(0);
+        for (int i=1; i<16; i++) listCfg[i - 1] = cursor.getFloat(i);
+        return new ConfigParameters(ID, listCfg);
     }
 }

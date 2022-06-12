@@ -66,4 +66,9 @@ public class _AdjustConfig {
         previousSlider = sliderIntensity;
         previousIntensity = intensity;
     }
+
+    public void applyFilterIntensity(float _intensity) {
+        setAndReturnIntensity(_intensity);
+        rewritePreviousIntensity();
+    }
 }

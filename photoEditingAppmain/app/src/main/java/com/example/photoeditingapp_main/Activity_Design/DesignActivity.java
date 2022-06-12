@@ -16,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,18 +44,23 @@ import com.example.photoeditingapp_main.Activity_Design.AdjustFilter.ExposureFil
 import com.example.photoeditingapp_main.Activity_Design.AdjustFilter._ParentFilter;
 import com.example.photoeditingapp_main.Activity_Design.ControllerView.TransformController;
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.ConfigParameters;
 import com.example.photoeditingapp_main._Classes.DesignGeneralItem;
+import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes._DesignGeneralAdapter;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
+import java.util.Objects;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
@@ -67,6 +73,7 @@ public class DesignActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
 
     _GlobalVariables gv;
+    Calendar calendar = Calendar.getInstance();
 
     Uri image_uri = null;
     GPUImageFilterGroup gpuImageFilterGroup = new GPUImageFilterGroup(null);
@@ -75,6 +82,7 @@ public class DesignActivity extends AppCompatActivity {
     CropImageView cropImageView;
     TransformFilter transformFilter = null;
     Bitmap imageBitmap = null;
+    ConfigParameters configParameters;
 
     RecyclerView recyclerView;
     _DesignGeneralAdapter adjustAdapter, optionAdapter;
@@ -115,12 +123,16 @@ public class DesignActivity extends AppCompatActivity {
 
         controllerFragment = findViewById(R.id.controllerFragment);
 
+        configParameters = new ConfigParameters();
+
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) image_uri = (Uri) bundle.get("image_uri");
-        try {
-            imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
-            imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
-        } catch (IOException e) { e.printStackTrace(); }
+        if (bundle != null) {
+            image_uri = (Uri) bundle.get("image_uri");
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
+            } catch (IOException e) { e.printStackTrace(); }
+        }
 
         imageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
         imageView.setImage(image_uri);
@@ -182,6 +194,9 @@ public class DesignActivity extends AppCompatActivity {
         adjustAdapter = new _DesignGeneralAdapter(listAdjust, R.layout._custom_design_adjust_itemview);
         optionAdapter = new _DesignGeneralAdapter(listOption, R.layout._custom_design_option_itemview);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(null);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -223,8 +238,35 @@ public class DesignActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view, int position) {
                                 switch (position) {
-                                    case 0: break;
-                                    case 1: DesignActivity.this.onBackPressed(); break;
+                                    case 0:
+                                        String name = calendar.getTimeInMillis() + ".png";
+                                        Bitmap exported = imageView.getGPUImage().getBitmapWithFilterApplied();
+                                        File path = new File(gv.privateLocation, name);
+                                        FileOutputStream fos = null;
+                                        try {
+                                            fos = new FileOutputStream(path);
+                                            exported.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        } finally {
+                                            try {
+                                                Objects.requireNonNull(fos).close();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                        Uri uri = Uri.parse(path.toString());
+                                        if (gv.getLocalDB().addImageToStudio(name, uri)) {
+                                            GeneralPictureItem addedItem = gv.getLocalDB().getLastAddedImage();
+                                            if (addedItem.getImageName().equals(name) && gv.getLocalDB().updateConfigToImage(addedItem.getId(), getConfigParameters())) {
+                                                Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
+                                                DesignActivity.super.onBackPressed();
+                                            } else Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
+                                        } else Log.i("FAILED", uri + " " + name);
+                                        break;
+
+                                    case 1: onBackPressed(); break;
+                                    default: break;
                                 }
                             }
 
@@ -265,6 +307,7 @@ public class DesignActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (gpuImageFilterGroup.getFilters().size() != 0 || transformFilter != null) {
+            recyclerView.setAdapter(null);
             showConfirmationDialog();
         } else super.onBackPressed();
     }
@@ -311,7 +354,7 @@ public class DesignActivity extends AppCompatActivity {
     }
 
     private void showConfirmationDialog() {
-        final Dialog dialog = new Dialog(DesignActivity.this);
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout._dialog_rename_album);
 
@@ -321,7 +364,6 @@ public class DesignActivity extends AppCompatActivity {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
 
         EditText editText = dialog.findViewById(R.id.editTextRenameAlbum);
@@ -338,8 +380,6 @@ public class DesignActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                //Long.toString(Calendar.getInstance().getTimeInMillis())
-                //gv.getLocalDB().addImageToStudio()
                 DesignActivity.super.onBackPressed();
             }
         });
@@ -352,5 +392,25 @@ public class DesignActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    private ConfigParameters getConfigParameters() {
+        ConfigParameters cfg = new ConfigParameters();
+        cfg.setConfig(0, imageFilterList.get(1).getSliderValue(0));
+        cfg.setConfig(1, imageFilterList.get(2).getSliderValue(0));
+        cfg.setConfig(2, imageFilterList.get(2).getSliderValue(1));
+        cfg.setConfig(3, imageFilterList.get(3).getSliderValue(0));
+        cfg.setConfig(4, imageFilterList.get(4).getSliderValue(0));
+        cfg.setConfig(5, imageFilterList.get(5).getSliderValue(0));
+        cfg.setConfig(6, imageFilterList.get(6).getSliderValue(0));
+        cfg.setConfig(7, imageFilterList.get(6).getSliderValue(1));
+        cfg.setConfig(8, imageFilterList.get(7).getSliderValue(0));
+        cfg.setConfig(9, imageFilterList.get(8).getSliderValue(0));
+        cfg.setConfig(10, imageFilterList.get(8).getSliderValue(1));
+        cfg.setConfig(11, imageFilterList.get(8).getSliderValue(2));
+        cfg.setConfig(12, imageFilterList.get(9).getSliderValue(0));
+        cfg.setConfig(13, imageFilterList.get(10).getSliderValue(0));
+        cfg.setConfig(14, imageFilterList.get(10).getSliderValue(1));
+        return cfg;
     }
 }

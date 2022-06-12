@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,7 @@ import java.util.Objects;
 public class studio_recent_page extends Fragment {
 
     _GlobalVariables gv;
-    ArrayList<GeneralPictureItem> imageItems;
+    ArrayList<GeneralPictureItem> imageItems = new ArrayList<>();
     _AccountGridViewAdapter gridViewAdapter;
     ExpandableGridView gridView;
 
@@ -69,7 +70,6 @@ public class studio_recent_page extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gv = (_GlobalVariables) requireActivity().getApplication();
-        imageItems = gv.getLocalDB().getImagesFromStudio();
     }
 
     @Override
@@ -82,9 +82,10 @@ public class studio_recent_page extends Fragment {
         if (bottomNavigationView2.getVisibility() == View.VISIBLE) showBottomNavMainPage();
         isFirstSetUp = true;
 
-        imageItems = gv.getLocalDB().getImagesFromStudio();
+        imageItems = gv.getLocalDB().getImagesFromStudio(true);
         gridViewAdapter = new _AccountGridViewAdapter(getContext(), imageItems);
         gridView.setAdapter(gridViewAdapter);
+        //Log.i(imageItems.get(0).getImageName(), imageItems.get(0).getImageUri().toString());
         super.onResume();
     }
 
@@ -114,7 +115,6 @@ public class studio_recent_page extends Fragment {
         menuItemSave = bottomNavigationView2.getMenu().getItem(1);
         menuItemShare = bottomNavigationView2.getMenu().getItem(2);
         menuItemBlank = bottomNavigationView2.getMenu().getItem(0);
-
 
         menuItemBlank.setEnabled(false);
         menuItemBlank.setVisible(false);
@@ -173,9 +173,6 @@ public class studio_recent_page extends Fragment {
                                 Intent designActivity = new Intent(getActivity(), DesignActivity.class);
                                 designActivity.putExtra("image_uri",
                                         Objects.requireNonNull(imageItems.get(adapter1.getPositionSelectedItems().get(0)).getImageUri()));
-                                designActivity.putExtra("image_id",
-                                        Integer.toString(imageItems.get(adapter1.getPositionSelectedItems().get(0)).getId()));
-                                //float[] listConfig = imageItems.get(adapter1.getPositionSelectedItems().get(0)).g
                                 startActivity(designActivity);
                                 break;
                             case R.id.save_photo: break;

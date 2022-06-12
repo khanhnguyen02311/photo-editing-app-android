@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class androidx.appcompat.widget.** { *; }
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder

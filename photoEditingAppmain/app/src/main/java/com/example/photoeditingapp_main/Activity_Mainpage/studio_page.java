@@ -56,22 +56,15 @@ public class studio_page extends Fragment {
                 if (uri != null) {
                     Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null);
                     try {
-                        if (cursor != null && cursor.moveToFirst()) {
-                            name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        }
+                        if (cursor.moveToFirst()) name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     } finally {
                         Objects.requireNonNull(cursor).close();
                     }
-
                     if (gv.getLocalDB().addImageToStudio(name, uri)) {
                         Snackbar snackbar = Snackbar.make(requireView(), "Add image successful.", 1000);
                         snackbar.show();
                     }
                 }
-
-                /*Intent designActivity = new Intent(getActivity(), DesignActivity.class);
-                designActivity.putExtra("image_uri", Objects.requireNonNull(uri).toString());
-                startActivity(designActivity);*/
             }
         });
 
