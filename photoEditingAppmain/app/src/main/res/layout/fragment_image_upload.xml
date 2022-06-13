@@ -59,11 +59,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
+            android:layout_gravity="center"
             android:text="Khang Huynh"
             android:layout_margin="10dp"
-            android:fontFamily="@font/almarai_extrabold"
-            android:textSize="15sp"
+            android:fontFamily="@font/almarai_bold"
+            android:textSize="17sp"
             />
 
     </LinearLayout>
