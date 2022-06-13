@@ -81,7 +81,7 @@ public class _AccountGridViewAdapter extends ArrayAdapter<GeneralPictureItem> {
         View row = inflater.inflate(R.layout._custom_item_gridview_accountpage, parent, false);
 
         SquareImageView imageView = row.findViewById(R.id.imageView_custom_item_gridview_account_page);
-        Log.i("URI", listImages.get(position).getImageUri().toString());
+        //Log.i("URI", listImages.get(position).getImageUri().toString());
         Glide.with(_Context).load(listImages.get(position).getImageUri()).centerCrop().placeholder(R.drawable.image_placeholder).into(imageView);
         if (isSelected.get(position)) {
             MaterialCardView cardView = row.findViewById(R.id.cardView_custom_item_gridview_account_page);

@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,11 +26,6 @@ public class _GlobalVariables extends Application {
     public File privateLocation;
     private FirebaseFirestore firestoreDB;
     private _LocalDatabase localDB;
-
-    private final String[] REQUIRED_PERMISSIONS = new String[] {
-            "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.READ_EXTERNAL_STORAGE"
-    };
 
     public FirebaseFirestore getFirestoreDB() {return firestoreDB;}
     public _LocalDatabase getLocalDB() {return localDB;}
@@ -51,13 +49,6 @@ public class _GlobalVariables extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-    }
-
-    public boolean allPermissionGranted() {
-        for (String permission : REQUIRED_PERMISSIONS)
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
-                return false;
-        return true;
     }
 }
 

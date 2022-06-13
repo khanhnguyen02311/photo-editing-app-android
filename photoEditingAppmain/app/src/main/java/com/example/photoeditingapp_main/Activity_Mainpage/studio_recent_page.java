@@ -1,10 +1,17 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
@@ -63,6 +70,8 @@ public class studio_recent_page extends Fragment {
     boolean isFirstSetUp = true;
 
     public studio_recent_page() { }
+
+
 
     public static studio_recent_page newInstance() { return new studio_recent_page(); }
 
@@ -171,8 +180,11 @@ public class studio_recent_page extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.edit_photo:
                                 Intent designActivity = new Intent(getActivity(), DesignActivity.class);
-                                designActivity.putExtra("image_uri",
-                                        Objects.requireNonNull(imageItems.get(adapter1.getPositionSelectedItems().get(0)).getImageUri()));
+                                Uri uri = imageItems.get(adapter1.getPositionSelectedItems().get(0)).getImageUri();
+                                //designActivity.setData(uri);
+                                designActivity.setClipData(ClipData.newUri(requireActivity().getContentResolver(), "image_uri", uri));
+                                designActivity.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                //designActivity.putExtra("image_uri", uri);
                                 startActivity(designActivity);
                                 break;
                             case R.id.save_photo: break;
