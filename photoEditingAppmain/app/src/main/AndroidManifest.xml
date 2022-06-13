@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.photoeditingapp_main">
 
     <uses-permission
@@ -10,6 +11,7 @@
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:name="._Classes._GlobalVariables"
@@ -18,10 +20,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PhotoEditingAppmain">
+        android:theme="@style/Theme.PhotoEditingAppmain"
+        android:persistent="true"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".Activity_Design.DesignActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:persistableMode="persistAcrossReboots"/>
         <activity
             android:name=".Activity_Mainpage.MainpageActivity"
             android:exported="false" />
@@ -30,7 +35,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

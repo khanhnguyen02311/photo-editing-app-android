@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.UriPermission;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -55,11 +59,13 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
@@ -125,14 +131,36 @@ public class DesignActivity extends AppCompatActivity {
 
         configParameters = new ConfigParameters();
 
-        Bundle bundle = getIntent().getExtras();
+        //image_uri = (Uri) getIntent().getData();
+        if (getIntent().getClipData().getItemCount() == 1) image_uri = (Uri) getIntent().getClipData().getItemAt(0).getUri();
+        int receivedFlags = getIntent().getFlags();
+        if ((receivedFlags & Intent.FLAG_GRANT_READ_URI_PERMISSION) == 0)
+        {
+            Log.i("FLAGS", "Read URI permission flag not available");
+        }
+        try {
+            List<UriPermission> list = this.getContentResolver().getPersistedUriPermissions();
+            list.size();
+            imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+            imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
+        } catch (IOException e) { e.printStackTrace(); }
+
+        /*Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             image_uri = (Uri) bundle.get("image_uri");
             try {
+                *//*InputStream is = getContentResolver().openInputStream(image_uri);
+                imageBitmap = BitmapFactory.decodeStream(is);*//*
+                List<UriPermission> list = this.getContentResolver().getPersistedUriPermissions();
+                list.size();
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
                 imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());
             } catch (IOException e) { e.printStackTrace(); }
-        }
+
+            *//*String filePath = image_uri.getPath();
+            imageBitmap  = BitmapFactory.decodeFile(filePath);
+            imageView.setRatio((float)imageBitmap.getWidth() / imageBitmap.getHeight());*//*
+        }*/
 
         imageView.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
         imageView.setImage(image_uri);
@@ -255,7 +283,9 @@ public class DesignActivity extends AppCompatActivity {
                                                 e.printStackTrace();
                                             }
                                         }
-                                        Uri uri = Uri.parse(path.toString());
+                                        Uri uri = Uri.fromFile(path);
+
+                                        Log.i("PATH URI", uri.toString());
                                         if (gv.getLocalDB().addImageToStudio(name, uri)) {
                                             GeneralPictureItem addedItem = gv.getLocalDB().getLastAddedImage();
                                             if (addedItem.getImageName().equals(name) && gv.getLocalDB().updateConfigToImage(addedItem.getId(), getConfigParameters())) {
