@@ -1,6 +1,7 @@
 package com.example.photoeditingapp_main._Classes;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -16,15 +17,13 @@ import java.util.Random;
 
 public class _GlobalVariables extends Application {
     //public ArrayList<GeneralPictureItem> listDiscoverItem = new ArrayList<>();
-    //ContextWrapper contextWrapper = new ContextWrapper(this);
-    //File privateDir = contextWrapper.getDir("studioImages", Context.MODE_PRIVATE);
 
-    public ArrayList<GeneralPictureItem> listStudioItem = new ArrayList<>();
-    public File studioLocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/" + "StewdioImages");
+    ContextWrapper contextWrapper;
+    public File publicLocation;
+    public File privateLocation;
     private FirebaseFirestore firestoreDB;
     private _LocalDatabase localDB;
 
-    private final int REQUEST_CODE_PERMISSION = 101; //Read, modify and delete storage
     private final String[] REQUIRED_PERMISSIONS = new String[] {
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.READ_EXTERNAL_STORAGE"
@@ -37,16 +36,21 @@ public class _GlobalVariables extends Application {
     public void onCreate() {
         super.onCreate();
         localDB = new _LocalDatabase(this);
-        //localDB.resetTables();  for test database
+        //localDB.resetTables();
+
+        contextWrapper = new ContextWrapper(this);
+        privateLocation = contextWrapper.getDir("tempImages", Context.MODE_PRIVATE);
+        publicLocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + "StewdioImages");
 
         firestoreDB = FirebaseFirestore.getInstance();
-        if (!studioLocation.exists()) studioLocation.mkdirs();
-        String[] listImages = new String[]{};
+        if (!publicLocation.exists()) publicLocation.mkdirs();
+        if (!privateLocation.exists()) privateLocation.mkdirs();
+        /*String[] listImages = new String[]{};
         try {
             listImages = getAssets().list("TestImages");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public boolean allPermissionGranted() {

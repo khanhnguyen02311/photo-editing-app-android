@@ -1,6 +1,7 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
 import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
@@ -27,14 +30,18 @@ import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class studio_recent_page extends Fragment {
 
     _GlobalVariables gv;
-    ArrayList<GeneralPictureItem> imageItems;
+    ArrayList<GeneralPictureItem> imageItems = new ArrayList<>();
+    _AccountGridViewAdapter gridViewAdapter;
+    ExpandableGridView gridView;
 
     TextView albumAmount;
     TextView textPhoto;
@@ -46,7 +53,8 @@ public class studio_recent_page extends Fragment {
     BottomNavigationView bottomNavigationView;
     BottomNavigationView bottomNavigationView2;
 
-    MenuItem menuItem;
+    MenuItem menuItemSave;
+    MenuItem menuItemShare;
     MenuItem menuItemBlank;
 
     RelativeLayout relativeLayoutTitle;
@@ -62,6 +70,23 @@ public class studio_recent_page extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gv = (_GlobalVariables) requireActivity().getApplication();
+    }
+
+    @Override
+    public void onResume() {
+        //reset layouts
+        if (relativeLayoutSelectedImage.getVisibility() == View.VISIBLE) {
+            relativeLayoutTitle.setVisibility(View.VISIBLE);
+            relativeLayoutSelectedImage.setVisibility(View.GONE);
+        }
+        if (bottomNavigationView2.getVisibility() == View.VISIBLE) showBottomNavMainPage();
+        isFirstSetUp = true;
+
+        imageItems = gv.getLocalDB().getImagesFromStudio(true);
+        gridViewAdapter = new _AccountGridViewAdapter(getContext(), imageItems);
+        gridView.setAdapter(gridViewAdapter);
+        //Log.i(imageItems.get(0).getImageName(), imageItems.get(0).getImageUri().toString());
+        super.onResume();
     }
 
     @Override
@@ -87,17 +112,16 @@ public class studio_recent_page extends Fragment {
         bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_mainpage);
         bottomNavigationView2 = requireActivity().findViewById(R.id.bottom_navigation_mainpage_selected_image);
 
-        // Create a list of image items
-        imageItems = gv.getLocalDB().getImagesFromStudio();
-
-        menuItem = bottomNavigationView2.getMenu().getItem(1);
+        menuItemSave = bottomNavigationView2.getMenu().getItem(1);
+        menuItemShare = bottomNavigationView2.getMenu().getItem(2);
         menuItemBlank = bottomNavigationView2.getMenu().getItem(0);
+
         menuItemBlank.setEnabled(false);
         menuItemBlank.setVisible(false);
 
-        ExpandableGridView gridView = view.findViewById(R.id.grid_view_recent_page);
-        _AccountGridViewAdapter adapter = new _AccountGridViewAdapter(getContext(), imageItems);
-        gridView.setAdapter(adapter);
+        gridView = view.findViewById(R.id.grid_view_recent_page);
+        gridViewAdapter = new _AccountGridViewAdapter(getContext(), imageItems);
+        gridView.setAdapter(gridViewAdapter);
 
         // Item click in grid view
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,28 +140,49 @@ public class studio_recent_page extends Fragment {
                     adapter1.setSelected(i, false);
                 }
                 if (adapter1.getPositionSelectedItems().size() != 0) {
-                    if(isFirstSetUp) {
-                        relativeLayoutTitle.setVisibility(View.INVISIBLE);
+                    if (isFirstSetUp) {
+                        relativeLayoutTitle.setVisibility(View.GONE);
                         relativeLayoutSelectedImage.setVisibility(View.VISIBLE);
                         isFirstSetUp = false;
                         showBottomNavSelectImage();
                     }
                     if(adapter1.getPositionSelectedItems().size() == 1) {
-                        menuItem.setVisible(true);
+                        menuItemSave.setVisible(true);
+                        menuItemShare.setVisible(true);
                     }
                     else {
-                        if(menuItem.isEnabled()) {
-                            menuItem.setVisible(false);
+                        if(menuItemSave.isEnabled()) {
+                            menuItemSave.setVisible(false);
+                            menuItemShare.setVisible(false);
                         }
                     }
                     setText(adapter1.getPositionSelectedItems().size(), albumAmount, textPhoto);
                 }
                 else {
                     relativeLayoutTitle.setVisibility(View.VISIBLE);
-                    relativeLayoutSelectedImage.setVisibility(View.INVISIBLE);
+                    relativeLayoutSelectedImage.setVisibility(View.GONE);
                     isFirstSetUp = true;
                     showBottomNavMainPage();
                 }
+
+                bottomNavigationView2.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.edit_photo:
+                                Intent designActivity = new Intent(getActivity(), DesignActivity.class);
+                                designActivity.putExtra("image_uri",
+                                        Objects.requireNonNull(imageItems.get(adapter1.getPositionSelectedItems().get(0)).getImageUri()));
+                                startActivity(designActivity);
+                                break;
+                            case R.id.save_photo: break;
+                            case R.id.share_photo: break;
+                            case R.id.delete_photo: break;
+                            case R.id.blank: default: break;
+                        }
+                        return true;
+                    }
+                });
             }
         });
 
@@ -185,16 +230,16 @@ public class studio_recent_page extends Fragment {
             @Override
             public void onClick(View v) {
                 relativeLayoutTitle.setVisibility(View.VISIBLE);
-                relativeLayoutSelectedImage.setVisibility(View.INVISIBLE);
+                relativeLayoutSelectedImage.setVisibility(View.GONE);
 
-                List<Integer> positionSelectedItems = adapter.getPositionSelectedItems();
+                List<Integer> positionSelectedItems = gridViewAdapter.getPositionSelectedItems();
                 for (int i = 0; i < positionSelectedItems.size(); i++) {
-                    View view=gridView.getChildAt(positionSelectedItems.get(i));
+                    View view = gridView.getChildAt(positionSelectedItems.get(i));
                     if (view != null) {
                         endAnimation(view.findViewById(R.id.imageView_custom_item_gridview_account_page), view.findViewById(R.id.cardView_custom_item_gridview_account_page));
                     }
                 }
-                adapter.clearSelected();
+                gridViewAdapter.clearSelected();
                 isFirstSetUp = true;
                 showBottomNavMainPage();
             }
@@ -204,25 +249,26 @@ public class studio_recent_page extends Fragment {
         selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Integer> positionDeselectedItems = adapter.getPositionDeselectedItems();
+                List<Integer> positionDeselectedItems = gridViewAdapter.getPositionDeselectedItems();
                 for (int i = 0; i < positionDeselectedItems.size(); i++) {
                     View view= gridView.getChildAt(positionDeselectedItems.get(i));
                     if (view != null) {
                         startAnimation(view.findViewById(R.id.imageView_custom_item_gridview_account_page), view.findViewById(R.id.cardView_custom_item_gridview_account_page));
                     }
                 }
-                if(adapter.getPositionSelectedItems().size() == 1){
-                    menuItem.setVisible(false);
+                if (gridViewAdapter.getPositionSelectedItems().size() == 1) {
+                    menuItemSave.setVisible(false);
+                    menuItemShare.setVisible(false);
                 }
-                adapter.setAllSelected();
-                adapter.notifyDataSetChanged();
-                setText(adapter.getPositionSelectedItems().size(),albumAmount,textPhoto);
+                gridViewAdapter.setAllSelected();
+                gridViewAdapter.notifyDataSetChanged();
+                setText(gridViewAdapter.getPositionSelectedItems().size(),albumAmount,textPhoto);
             }
         });
 
         // Set up  bottom navigation
-        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_mainpage_selected_image);
-        /*bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        /*BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_mainpage_selected_image);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -243,12 +289,7 @@ public class studio_recent_page extends Fragment {
     private void setText(int size, TextView albumAmount, TextView textPhoto) {
         String amount = String.valueOf(size);
         albumAmount.setText(amount);
-        if (size == 1) {
-            textPhoto.setText("Photo Selected");
-        }
-        else {
-            textPhoto.setText("Photos Selected");
-        }
+        textPhoto.setText("Selected");
     }
 
     private void showBottomNavSelectImage() {
@@ -265,7 +306,7 @@ public class studio_recent_page extends Fragment {
     // Start animation when select image item
     private void startAnimation(SquareImageView squareImageView, MaterialCardView cardView) {
         squareImageView.setCornerRadius(32);
-        ObjectAnimator animator = ObjectAnimator.ofArgb(cardView, "strokeColor", Color.parseColor("#646464"));
+        ObjectAnimator animator = ObjectAnimator.ofArgb(cardView, "strokeColor", Color.parseColor("#505050"));
         animator.setDuration(100);
         animator.start();
     }
@@ -273,9 +314,8 @@ public class studio_recent_page extends Fragment {
     // End animation when deselect image item
     private void endAnimation(SquareImageView squareImageView, MaterialCardView cardView) {
         squareImageView.setCornerRadius(0);
-        ObjectAnimator animator = ObjectAnimator.ofArgb(cardView, "strokeColor", Color.parseColor("#00646464"));
+        ObjectAnimator animator = ObjectAnimator.ofArgb(cardView, "strokeColor", Color.parseColor("#00505050"));
         animator.setDuration(100);
         animator.start();
     }
-
 }

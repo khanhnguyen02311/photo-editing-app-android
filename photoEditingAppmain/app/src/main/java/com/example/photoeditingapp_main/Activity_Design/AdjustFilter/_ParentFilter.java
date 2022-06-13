@@ -37,8 +37,6 @@ public abstract class _ParentFilter {
     public abstract GPUImageFilter getFilter();
 
     public void storePreviousFilterIntensity() {
-        for (_AdjustConfig cfg: listConfig) {
-            cfg.rewritePreviousIntensity();
-        }
+        for (_AdjustConfig cfg: listConfig) cfg.rewritePreviousIntensity();
     }
 }
