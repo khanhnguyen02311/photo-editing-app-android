@@ -21,17 +21,18 @@
                 android:id="@+id/relativeLayout_studio_recent_page_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/album_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RECENTLY ADDED"
-                android:layout_centerVertical="true"
-                android:textAllCaps="true"
-                android:textColor="@color/app_dark_gray"
-                android:fontFamily="@font/arsenal_bold"
-                android:textSize="20dp"
-                android:layout_marginStart="5dp" />
+
+                <TextView
+                    android:id="@+id/album_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/arsenal_bold"
+                    android:text="RECENTLY ADDED"
+                    android:textAllCaps="true"
+                    android:textColor="@color/app_dark_gray"
+                    android:textSize="20dp" />
 
             <ImageButton
                 android:id="@+id/more_button_recent_page"
