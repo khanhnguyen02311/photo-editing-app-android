@@ -76,26 +76,26 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/textFieldUsername"
+            android:id="@+id/textFieldAccountname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
-            android:hint="Username"
+            android:hint="Account Name"
             app:errorIconDrawable="@null"
             app:errorEnabled="false"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/usernameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="Khang Huynh"
-            android:digits="@string/acc_mail_combo_input_filter"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/accountnameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="Khang Huynh"
+                android:digits="@string/acc_mail_combo_input_filter"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -125,7 +125,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Password"
+            android:text="Change Account Information"
             android:layout_marginStart="10dp"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
@@ -137,6 +137,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/textFieldUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                android:hint="Username"
+                app:errorIconDrawable="@null"
+                app:errorEnabled="false"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usernameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="Khang Huynh"
+                    android:digits="@string/acc_mail_combo_input_filter"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textFieldPassword"
