@@ -155,11 +155,12 @@ public class signin_page extends Fragment {
             public void onClick(View view) {
 
                 //Remove later
-                Intent intent = new Intent(getActivity(), MainpageActivity.class);
+                /*Intent intent = new Intent(getActivity(), MainpageActivity.class);
                 intent.putExtra("usr", "DEBUG");
-                startActivity(intent);
+                startActivity(intent);*/
 
                 ProgressDialog pd = new ProgressDialog(view.getContext());
+                pd.setCanceledOnTouchOutside(false);
                 pd.setMessage("Loading");
                 pd.show();
 
@@ -195,11 +196,13 @@ public class signin_page extends Fragment {
                                     }
                         });
                     } else {
-                        firestoreDB.collection("users").whereEqualTo("email", acc).whereEqualTo("psw", psw).get()
+                        firestoreDB.collection("users").whereEqualTo("email", acc).whereEqualTo("psw", gv.hashingAlgorithm(psw)).get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot snapshot) {
                                         if (!snapshot.isEmpty()) {
+                                            String username = (String) snapshot.getDocuments().get(0).get("usr");
+                                            if (gv.getLocalDB().setActiveUser(username, gv.hashingAlgorithm(psw))) Log.i("SETACTIVEUSER", username);
                                             pd.dismiss();
                                             Intent intent = new Intent(getActivity(), MainpageActivity.class);
                                             intent.putExtra("usr", snapshot.getDocuments().get(0).get("usr").toString());

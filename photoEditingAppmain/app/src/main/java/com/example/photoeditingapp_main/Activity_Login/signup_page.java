@@ -247,6 +247,7 @@ public class signup_page extends Fragment {
             @Override
             public void onClick(View view) {
                 ProgressDialog pd = new ProgressDialog(view.getContext());
+                pd.setCanceledOnTouchOutside(false);
                 pd.setMessage("Loading");
                 pd.show();
 

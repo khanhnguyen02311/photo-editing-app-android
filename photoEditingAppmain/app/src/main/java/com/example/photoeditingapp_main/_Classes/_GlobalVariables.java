@@ -55,20 +55,6 @@ public class _GlobalVariables extends Application {
 
         if (!publicLocation.exists()) publicLocation.mkdirs();
         if (!privateLocation.exists()) privateLocation.mkdirs();
-        /*String[] listImages = new String[]{};
-        try {
-            listImages = getAssets().list("TestImages");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    public boolean checkAccount() {
-        ArrayList<String> deviceAccount = localDB.getActiveUser();
-        if (deviceAccount.size() != 0) return false;
-        QuerySnapshot snapshot = firestoreDB.collection("users")
-                .whereEqualTo("usr", deviceAccount.get(0)).whereEqualTo("psw", deviceAccount.get(1)).get().getResult();
-        return snapshot.isEmpty();
     }
 
     public String hashingAlgorithm(String s) {

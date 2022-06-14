@@ -170,6 +170,11 @@ public class _LocalDatabase extends SQLiteOpenHelper {
         return account;
     }
 
+    public void clearActiveUser() {
+        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
+        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
+    }
+
     public int getImageStudioSize() {
         Cursor cursor = onGetData("SELECT COUNT(*) FROM " + TABLE_STUDIO);
         cursor.moveToFirst();

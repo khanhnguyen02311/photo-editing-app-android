@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -18,16 +19,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.photoeditingapp_main.Activity_Login.LoginActivity;
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainpageActivity extends AppCompatActivity {
 
+    _GlobalVariables gv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
+
+        gv = (_GlobalVariables) getApplication();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_mainpage);
         TextView pageName = findViewById(R.id.pageName);
@@ -41,7 +48,7 @@ public class MainpageActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu= new PopupMenu(view.getContext(), view);
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
                 popupMenu.getMenuInflater().inflate(R.menu.more_button_menu_mainpage,popupMenu.getMenu());
 
                 // Set icon for popup menu
@@ -52,9 +59,13 @@ public class MainpageActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.sign_out:
+                                gv.getLocalDB().clearActiveUser();
+                                Intent intent = new Intent(getApplication(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                                 break;
-                            default:
-                                break;
+                            case R.id.credit: break;
+                            default: break;
                         }
                         return true;
                     }

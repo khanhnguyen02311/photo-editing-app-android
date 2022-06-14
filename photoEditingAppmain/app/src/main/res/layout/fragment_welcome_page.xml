@@ -26,51 +26,56 @@
 
     </RelativeLayout>
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:fontFamily="@font/ablation_regular"
-        android:text="STEWDIO"
-        android:textColor="@color/text_primary_black"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="25dp"
-        android:fontFamily="@font/almarai_light"
-        android:text="For a better experience"
-        android:textColor="@color/text_secondary_black"
-        android:textSize="20sp"
-        android:textStyle="normal"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/ablation_regular"
+            android:padding="2dp"
+            android:text="STEWDIO"
+            android:textColor="@color/text_primary_black"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginVertical="25dp"
+            android:fontFamily="@font/almarai_light"
+            android:text="For a better experience"
+            android:textColor="@color/text_secondary_black"
+            android:textSize="20sp"
+            android:textStyle="normal"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gsBtn"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Get started"
+            android:textAllCaps="false"
+            android:textColor="@color/app_white"
+            android:textSize="20sp"
+            app:cornerRadius="25dp"
+            android:backgroundTint="@color/app_teal_accent_light"
+            app:strokeColor="@color/app_teal_accent_light"
+            app:strokeWidth="2dp" />
+
+    </LinearLayout>
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/gsBtn"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="20dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="Get started"
-        android:textAllCaps="false"
-        android:textColor="@color/app_white"
-        android:textSize="20sp"
-        app:cornerRadius="25dp"
-        android:backgroundTint="@color/app_teal_accent_light"
-        app:strokeColor="@color/app_teal_accent_light"
-        app:strokeWidth="2dp" />
-</RelativeLayout>
 
 
 </LinearLayout>
