@@ -2,6 +2,7 @@ package com.example.photoeditingapp_main._Classes;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,6 +12,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class _LocalDatabase extends SQLiteOpenHelper {
@@ -18,6 +20,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "DATABASE_Stewdio";
     public static final String TABLE_STUDIO = "TABLE_ImageStudio";
     public static final String TABLE_CONFIG = "TABLE_ImageConfig";
+    public static final String TABLE_ACCOUNT = "TABLE_Account";
 
     public static final String COLUMN_Studio_ID = "ID";
     public static final String COLUMN_Studio_ImageName = "NAME";
@@ -26,6 +29,9 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public static final String COLUMN_Config_ID = "ID";
     public static final String[] COLUMN_Configs;
+
+    public static final String COLUMN_Account_ID = "ID";
+    public static final String COLUMN_Account_Password = "PASSWORD";
 
     static { COLUMN_Configs = new String[] {
                 "EXPOSURE",
@@ -72,6 +78,10 @@ public class _LocalDatabase extends SQLiteOpenHelper {
             COLUMN_Studio_ImageUri + " NVARCHAR(255), " +
             COLUMN_Studio_ImageConfig + " INTEGER, " +
             "FOREIGN KEY (" + COLUMN_Studio_ImageConfig + ") REFERENCES " + TABLE_CONFIG + "(" + COLUMN_Config_ID + "))";
+    public static final String SQL_CREATE_TABLE_ACCOUNT =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_ACCOUNT + " (" +
+            COLUMN_Account_ID + " NVARCHAR(255), " +
+            COLUMN_Account_Password + " NVARCHAR(255))";
 
 
     public _LocalDatabase(@Nullable Context context) {
@@ -82,12 +92,14 @@ public class _LocalDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_TABLE_CONFIG);
         sqLiteDatabase.execSQL(SQL_CREATE_TABLE_STUDIO);
+        sqLiteDatabase.execSQL(SQL_CREATE_TABLE_ACCOUNT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVer, int newVer) {
         sqLiteDatabase.execSQL(SQL_DROP_TABLE + TABLE_STUDIO);
         sqLiteDatabase.execSQL(SQL_DROP_TABLE + TABLE_CONFIG);
+        sqLiteDatabase.execSQL(SQL_DROP_TABLE + TABLE_ACCOUNT);
         onCreate(sqLiteDatabase);
     }
 
@@ -106,16 +118,19 @@ public class _LocalDatabase extends SQLiteOpenHelper {
     public void createTables() {
         onQueryData(SQL_CREATE_TABLE_CONFIG);
         onQueryData(SQL_CREATE_TABLE_STUDIO);
+        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
     }
 
     public void resetTables() {
         onQueryData(SQL_DROP_TABLE + TABLE_STUDIO);
         onQueryData(SQL_DROP_TABLE + TABLE_CONFIG);
+        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
         createTables();
     }
 
     public GeneralPictureItem getLastAddedImage() {
         Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_STUDIO + " ORDER BY " + COLUMN_Studio_ID + " DESC LIMIT 1");
+        cursor.moveToFirst();
         GeneralPictureItem item = getImageItemFromCursor(cursor);
         cursor.close();
         return item;
@@ -123,6 +138,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public ConfigParameters getLastAddedConfig() {
         Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_CONFIG + " ORDER BY " + COLUMN_Config_ID + " DESC LIMIT 1");
+        cursor.moveToFirst();
         ConfigParameters config = getConfigItemFromCursor(cursor);
         cursor.close();
         return config;
@@ -130,6 +146,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public GeneralPictureItem getImageFromTable(int id) {
         Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_STUDIO + " WHERE " + COLUMN_Studio_ID + " = " + id);
+        cursor.moveToFirst();
         GeneralPictureItem item = getImageItemFromCursor(cursor);
         cursor.close();
         return item;
@@ -137,6 +154,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public ConfigParameters getConfigFromTable(int id) {
         Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_CONFIG + " WHERE " + COLUMN_Config_ID + " = " + id);
+        cursor.moveToFirst();
         ConfigParameters config = getConfigItemFromCursor(cursor);
         cursor.close();
         return config;
@@ -191,12 +209,26 @@ public class _LocalDatabase extends SQLiteOpenHelper {
                 foreignKey.put(COLUMN_Studio_ImageConfig, cursor.getInt(0));
                 long update = dtb.update(TABLE_STUDIO, foreignKey, COLUMN_Studio_ID+"=?", new String[]{Integer.toString(studioImageID)});
                 cursor.close();
-                return update == -1;
+                return update != -1;
             } else {
                 cursor.close();
                 return false;
             }
         } else return false;
+    }
+
+    public boolean deleteImagesFromStudio(ArrayList<Integer> ids) {
+        SQLiteDatabase dtb = getWritableDatabase();
+        long deleteConfig = 0, deleteStudio = 0;
+        for (int id: ids) {
+            Cursor cursor = onGetData("SELECT "+TABLE_CONFIG+"."+COLUMN_Config_ID+" FROM "+TABLE_CONFIG+" WHERE "+TABLE_CONFIG+"."+COLUMN_Config_ID+" IN (SELECT "+TABLE_STUDIO+"."+COLUMN_Studio_ImageConfig+" FROM "+TABLE_STUDIO+" WHERE "+TABLE_STUDIO+"."+COLUMN_Studio_ID+" = "+id+")");
+            if (cursor.moveToFirst()) {
+                deleteConfig = dtb.delete(TABLE_CONFIG, COLUMN_Config_ID+"=?", new String[]{Integer.toString(cursor.getInt(0))});
+            }
+            deleteStudio = dtb.delete(TABLE_STUDIO, COLUMN_Studio_ID+"=?", new String[]{Integer.toString(id)});
+            if (deleteConfig == -1 || deleteStudio == -1) return false;
+        }
+        return true;
     }
 
 

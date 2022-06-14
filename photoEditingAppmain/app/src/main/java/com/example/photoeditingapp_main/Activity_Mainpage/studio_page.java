@@ -1,6 +1,7 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes.CameraActivity;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes._StudioViewPager2Adapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -47,7 +51,8 @@ public class studio_page extends Fragment {
     FabOption importBtn, cameraBtn;
     ArrayList<Fragment> listViewPagerFragment;
 
-    ActivityResultLauncher<String[]> imageContent = registerForActivityResult(new ActivityResultContracts.OpenDocument(),
+
+    ActivityResultLauncher <String[]> imageContent = registerForActivityResult(new ActivityResultContracts.OpenDocument(),
         new ActivityResultCallback<Uri>() {
             @SuppressLint("Range")
             @Override
@@ -134,6 +139,14 @@ public class studio_page extends Fragment {
             @Override
             public void onClick(View view) {
                 imageContent.launch(new String[]{"image/*"});
+            }
+        });
+
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraActivity = new Intent(requireContext(), CameraActivity.class);
+                startActivity(cameraActivity);
             }
         });
     }

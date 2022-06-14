@@ -38,7 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private final int REQUEST_CODE_PERMISSION = 101; //Read, modify and delete storage
     private final String[] REQUIRED_PERMISSIONS = new String[]{
             "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.READ_EXTERNAL_STORAGE"
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.CAMERA"
     };
 
     public boolean allPermissionGranted() {

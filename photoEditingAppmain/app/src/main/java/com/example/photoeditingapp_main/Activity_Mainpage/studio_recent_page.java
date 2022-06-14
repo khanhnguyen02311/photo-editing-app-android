@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,12 +40,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
 public class studio_recent_page extends Fragment {
+
+    Calendar calendar = Calendar.getInstance();
 
     _GlobalVariables gv;
     ArrayList<GeneralPictureItem> imageItems = new ArrayList<>();
@@ -60,7 +71,7 @@ public class studio_recent_page extends Fragment {
     BottomNavigationView bottomNavigationView;
     BottomNavigationView bottomNavigationView2;
 
-    MenuItem menuItemSave;
+    MenuItem menuItemEdit;
     MenuItem menuItemShare;
     MenuItem menuItemBlank;
 
@@ -121,9 +132,9 @@ public class studio_recent_page extends Fragment {
         bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_mainpage);
         bottomNavigationView2 = requireActivity().findViewById(R.id.bottom_navigation_mainpage_selected_image);
 
-        menuItemSave = bottomNavigationView2.getMenu().getItem(1);
-        menuItemShare = bottomNavigationView2.getMenu().getItem(2);
-        menuItemBlank = bottomNavigationView2.getMenu().getItem(0);
+        menuItemEdit = bottomNavigationView2.getMenu().findItem(R.id.edit_photo);
+        menuItemShare = bottomNavigationView2.getMenu().findItem(R.id.share_photo);
+        menuItemBlank = bottomNavigationView2.getMenu().findItem(R.id.blank);
 
         menuItemBlank.setEnabled(false);
         menuItemBlank.setVisible(false);
@@ -155,13 +166,13 @@ public class studio_recent_page extends Fragment {
                         isFirstSetUp = false;
                         showBottomNavSelectImage();
                     }
-                    if(adapter1.getPositionSelectedItems().size() == 1) {
-                        menuItemSave.setVisible(true);
+                    if (adapter1.getPositionSelectedItems().size() == 1) {
+                        menuItemEdit.setVisible(true);
                         menuItemShare.setVisible(true);
                     }
                     else {
-                        if(menuItemSave.isEnabled()) {
-                            menuItemSave.setVisible(false);
+                        if (menuItemEdit.isEnabled()) {
+                            menuItemEdit.setVisible(false);
                             menuItemShare.setVisible(false);
                         }
                     }
@@ -187,9 +198,54 @@ public class studio_recent_page extends Fragment {
                                 //designActivity.putExtra("image_uri", uri);
                                 startActivity(designActivity);
                                 break;
-                            case R.id.save_photo: break;
+
+                            case R.id.save_photo:
+                                List<Integer> listSelectedSave = gridViewAdapter.getPositionSelectedItems();
+                                Log.i("ITEMS", Integer.toString(listSelectedSave.size()));
+                                ArrayList<Uri> listUri = new ArrayList<>();
+                                for (int selectedItem: listSelectedSave) listUri.add(imageItems.get(selectedItem).getImageUri());
+                                for (Uri uris: listUri) {
+                                    Log.i("URI ITEMS", uris.toString());
+                                    String name = calendar.getTimeInMillis() + ".png";
+                                    try {
+                                        InputStream is = requireContext().getContentResolver().openInputStream(uris);
+                                        Bitmap exported = BitmapFactory.decodeStream(is);
+                                        File path = new File(gv.publicLocation, name);
+                                        FileOutputStream fos = null;
+                                        try {
+                                            fos = new FileOutputStream(path);
+                                            exported.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                                        } catch (Exception e) {
+                                            Log.i("ERROR", uris.toString());
+                                            e.printStackTrace();
+                                        } finally {
+                                            try {
+                                                Objects.requireNonNull(fos).close();
+                                                is.close();
+                                                Snackbar snackbar = Snackbar.make(requireView(), "Save image completed.", 1000);
+                                                snackbar.show();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                break;
+
                             case R.id.share_photo: break;
-                            case R.id.delete_photo: break;
+
+                            case R.id.delete_photo:
+                                List<Integer> listSelectedDelete = gridViewAdapter.getPositionSelectedItems();
+                                ArrayList<Integer> ids = new ArrayList<>();
+                                for (int selectedItem: listSelectedDelete) ids.add(imageItems.get(selectedItem).getId());
+                                if (gv.getLocalDB().deleteImagesFromStudio(ids)) {
+                                    Snackbar snackbar = Snackbar.make(requireView(), "Delete images completed.", 1000);
+                                    snackbar.show();
+                                }
+                                onResume();
+                                break;
                             case R.id.blank: default: break;
                         }
                         return true;
@@ -269,7 +325,7 @@ public class studio_recent_page extends Fragment {
                     }
                 }
                 if (gridViewAdapter.getPositionSelectedItems().size() == 1) {
-                    menuItemSave.setVisible(false);
+                    menuItemEdit.setVisible(false);
                     menuItemShare.setVisible(false);
                 }
                 gridViewAdapter.setAllSelected();

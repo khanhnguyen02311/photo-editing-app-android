@@ -3,12 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/add_photo"
-        android:icon="@drawable/ic_add"
-        android:title="    Add Photo"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/zoom_in"
         android:icon="@drawable/ic_search_zoom_in"
         android:title="    Zoom In"
