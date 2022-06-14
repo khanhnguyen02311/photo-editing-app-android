@@ -54,6 +54,7 @@ import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes._DesignGeneralAdapter;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -267,6 +268,7 @@ public class DesignActivity extends AppCompatActivity {
                             public void onClick(View view, int position) {
                                 switch (position) {
                                     case 0:
+                                        onPause();
                                         String name = calendar.getTimeInMillis() + ".png";
                                         Bitmap exported = imageView.getGPUImage().getBitmapWithFilterApplied();
                                         File path = new File(gv.privateLocation, name);
@@ -289,7 +291,9 @@ public class DesignActivity extends AppCompatActivity {
                                         if (gv.getLocalDB().addImageToStudio(name, uri)) {
                                             GeneralPictureItem addedItem = gv.getLocalDB().getLastAddedImage();
                                             if (addedItem.getImageName().equals(name) && gv.getLocalDB().updateConfigToImage(addedItem.getId(), getConfigParameters())) {
-                                                Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
+                                                Log.i("SUCCESS", uri + " " + name + " " + addedItem.getImageName());
+                                                Snackbar snackbar = Snackbar.make(view, "Image saved to Studio.", 1000);
+                                                snackbar.show();
                                                 DesignActivity.super.onBackPressed();
                                             } else Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
                                         } else Log.i("FAILED", uri + " " + name);

@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,22 +26,25 @@ public class _GlobalVariables extends Application {
     public File publicLocation;
     public File privateLocation;
     private FirebaseFirestore firestoreDB;
+    private FirebaseStorage storageDB;
     private _LocalDatabase localDB;
 
     public FirebaseFirestore getFirestoreDB() {return firestoreDB;}
+    public FirebaseStorage getStorageDB() {return storageDB;}
     public _LocalDatabase getLocalDB() {return localDB;}
 
     @Override
     public void onCreate() {
         super.onCreate();
         localDB = new _LocalDatabase(this);
+        firestoreDB = FirebaseFirestore.getInstance();
+        storageDB = FirebaseStorage.getInstance();
         //localDB.resetTables();
 
         contextWrapper = new ContextWrapper(this);
         privateLocation = contextWrapper.getDir("tempImages", Context.MODE_PRIVATE);
-        publicLocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/" + "StewdioImages");
+        publicLocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString());
 
-        firestoreDB = FirebaseFirestore.getInstance();
         if (!publicLocation.exists()) publicLocation.mkdirs();
         if (!privateLocation.exists()) privateLocation.mkdirs();
         /*String[] listImages = new String[]{};
