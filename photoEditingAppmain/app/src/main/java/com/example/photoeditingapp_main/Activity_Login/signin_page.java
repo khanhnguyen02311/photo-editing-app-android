@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.Activity_Mainpage.MainpageActivity;
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -33,6 +34,8 @@ import com.google.firebase.firestore.QuerySnapshot;
  * create an instance of this fragment.
  */
 public class signin_page extends Fragment {
+
+    _GlobalVariables gv;
 
     final String
             EMPTY_ERROR = "Field can't be empty",
@@ -84,6 +87,8 @@ public class signin_page extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        gv = (_GlobalVariables) requireActivity().getApplication();
     }
 
     @Override
@@ -154,7 +159,7 @@ public class signin_page extends Fragment {
                 intent.putExtra("usr", "DEBUG");
                 startActivity(intent);
 
-                /*ProgressDialog pd = new ProgressDialog(view.getContext());
+                ProgressDialog pd = new ProgressDialog(view.getContext());
                 pd.setMessage("Loading");
                 pd.show();
 
@@ -167,14 +172,14 @@ public class signin_page extends Fragment {
                 if ( !acc.isEmpty() && !psw.isEmpty() &&
                         accountLayout.getError() == null && passwordLayout.getError() == null) {
                     if (!Patterns.EMAIL_ADDRESS.matcher(acc).matches()) {
-                        firestoreDB.collection("users").whereEqualTo("usr", acc).whereEqualTo("psw", psw).get()
+                        firestoreDB.collection("users").whereEqualTo("usr", acc).whereEqualTo("psw", gv.hashingAlgorithm(psw)).get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot snapshot) {
                                         if (!snapshot.isEmpty()) {
+                                            if (gv.getLocalDB().setActiveUser(acc, gv.hashingAlgorithm(psw))) Log.i("SETACTIVEUSER", acc);
                                             pd.dismiss();
                                             Intent intent = new Intent(getActivity(), MainpageActivity.class);
-                                            intent.putExtra("usr", acc);
                                             startActivity(intent);
                                         } else {
                                             pd.dismiss();
@@ -216,7 +221,7 @@ public class signin_page extends Fragment {
                 } else {
                     pd.dismiss();
                     declineBar.show();
-                }*/
+                }
             }
         });
     }
