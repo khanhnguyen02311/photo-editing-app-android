@@ -55,20 +55,20 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/gsBtn"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="Get started"
         android:textAllCaps="false"
-        android:textColor="@color/app_dark_gray"
+        android:textColor="@color/app_white"
         android:textSize="20sp"
         app:cornerRadius="25dp"
-        app:strokeColor="@color/app_light_gray"
+        android:backgroundTint="@color/app_teal_accent_light"
+        app:strokeColor="@color/app_teal_accent_light"
         app:strokeWidth="2dp" />
 </RelativeLayout>
 
