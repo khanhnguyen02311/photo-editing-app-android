@@ -160,6 +160,21 @@ public class _LocalDatabase extends SQLiteOpenHelper {
         return config;
     }
 
+    public ArrayList<String> getActiveUser() {
+        Cursor cursor = onGetData(SQL_SELECT_TABLE + TABLE_ACCOUNT);
+        ArrayList<String> account = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            account.add(cursor.getString(0));
+            account.add(cursor.getString(1));
+        }
+        return account;
+    }
+
+    public void clearActiveUser() {
+        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
+        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
+    }
+
     public int getImageStudioSize() {
         Cursor cursor = onGetData("SELECT COUNT(*) FROM " + TABLE_STUDIO);
         cursor.moveToFirst();
@@ -174,6 +189,17 @@ public class _LocalDatabase extends SQLiteOpenHelper {
         int temp = cursor.getInt(0);
         cursor.close();
         return temp;
+    }
+
+    public boolean setActiveUser(String usr, String psw) {
+        SQLiteDatabase dtb = getWritableDatabase();
+        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
+        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_Account_ID, usr);
+        cv.put(COLUMN_Account_Password, psw);
+        long insert = dtb.insert(TABLE_ACCOUNT, null, cv);
+        return insert != -1;
     }
 
     public boolean addImageToStudio(String name, Uri _uri) {

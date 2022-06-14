@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginVertical="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/sourcesans3_medium"
                 android:text="See more"
@@ -38,20 +38,79 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:fel_edge="left|right"
-            app:fel_size_left="15dp"
-            app:fel_size_right="15dp">
+            app:fel_size_left="17dp"
+            app:fel_size_right="17dp">
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:scrollbars="none"
-                android:paddingStart="17dp"
-                android:paddingEnd="17dp"
+                android:paddingHorizontal="17dp"
                 android:clipToPadding="false">
 
                 <LinearLayout
                     android:id="@+id/LinearLayoutRecently"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_black"
+        android:layout_marginHorizontal="20dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arsenal_bold"
+                android:text="Trending"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sourcesans3_medium"
+                android:text="See more"
+                android:textColor="@color/app_teal_accent_dark"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <com.bosphere.fadingedgelayout.FadingEdgeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:fel_edge="left|right"
+            app:fel_size_left="17dp"
+            app:fel_size_right="17dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:scrollbars="none"
+                android:paddingHorizontal="17dp"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutTrending"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -67,65 +126,12 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/app_black"
-        android:layout_marginHorizontal="20dp" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/arsenal_bold"
-                android:text="Trending"
-                android:textSize="25sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/sourcesans3_medium"
-                android:text="See more"
-                android:textColor="@color/app_teal_accent_dark"
-                android:textSize="15sp" />
-        </RelativeLayout>
-
-        <com.bosphere.fadingedgelayout.FadingEdgeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:fel_edge="left|right"
-            app:fel_size_left="15dp"
-            app:fel_size_right="15dp">
-
-
-        </com.bosphere.fadingedgelayout.FadingEdgeLayout>
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        android:paddingStart="17dp"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:id="@+id/LinearLayoutTrending"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/app_black"
         android:layout_marginHorizontal="20dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginVertical="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -137,26 +143,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/sourcesans3_medium"
                 android:text="See more"
                 android:textColor="@color/app_teal_accent_dark"
                 android:textSize="15sp" />
         </RelativeLayout>
-    <HorizontalScrollView
+
+    <com.bosphere.fadingedgelayout.FadingEdgeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scrollbars="none"
-        android:paddingStart="17dp"
-        android:clipToPadding="false">
-        <LinearLayout
-            android:id="@+id/LinearLayoutDiscovery"
+        android:layout_height="match_parent"
+        app:fel_edge="left|right"
+        app:fel_size_left="17dp"
+        app:fel_size_right="17dp">
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </LinearLayout>
-    </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none"
+            android:paddingHorizontal="17dp"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutDiscovery"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+    </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+
     </LinearLayout>
 </ScrollView>

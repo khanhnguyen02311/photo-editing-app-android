@@ -1,5 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Login;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ThreadLockedTask;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,6 +55,8 @@ import java.util.Objects;
  */
 
 public class signup_page extends Fragment {
+
+    _GlobalVariables gv;
 
     final String
             EMPTY_ERROR = "Field can't be empty",
@@ -109,6 +113,7 @@ public class signup_page extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        gv = (_GlobalVariables) requireActivity().getApplication();
     }
 
     @Override
@@ -242,6 +247,7 @@ public class signup_page extends Fragment {
             @Override
             public void onClick(View view) {
                 ProgressDialog pd = new ProgressDialog(view.getContext());
+                pd.setCanceledOnTouchOutside(false);
                 pd.setMessage("Loading");
                 pd.show();
 
@@ -255,7 +261,7 @@ public class signup_page extends Fragment {
                 String psw = passwordText.getText().toString();
                 String cfpsw = confirmPasswordText.getText().toString();
 
-                if ( !usr.isEmpty() && !email.isEmpty() && !psw.isEmpty() && !cfpsw.isEmpty() &&
+                if (!usr.isEmpty() && !email.isEmpty() && !psw.isEmpty() && !cfpsw.isEmpty() &&
                         usernameLayout.getError() == null &&
                         emailLayout.getError() == null &&
                         passwordLayout.getError() == null &&
@@ -274,7 +280,7 @@ public class signup_page extends Fragment {
                                             Map<String, Object> user = new HashMap<>();
                                             user.put("usr", usr);
                                             user.put("email", email);
-                                            user.put("psw", psw);
+                                            user.put("psw", gv.hashingAlgorithm(psw));
 
                                             firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
