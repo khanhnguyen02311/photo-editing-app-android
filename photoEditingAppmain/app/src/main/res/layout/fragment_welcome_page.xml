@@ -1,41 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Activity_Login.welcome_page">
+    tools:context=".Activity_Login.welcome_page"
+    android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/welcome_background2"
-        android:scaleType="centerCrop"
-        android:foreground="#76000000"/>
+        android:layout_height="400dp"
+        android:background="@drawable/get_started_background">
+        <androidx.cardview.widget.CardView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@color/app_white"
+            app:cardCornerRadius="20dp"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/stewdio"
+                android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/ablation_regular"
+        android:text="STEWDIO"
+        android:textColor="@color/text_primary_black"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/dmserifdisplay_regular"
-        android:text="WELCOME"
-        android:textColor="@color/text_primary_white"
-        android:textSize="38sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/almarai_light"
+        android:text="For a better experience"
+        android:textColor="@color/text_secondary_black"
+        android:textSize="20sp"
+        android:textStyle="normal"/>
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/gsBtn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="40dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        app:cornerRadius="25dp"
-        android:textSize="18dp"
-        android:textStyle="bold"
         android:text="Get started"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="@color/app_dark_gray"
+        android:textSize="20sp"
+        app:cornerRadius="25dp"
+        app:strokeColor="@color/app_light_gray"
+        app:strokeWidth="2dp" />
+</RelativeLayout>
 
-</FrameLayout>
+
+</LinearLayout>
