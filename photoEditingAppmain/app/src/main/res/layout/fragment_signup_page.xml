@@ -10,6 +10,8 @@
     android:focusable="true"
     android:focusedByDefault="false">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +19,24 @@
         android:paddingHorizontal="50dp"
         android:layout_gravity="center">
 
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/stewdio"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/ablation_regular"
+            android:text="Create account"
+            android:textColor="@color/text_primary_black"
+            android:textSize="23sp"
+            android:textStyle="bold"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/textFieldUsername"
@@ -141,16 +161,30 @@
             android:textSize="16dp"
             android:text="SIGN UP"/>
 
-        <TextView
-            android:id="@+id/signInHyperlink"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Already have an account? Sign in"
-            android:textColor="@color/text_primary_black"
-            android:textSize="16dp"
-            android:clickable="true"
-            android:focusable="true"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account?"
+                android:textColor="@color/text_primary_black"
+                android:textSize="16dp"
+                android:clickable="true"
+                android:focusable="true"/>
+            <TextView
+                android:id="@+id/signInHyperlink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Sign in"
+                android:textColor="@color/app_teal_accent_light"
+                android:textSize="16dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
