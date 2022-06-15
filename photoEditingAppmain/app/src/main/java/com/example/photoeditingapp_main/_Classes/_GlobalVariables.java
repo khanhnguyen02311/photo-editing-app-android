@@ -41,6 +41,8 @@ public class _GlobalVariables extends Application {
     public FirebaseStorage getStorageDB() {return storageDB;}
     public _LocalDatabase getLocalDB() {return localDB;}
 
+    public boolean enableBackPressed = true;
+
     @Override
     public void onCreate() {
         super.onCreate();

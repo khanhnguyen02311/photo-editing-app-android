@@ -19,15 +19,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
+import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
+import com.example.photoeditingapp_main._Classes._AccountGridViewAdapter;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class account_page extends Fragment {
@@ -37,6 +41,9 @@ public class account_page extends Fragment {
     TextView nameText, bioText, photoNumber, timeStarted;
     ImageView accountImageView;
     MaterialCardView editProfileBtn;
+    ExpandableGridView gridView;
+    _AccountGridViewAdapter adapter;
+    ArrayList<GeneralPictureItem> listImages;
 
     public account_page() {
         // Required empty public constructor
@@ -75,11 +82,16 @@ public class account_page extends Fragment {
         timeStarted = view.findViewById(R.id.time_started);
         accountImageView = view.findViewById(R.id.account_image);
         editProfileBtn = view.findViewById(R.id.edit_profile_btn);
+        gridView = view.findViewById(R.id.GridViewAccount);
+
+        listImages = new ArrayList<>();
+        gridView.setExpanded(true);
 
         gv.getFirestoreDB().collection("users").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot snapshots) {
+                                //load account information
                                 if (!snapshots.isEmpty()) {
                                     nameText.setText((String) snapshots.getDocuments().get(0).get("name"));
                                     bioText.setText((String) snapshots.getDocuments().get(0).get("bio"));
@@ -99,6 +111,31 @@ public class account_page extends Fragment {
                                             }
                                         });*/
                                     }
+
+                                    //load account images
+                                    gv.getFirestoreDB().collection("images").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot snapshot) {
+                                                    if (!snapshot.isEmpty()) {
+                                                        //Log.i(Integer.toString(snapshot.size()), "SNAPSHOTS");
+                                                        List<DocumentSnapshot> snapshotList = snapshot.getDocuments();
+                                                        photoNumber.setText(Integer.toString(snapshotList.size()));
+                                                        for (DocumentSnapshot snap: snapshotList) {
+                                                            Log.i("Uri", (String) snap.get("image_uri"));
+                                                            listImages.add(new GeneralPictureItem(listImages.size(), null, Uri.parse((String) snap.get("image_uri")), null));
+                                                        }
+                                                        adapter = new _AccountGridViewAdapter(getContext(), listImages);
+                                                        gridView.setAdapter(adapter);
+                                                    }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    e.printStackTrace();
+                                                    Snackbar.make(view, "Cannot get information.", 1000).show();
+                                                }
+                                            });
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -115,12 +152,6 @@ public class account_page extends Fragment {
             }
         });
 
-        ArrayList<Integer> list = new ArrayList<>();
-
-        ExpandableGridView gridView = view.findViewById(R.id.GridViewAccount);
-        gridView.setExpanded(true);
-        //_AccountGridViewAdapter adapter = new _AccountGridViewAdapter(getContext(), list);
-        //gridView.setAdapter(adapter);
 
     }
 }

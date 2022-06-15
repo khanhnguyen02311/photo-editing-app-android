@@ -84,7 +84,6 @@
                 android:layout_marginHorizontal="20dp"
                 android:background="@android:color/transparent"
                 android:textSize="15sp"
-                android:fontFamily="@font/almarai_regular"
                 android:maxLength="255" />
 
             <ImageView

@@ -26,6 +26,7 @@ import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,6 +39,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -112,33 +114,36 @@ public class UploadActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    StorageReference rf = gv.getStorageDB().getReference().child("/USERIMAGES/"+gv.getLocalDB().getActiveUser().get(0)+Calendar.getInstance().getTimeInMillis());
+                                    StorageReference rf = gv.getStorageDB().getReference().child("/USERIMAGES/"+gv.getLocalDB().getActiveUser().get(0)+"_"+Calendar.getInstance().getTimeInMillis());
                                     rf.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            Log.i("TASKSNAPSHOT", taskSnapshot.getMetadata().toString());
-
-                                            Map<String, Object> imageItem = new HashMap<>();
-                                            imageItem.put("usr", gv.getLocalDB().getActiveUser().get(0));
-                                            imageItem.put("image_uri", rf.getDownloadUrl().toString());
-                                            imageItem.put("info", infoText.getText().toString());
-                                            imageItem.put("timeadded", new Timestamp(Calendar.getInstance().getTime()));
-                                            imageItem.put("like_amount", 0);
-
-                                            gv.getFirestoreDB().collection("images").add(imageItem).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    Log.d("NEWIMAGE", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                                    pd.dismiss();
-                                                    final Handler handler = new Handler();
-                                                    onBackPressed();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w("NEWIMAGE", "Error adding document", e);
-                                                    pd.dismiss();
-                                                    e.printStackTrace();
+                                                public void onSuccess(Uri uri) {
+                                                    Map<String, Object> imageItem = new HashMap<>();
+                                                    imageItem.put("usr", gv.getLocalDB().getActiveUser().get(0));
+                                                    imageItem.put("info", infoText.getText().toString());
+                                                    imageItem.put("timeadded", new Timestamp(Calendar.getInstance().getTime()));
+                                                    imageItem.put("like_amount", 0);
+                                                    imageItem.put("image_uri", uri.toString());
+
+                                                    gv.getFirestoreDB().collection("images").add(imageItem).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentReference documentReference) {
+                                                            Log.d("NEWIMAGE", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                            pd.dismiss();
+                                                            final Handler handler = new Handler();
+                                                            onBackPressed();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("NEWIMAGE", "Error adding document", e);
+                                                            pd.dismiss();
+                                                            e.printStackTrace();
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }

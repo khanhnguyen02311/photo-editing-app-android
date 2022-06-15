@@ -76,6 +76,7 @@ public class MainpageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //if (gv.enableBackPressed)
         findViewById(R.id.bottom_navigation_mainpage).setVisibility(View.VISIBLE);
         findViewById(R.id.bottom_navigation_mainpage_selected_image).setVisibility(View.GONE);
         super.onBackPressed();
