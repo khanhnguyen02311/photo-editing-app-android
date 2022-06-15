@@ -1,4 +1,4 @@
-package com.example.photoeditingapp_main;
+package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.photoeditingapp_main.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link editProfileFragment#newInstance} factory method to
+ * Use the {@link profile_edit_page#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class editProfileFragment extends Fragment {
+public class profile_edit_page extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class editProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public editProfileFragment() {
+    public profile_edit_page() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class editProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment editProfileFragment.
+     * @return A new instance of fragment profile_edit_page.
      */
     // TODO: Rename and change types and number of parameters
-    public static editProfileFragment newInstance(String param1, String param2) {
-        editProfileFragment fragment = new editProfileFragment();
+    public static profile_edit_page newInstance(String param1, String param2) {
+        profile_edit_page fragment = new profile_edit_page();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

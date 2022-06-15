@@ -10,197 +10,147 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cardCornerRadius="1000dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp">
+                        app:cardCornerRadius="500dp"
+                        app:strokeColor="@color/app_dark_gray"
+                        app:strokeWidth="3dp"
+                        android:layout_margin="5dp">
 
                         <ImageView
+                            android:id="@+id/account_image"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/welcome_background" />
-                    </androidx.cardview.widget.CardView>
+                            android:layout_height="match_parent"/>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="0dp"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="0dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/_circle_bg_avatar"/>
-
-                            <ImageButton
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null"
-                                android:scaleX="0.5"
-                                android:scaleY="0.5"
-                                android:src="@drawable/ic_camera" />
-                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="130dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp">
-
-
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    android:gravity="end">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/bio_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="5dp"
+                        android:background="#999999"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/photo_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="25"
-                                android:textSize="19sp" />
+                                android:textSize="17sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
                                 android:text="Photos"
-                                android:textSize="15sp" />
+                                android:textSize="13sp" />
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="156"
-                                android:textSize="19sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:text="Followers"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/time_started"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="519"
-                                android:textSize="19sp" />
+                                android:textSize="17sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Following"
-                                android:textSize="15sp" />
+                                android:text="Time started"
+                                android:textSize="13sp" />
                         </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
 
-                    </LinearLayout>
+            </RelativeLayout>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        app:cardCornerRadius="3dp"
-                        app:strokeColor="@color/app_light_gray"
-                        app:strokeWidth="1dp">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/edit_profile_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="3dp"
+                app:strokeColor="@color/app_teal_accent_light"
+                app:strokeWidth="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginVertical="2dp"
-                            android:text="Edit Profile"
-                            android:textSize="15sp" />
-                    </com.google.android.material.card.MaterialCardView>
-                </RelativeLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="110dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Khang Huynh"
-                        android:textStyle="bold"
-                        android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hello Hello Hello Hello Hello  "
-                        android:textSize="13sp"/>
-
-                </LinearLayout>
-            </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="2dp"
+                    android:text="Edit Profile"
+                    android:textSize="15sp" />
+            </com.google.android.material.card.MaterialCardView>
 
             <com.example.photoeditingapp_main._Classes.ExpandableGridView
                 android:id="@+id/GridViewAccount"

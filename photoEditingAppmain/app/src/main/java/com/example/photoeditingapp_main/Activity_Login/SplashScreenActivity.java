@@ -38,7 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ArrayList<String> deviceAccount = gv.getLocalDB().getActiveUser();
-                //Log.i(deviceAccount.get(0), deviceAccount.get(1));
+                //Log.i("ACTIVEUSER", Integer.toString(deviceAccount.size()));
                 if (deviceAccount.size() == 0) {
                     Intent intent = new Intent(getApplication(), LoginActivity.class);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); clear backstack

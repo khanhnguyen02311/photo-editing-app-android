@@ -223,6 +223,72 @@ public class DesignActivity extends AppCompatActivity {
         adjustAdapter = new _DesignGeneralAdapter(listAdjust, R.layout._custom_design_adjust_itemview);
         optionAdapter = new _DesignGeneralAdapter(listOption, R.layout._custom_design_option_itemview);
 
+        _RecyclerTouchListener listener1 = new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, controllerFragment.getId(), ConstraintSet.TOP, 20);
+                constraintSet.applyTo(parentLayout);
+                if (position == 0) {
+                    beforeAfterBtn.setVisibility(View.GONE);
+                    transformFilter = new TransformFilter(cropImageView, imageBitmap);
+                    transformController = TransformController.newInstance(transformFilter);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, transformController).commit();
+                } else {
+                    simpleController = SliderController.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, simpleController).commit();
+                }
+                recyclerView.setVisibility(View.GONE);
+                tabLayout.setClickable(false);
+            }
+            @Override  public void onLongClick(View view, int position) { }
+        });
+
+        _RecyclerTouchListener listener2 = new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                switch (position) {
+                    case 0:
+                        onPause();
+                        String name = calendar.getTimeInMillis() + ".png";
+                        Bitmap exported = imageView.getGPUImage().getBitmapWithFilterApplied();
+                        File path = new File(gv.privateLocation, name);
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(path);
+                            exported.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                Objects.requireNonNull(fos).close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Uri uri = Uri.fromFile(path);
+
+                        Log.i("PATH URI", uri.toString());
+                        if (gv.getLocalDB().addImageToStudio(name, uri)) {
+                            GeneralPictureItem addedItem = gv.getLocalDB().getLastAddedImage();
+                            if (addedItem.getImageName().equals(name) && gv.getLocalDB().updateConfigToImage(addedItem.getId(), getConfigParameters())) {
+                                Log.i("SUCCESS", uri + " " + name + " " + addedItem.getImageName());
+                                Snackbar snackbar = Snackbar.make(view, "Image saved to Studio.", 1000);
+                                snackbar.show();
+                                DesignActivity.super.onBackPressed();
+                            } else Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
+                        } else Log.i("FAILED", uri + " " + name);
+                        break;
+
+                    case 1: onBackPressed(); break;
+                    default: break;
+                }
+            }
+
+            @Override
+            public void onLongClick(View view, int position) { }
+        });
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(null);
 
@@ -239,74 +305,15 @@ public class DesignActivity extends AppCompatActivity {
                     case 1:
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         recyclerView.setAdapter(adjustAdapter);
-                        recyclerView.addOnItemTouchListener(new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
-                                constraintSet.connect(gpuImageLayout.getId(), ConstraintSet.BOTTOM, controllerFragment.getId(), ConstraintSet.TOP, 20);
-                                constraintSet.applyTo(parentLayout);
-                                if (position == 0) {
-                                    beforeAfterBtn.setVisibility(View.GONE);
-                                    transformFilter = new TransformFilter(cropImageView, imageBitmap);
-                                    transformController = TransformController.newInstance(transformFilter);
-                                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, transformController).commit();
-                                } else {
-                                    simpleController = SliderController.newInstance(position, listAdjust.get(position).getText(), imageFilterList.get(position));
-                                    getSupportFragmentManager().beginTransaction().replace(R.id.controllerFragment, simpleController).commit();
-                                }
-                                recyclerView.setVisibility(View.GONE);
-                                tabLayout.setClickable(false);
-                            }
-                            @Override  public void onLongClick(View view, int position) { }
-                        }));
+                        recyclerView.removeOnItemTouchListener(listener2);
+                        recyclerView.addOnItemTouchListener(listener1);
                         break;
 
                     case 2:
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.VERTICAL, false));
                         recyclerView.setAdapter(optionAdapter);
-                        recyclerView.addOnItemTouchListener(new _RecyclerTouchListener(DesignActivity.this, recyclerView, new _RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
-                                switch (position) {
-                                    case 0:
-                                        onPause();
-                                        String name = calendar.getTimeInMillis() + ".png";
-                                        Bitmap exported = imageView.getGPUImage().getBitmapWithFilterApplied();
-                                        File path = new File(gv.privateLocation, name);
-                                        FileOutputStream fos = null;
-                                        try {
-                                            fos = new FileOutputStream(path);
-                                            exported.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        } finally {
-                                            try {
-                                                Objects.requireNonNull(fos).close();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        Uri uri = Uri.fromFile(path);
-
-                                        Log.i("PATH URI", uri.toString());
-                                        if (gv.getLocalDB().addImageToStudio(name, uri)) {
-                                            GeneralPictureItem addedItem = gv.getLocalDB().getLastAddedImage();
-                                            if (addedItem.getImageName().equals(name) && gv.getLocalDB().updateConfigToImage(addedItem.getId(), getConfigParameters())) {
-                                                Log.i("SUCCESS", uri + " " + name + " " + addedItem.getImageName());
-                                                Snackbar snackbar = Snackbar.make(view, "Image saved to Studio.", 1000);
-                                                snackbar.show();
-                                                DesignActivity.super.onBackPressed();
-                                            } else Log.i("FAILED", uri + " " + name + " " + addedItem.getImageName());
-                                        } else Log.i("FAILED", uri + " " + name);
-                                        break;
-
-                                    case 1: onBackPressed(); break;
-                                    default: break;
-                                }
-                            }
-
-                            @Override
-                            public void onLongClick(View view, int position) { }
-                        }));
+                        recyclerView.removeOnItemTouchListener(listener1);
+                        recyclerView.addOnItemTouchListener(listener2);
                         break;
 
                     default:
@@ -337,6 +344,7 @@ public class DesignActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {

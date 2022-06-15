@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes.ExpandableGridView;
@@ -36,11 +38,14 @@ import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes.SquareImageView;
 import com.example.photoeditingapp_main._Classes._AccountGridViewAdapter;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -108,6 +113,28 @@ public class studio_recent_page extends Fragment {
         //Log.i(imageItems.get(0).getImageName(), imageItems.get(0).getImageUri().toString());
         super.onResume();
     }
+
+    /*@Override
+    public void onDetach() {
+        if (relativeLayoutSelectedImage.getVisibility() == View.VISIBLE) {
+            relativeLayoutTitle.setVisibility(View.VISIBLE);
+            relativeLayoutSelectedImage.setVisibility(View.GONE);
+        }
+        if (bottomNavigationView2.getVisibility() == View.VISIBLE) showBottomNavMainPage();
+        isFirstSetUp = true;
+        super.onDetach();
+    }
+
+    @Override
+    public void onStop() {
+        if (relativeLayoutSelectedImage.getVisibility() == View.VISIBLE) {
+            relativeLayoutTitle.setVisibility(View.VISIBLE);
+            relativeLayoutSelectedImage.setVisibility(View.GONE);
+        }
+        if (bottomNavigationView2.getVisibility() == View.VISIBLE) showBottomNavMainPage();
+        isFirstSetUp = true;
+        super.onStop();
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -234,7 +261,28 @@ public class studio_recent_page extends Fragment {
                                 }
                                 break;
 
-                            case R.id.share_photo: break;
+                            case R.id.share_photo:
+                                Integer position = gridViewAdapter.getPositionSelectedItems().get(0);
+                                GeneralPictureItem imageItem = imageItems.get(position);
+                                gv.getFirestoreDB().collection("users").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot snapshots) {
+                                                if (!snapshots.isEmpty()) {
+                                                    Intent intent = new Intent(getActivity(), UploadActivity.class);
+                                                    intent.putExtra("name", (String) snapshots.getDocuments().get(0).get("name"));
+                                                    intent.putExtra("avatar_uri", (String) snapshots.getDocuments().get(0).get("avatar"));
+                                                    intent.putExtra("image_uri", imageItem.getImageUri().toString());
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Snackbar.make(view, "Cannot get information.", 1000).show();
+                                            }
+                                        });
+                                break;
 
                             case R.id.delete_photo:
                                 List<Integer> listSelectedDelete = gridViewAdapter.getPositionSelectedItems();

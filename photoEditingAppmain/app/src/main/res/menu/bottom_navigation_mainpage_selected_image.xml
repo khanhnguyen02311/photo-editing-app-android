@@ -22,7 +22,7 @@
         android:id="@+id/share_photo"
         android:enabled="true"
         android:icon="@drawable/ic_share"
-        android:title="Share"/>
+        android:title="Upload"/>
     <item
         android:id="@+id/delete_photo"
         android:enabled="true"

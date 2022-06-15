@@ -29,19 +29,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoEditingAppmain">
-
+        <activity
+            android:name=".Activity_Mainpage.UploadActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity_Login.SplashScreenActivity"
             android:exported="true"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="._Classes.CameraActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".Activity_Design.DesignActivity"
             android:exported="false"
@@ -52,8 +56,7 @@
         <activity
             android:name=".Activity_Login.LoginActivity"
             android:exported="false"
-            android:noHistory="true">
-        </activity>
+            android:noHistory="true" />
     </application>
 
 </manifest>

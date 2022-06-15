@@ -88,8 +88,8 @@ public class studio_photo extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("album",getArguments().getSerializable("album"));
-                Navigation.findNavController(v).navigate(R.id.action_studio_photo_to_studio_album_item_page,bundle);
+                //bundle.putSerializable("album",getArguments().getSerializable("album"));
+                //Navigation.findNavController(v).navigate(R.id.action_studio_photo_to_studio_album_item_page, bundle);
             }
         });
 

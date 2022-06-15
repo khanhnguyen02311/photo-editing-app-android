@@ -21,9 +21,6 @@
         android:label="fragment_studio_page"
         tools:layout="@layout/fragment_studio_page" >
         <action
-            android:id="@+id/action_studio_page_to_photo_gallery_page"
-            app:destination="@id/photo_gallery_page" />
-        <action
             android:id="@+id/action_studio_page_to_studio_album_item_page"
             app:destination="@id/studio_album_item_page" />
     </fragment>
@@ -31,29 +28,28 @@
         android:id="@+id/account_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.account_page"
         android:label="fragment_account_page"
-        tools:layout="@layout/fragment_account_page" />
-    <fragment
-        android:id="@+id/photo_gallery_page"
-        android:name="com.example.photoeditingapp_main.Activity_Mainpage.photo_gallery_page"
-        android:label="fragment_photo_gallery_page"
-        tools:layout="@layout/fragment_photo_gallery_page" />
+        tools:layout="@layout/fragment_account_page" >
+        <action
+            android:id="@+id/action_account_page_to_profile_edit_page"
+            app:destination="@id/profile_edit_page" />
+    </fragment>
     <fragment
         android:id="@+id/studio_album_item_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_album_item_page"
         android:label="fragment_studio_album_item_page"
         tools:layout="@layout/fragment_studio_album_item_page" >
         <action
-            android:id="@+id/action_studio_album_item_page_to_studio_photo"
-            app:destination="@id/studio_photo" />
+            android:id="@+id/action_studio_album_item_page_to_studio_page"
+            app:destination="@id/studio_page" />
     </fragment>
     <fragment
-        android:id="@+id/studio_photo"
-        android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_photo"
-        android:label="fragment_studio_photo"
-        tools:layout="@layout/fragment_studio_photo" >
-        <action
-            android:id="@+id/action_studio_photo_to_studio_album_item_page"
-            app:destination="@id/studio_album_item_page" />
-    </fragment>
+        android:id="@+id/profile_edit_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.profile_edit_page"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/studio_recent_page"
+        android:name="com.example.photoeditingapp_main.Activity_Mainpage.studio_recent_page"
+        android:label="studio_recent_page" />
 
 </navigation>

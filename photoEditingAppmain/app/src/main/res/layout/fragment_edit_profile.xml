@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".editProfileFragment">
+    tools:context=".Activity_Mainpage.profile_edit_page">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/almarai_bold"
+                android:fontFamily="@font/sourcesans3_bold"
                 android:text="Edit Profile"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -45,31 +45,30 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/ic_tick_square"
-                android:backgroundTint="@color/app_teal_accent_light" />
+                android:background="@drawable/ic_tick_square"/>
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginVertical="20dp"
             app:cardCornerRadius="1000dp"
             app:cardElevation="0dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/welcome_background" />
+                android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
+            android:focusable="true"
             android:text="Change profile photo"
             android:textColor="@color/app_teal_accent_light"
             android:textSize="18sp" />
@@ -86,15 +85,14 @@
             android:hint="Account Name"
             app:errorIconDrawable="@null"
             app:errorEnabled="false"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="2.5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/accountnameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="Khang Huynh"
                 android:digits="@string/acc_mail_combo_input_filter"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,15 +108,14 @@
             android:hint="Biography"
             app:errorIconDrawable="@null"
             app:errorEnabled="false"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="0dp">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="2.5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bioText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="Hello everybody Hello everybody Hello everybody Hello everybody Hello everybody"
                 android:digits="@string/acc_mail_combo_input_filter"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,11 +123,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change Account Information"
-            android:layout_marginStart="10dp"
             android:textSize="18sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:textColor="@color/app_teal_accent_light"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,15 +148,14 @@
                 android:hint="Username"
                 app:errorIconDrawable="@null"
                 app:errorEnabled="false"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2.5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="Khang Huynh"
                     android:digits="@string/acc_mail_combo_input_filter"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,8 +170,8 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 android:hint="Current Password"
                 app:errorIconDrawable="@null"
-                android:layout_marginHorizontal="10dp"
-                >
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2.5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordText"
@@ -196,7 +194,8 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 android:hint="New Password"
                 app:errorIconDrawable="@null"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2.5dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -220,8 +219,9 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 android:hint="Confirm password"
                 app:errorIconDrawable="@null"
-                android:layout_marginHorizontal="10dp"
->
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirmPasswordText"

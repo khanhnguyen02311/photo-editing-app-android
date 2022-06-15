@@ -39,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = new String[]{
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.CAMERA"
+            "android.permission.CAMERA",
+            "android.permission.INTERNET"
     };
 
     public boolean allPermissionGranted() {

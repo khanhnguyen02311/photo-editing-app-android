@@ -171,8 +171,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
     }
 
     public void clearActiveUser() {
-        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
-        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
+        onQueryData("DELETE FROM "+TABLE_ACCOUNT);
     }
 
     public int getImageStudioSize() {
@@ -193,8 +192,7 @@ public class _LocalDatabase extends SQLiteOpenHelper {
 
     public boolean setActiveUser(String usr, String psw) {
         SQLiteDatabase dtb = getWritableDatabase();
-        onQueryData(SQL_DROP_TABLE + TABLE_ACCOUNT);
-        onQueryData(SQL_CREATE_TABLE_ACCOUNT);
+        clearActiveUser();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_Account_ID, usr);
         cv.put(COLUMN_Account_Password, psw);

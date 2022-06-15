@@ -44,7 +44,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -277,9 +281,14 @@ public class signup_page extends Fragment {
                                     @Override
                                     public void onSuccess(QuerySnapshot snapshot) {
                                         if (snapshot.isEmpty()) {
+                                            String sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
                                             Map<String, Object> user = new HashMap<>();
                                             user.put("usr", usr);
+                                            user.put("name", usr);
+                                            user.put("bio", "An image sorcerer.");
                                             user.put("email", email);
+                                            user.put("timestart", sdf);
+                                            user.put("avatar", "");
                                             user.put("psw", gv.hashingAlgorithm(psw));
 
                                             firestoreDB.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

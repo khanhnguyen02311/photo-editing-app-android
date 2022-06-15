@@ -47,9 +47,11 @@
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_main.xml" value="0.2598958333333333" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_mainpage.xml" value="0.264" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
+        <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_upload.xml" value="0.2598958333333333" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/content_homepage.xml" value="0.11614583333333334" />
-        <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_account_page.xml" value="0.2598958333333333" />
+        <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_account_page.xml" value="0.2072072072072072" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_discover_page.xml" value="0.2598958333333333" />
+        <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_edit_profile.xml" value="0.264" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_home_page.xml" value="0.2" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_image_detail.xml" value="0.1358695652173913" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_image_upload.xml" value="0.264" />
@@ -61,6 +63,7 @@
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_album_item_page.xml" value="0.25407608695652173" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_my_album_page.xml" value="0.25407608695652173" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_page.xml" value="0.2" />
+        <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_photo.xml" value="0.14130434782608695" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_recent_page.xml" value="0.25407608695652173" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_test_darkmode.xml" value="0.264" />
         <entry key="..\:/Learn Programming/AndroidStudio projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_test_lightmode.xml" value="0.264" />
