@@ -7,8 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.app.Application;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,9 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             ActivityCompat.requestPermissions(LoginActivity.this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION);
         }
+
+
 
         activityLayout = findViewById(R.id.activity_login_layout);
 

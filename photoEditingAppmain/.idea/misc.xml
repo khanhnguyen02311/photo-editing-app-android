@@ -103,6 +103,7 @@
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/_dialog_rename_album.xml" value="0.2" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_mainpage.xml" value="0.264" />
+        <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/activity_welcome.xml" value="0.1453125" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_account_page.xml" value="0.46647230320699706" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_discover_page.xml" value="0.22826086956521738" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_home_page.xml" value="0.4" />
@@ -117,6 +118,7 @@
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_page.xml" value="0.2" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_photo.xml" value="0.2" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_studio_recent_page.xml" value="0.4" />
+        <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/layout/fragment_welcome_page.xml" value="0.14175724637681159" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/menu/bottom_navigation_mainpage_menu.xml" value="0.25" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/menu/bottom_navigation_mainpage_selected_image_menu.xml" value="0.25" />
         <entry key="..\:/Projects/photo-editing-app-android/photoEditingAppmain/app/src/main/res/menu/more_button_menu.xml" value="0.25" />

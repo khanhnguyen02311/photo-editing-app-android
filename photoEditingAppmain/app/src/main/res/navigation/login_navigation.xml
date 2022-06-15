@@ -3,21 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/welcome_page">
+    app:startDestination="@id/signin_page">
 
-    <fragment
-        android:id="@+id/welcome_page"
-        android:name="com.example.photoeditingapp_main.Activity_Login.welcome_page"
-        android:label="fragment_welcome_page"
-        tools:layout="@layout/fragment_welcome_page" >
-        <action
-            android:id="@+id/action_welcome_page_to_signin_page"
-            app:destination="@id/signin_page"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
     <fragment
         android:id="@+id/signin_page"
         android:name="com.example.photoeditingapp_main.Activity_Login.signin_page"
