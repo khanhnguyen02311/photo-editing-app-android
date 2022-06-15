@@ -23,7 +23,8 @@
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/stewdioplaceholder"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -80,8 +81,7 @@
                 android:id="@+id/bioText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:digits="@string/acc_mail_combo_input_filter"/>
+                android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -98,6 +98,7 @@
             android:layout_gravity="center"/>
 
         <LinearLayout
+            android:id="@+id/changeAccountInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -198,6 +199,30 @@
                     android:digits="@string/account_input_filter"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show password"
+                    android:textColor="@color/text_secondary_black"
+                    android:layout_marginEnd="10dp"/>
+
+                <CheckBox
+                    android:id="@+id/showPasswordChecker"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:button="@drawable/_custom_password_toggle"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

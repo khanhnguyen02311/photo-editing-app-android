@@ -96,21 +96,8 @@ public class account_page extends Fragment {
                                     nameText.setText((String) snapshots.getDocuments().get(0).get("name"));
                                     bioText.setText((String) snapshots.getDocuments().get(0).get("bio"));
                                     timeStarted.setText((String) snapshots.getDocuments().get(0).get("timestart"));
-                                    if (Objects.requireNonNull(snapshots.getDocuments().get(0).get("avatar")).equals("")) {
-                                        Glide.with(requireContext()).load(R.drawable.stewdioplaceholder).centerCrop().into(accountImageView);
-
-                                        /*gv.getStorageDB().getReference().child("/ESSENTIAL/stewdioplaceholder.png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                Glide.with(requireContext()).load(uri.toString()).centerCrop().into(accountImageView);
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        });*/
-                                    }
+                                    if (!Objects.requireNonNull(snapshots.getDocuments().get(0).get("avatar")).equals(""))
+                                        Glide.with(requireContext()).load(Uri.parse((String) snapshots.getDocuments().get(0).get("avatar"))).centerCrop().into(accountImageView);
 
                                     //load account images
                                     gv.getFirestoreDB().collection("images").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).get()
