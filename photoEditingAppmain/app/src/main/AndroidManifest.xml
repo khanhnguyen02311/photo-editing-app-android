@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoEditingAppmain">
         <activity
+            android:name=".Activity_Login.WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity_Mainpage.UploadActivity"
             android:exported="false" />
         <activity
