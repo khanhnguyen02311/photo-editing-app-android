@@ -134,8 +134,8 @@ public class profile_edit_page extends Fragment {
                             nameText.setText((String) snapshot.getDocuments().get(0).get("name"));
                             bioText.setText((String) snapshot.getDocuments().get(0).get("bio"));
                             usrText.setText((String) snapshot.getDocuments().get(0).get("usr"));
-                            if (!Objects.requireNonNull(snapshot.getDocuments().get(0).get("avatar")).equals(""))
-                                Glide.with(requireContext()).load(Uri.parse((String) snapshot.getDocuments().get(0).get("avatar"))).centerCrop().into(imageView);
+                            Glide.with(requireContext()).load(Uri.parse((String) snapshot.getDocuments().get(0).get("avatar"))).centerCrop().into(imageView);
+                            newUri = (String) snapshot.getDocuments().get(0).get("avatar");
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -283,6 +283,7 @@ public class profile_edit_page extends Fragment {
                                                         public void onSuccess(QuerySnapshot snapshot) {
                                                             if (snapshot.isEmpty()) {
                                                                 rf.update("usr", usr);
+                                                                gv.getLocalDB().updateUser(0, usr);
                                                                 gv.getFirestoreDB().collection("images").whereEqualTo("usr", oldUsr).get()
                                                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                                             @Override
@@ -294,13 +295,21 @@ public class profile_edit_page extends Fragment {
                                                                                         oldPswLayout.getError() == null &&
                                                                                         pswLayout.getError() == null &&
                                                                                         confirmPswLayout.getError() == null) {
-                                                                                    rf.update("psw", gv.hashingAlgorithm(psw)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                        @Override
-                                                                                        public void onSuccess(Void unused) {
-                                                                                            pd.dismiss();
-                                                                                            Navigation.findNavController(view).popBackStack();
-                                                                                        }
-                                                                                    });
+                                                                                        rf.update("psw", gv.hashingAlgorithm(psw)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                            @Override
+                                                                                            public void onSuccess(Void unused) {
+                                                                                                gv.getLocalDB().updateUser(1, gv.hashingAlgorithm(psw));
+                                                                                                pd.dismiss();
+                                                                                                Navigation.findNavController(view).popBackStack();
+                                                                                            }
+                                                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                                                            @Override
+                                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                                e.printStackTrace();
+                                                                                                pd.dismiss();
+                                                                                                Navigation.findNavController(view).popBackStack();
+                                                                                            }
+                                                                                        });
                                                                                 }
                                                                             }
                                                                         }).addOnFailureListener(new OnFailureListener() {
@@ -313,7 +322,14 @@ public class profile_edit_page extends Fragment {
                                                                         });
                                                             }
                                                         }
-                                                    });
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                e.printStackTrace();
+                                                                pd.dismiss();
+                                                                Navigation.findNavController(view).popBackStack();
+                                                            }
+                                                        });
                                             }
                                         } else {
                                             pd.dismiss();

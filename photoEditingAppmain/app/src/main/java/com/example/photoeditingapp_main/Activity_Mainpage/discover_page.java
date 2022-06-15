@@ -19,6 +19,11 @@ import com.example.photoeditingapp_main.R;
 import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes._DiscoverAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -31,7 +36,6 @@ public class discover_page extends Fragment {
 
     _GlobalVariables gv;
     _DiscoverAdapter adapter;
-    ArrayList<GeneralPictureItem> listDiscoverItem;
     RecyclerView rv;
 
     public discover_page() {}
@@ -65,6 +69,19 @@ public class discover_page extends Fragment {
         rv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         //adapter = new _DiscoverAdapter(gv.listDiscoverItem, gv.studioLocation);
+        gv.getFirestoreDB().collection("images").orderBy("timeadded", Query.Direction.DESCENDING).limit(30).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot snapshot) {
+                adapter = new _DiscoverAdapter(getContext(), snapshot.getDocuments());
+                rv.setAdapter(adapter);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+                Snackbar.make(view, "Can't load images.", 1000).show();
+            }
+        });
         //rv.setAdapter(adapter);
     }
 }

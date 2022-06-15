@@ -174,6 +174,12 @@ public class _LocalDatabase extends SQLiteOpenHelper {
         onQueryData("DELETE FROM "+TABLE_ACCOUNT);
     }
 
+    public void updateUser(int pos, String info) {
+        ArrayList<String> acc = getActiveUser();
+        acc.set(pos, info);
+        setActiveUser(acc.get(0), acc.get(1));
+    }
+
     public int getImageStudioSize() {
         Cursor cursor = onGetData("SELECT COUNT(*) FROM " + TABLE_STUDIO);
         cursor.moveToFirst();
