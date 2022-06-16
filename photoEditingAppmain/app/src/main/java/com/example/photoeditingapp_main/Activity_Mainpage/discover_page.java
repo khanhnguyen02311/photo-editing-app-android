@@ -1,9 +1,6 @@
 package com.example.photoeditingapp_main.Activity_Mainpage;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,23 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.photoeditingapp_main.Activity_Design.DesignActivity;
 import com.example.photoeditingapp_main.R;
-import com.example.photoeditingapp_main._Classes._GlobalVariables;
-import com.example.photoeditingapp_main._Classes.GeneralPictureItem;
 import com.example.photoeditingapp_main._Classes._DiscoverAdapter;
-import com.example.photoeditingapp_main._Classes._RecyclerTouchListener;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,7 +24,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -88,31 +75,6 @@ public class discover_page extends Fragment {
                 snapshotList = snapshot.getDocuments();
                 adapter = new _DiscoverAdapter(getContext(), snapshotList);
                 rv.setAdapter(adapter);
-                rv.addOnItemTouchListener(new _RecyclerTouchListener(getContext(), rv, new _RecyclerTouchListener.ClickListener() {
-                    @Override
-                    public void onClick(View view, int position) {
-                        final Dialog dialog = new Dialog(getContext());
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(R.layout._dialog_show_big_image);
-
-                        Window window = dialog.getWindow();
-
-                        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-                        window.setAttributes(windowAttributes);
-
-                        ImageView imageView = window.findViewById(R.id.imageview);
-
-                        Glide.with(requireContext()).load(snapshotList.get(position).get("image_uri")).centerInside().into(imageView);
-
-                        dialog.show();
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) { }
-                }));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

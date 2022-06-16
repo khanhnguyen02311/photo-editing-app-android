@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
@@ -100,7 +101,7 @@ public class account_page extends Fragment {
                                         Glide.with(requireContext()).load(Uri.parse((String) snapshots.getDocuments().get(0).get("avatar"))).centerCrop().into(accountImageView);
 
                                     //load account images
-                                    gv.getFirestoreDB().collection("images").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).get()
+                                    gv.getFirestoreDB().collection("images").whereEqualTo("usr", gv.getLocalDB().getActiveUser().get(0)).orderBy("timeadded", Query.Direction.DESCENDING).get()
                                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                 @Override
                                                 public void onSuccess(QuerySnapshot snapshot) {

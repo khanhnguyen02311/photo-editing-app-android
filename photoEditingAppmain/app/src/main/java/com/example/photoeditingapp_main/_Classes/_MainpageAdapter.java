@@ -26,18 +26,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.List;
 
 
-public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.ViewHolder> {
+public class _MainpageAdapter extends RecyclerView.Adapter<_MainpageAdapter.ViewHolder> {
 
     Context context;
     List<DocumentSnapshot> userSnapshot;
 
-    public _DiscoverAdapter(Context c, List<DocumentSnapshot> snap) {context = c; userSnapshot = snap;}
+    public _MainpageAdapter(Context c, List<DocumentSnapshot> snap) {context = c; userSnapshot = snap;}
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(context);
-        LinearLayout cardLayout = (LinearLayout) li.inflate(R.layout._custom_discover_imageview, parent, false);
+        LinearLayout cardLayout = (LinearLayout) li.inflate(R.layout._custom_item_horizontal_scroll_view, parent, false);
         return new ViewHolder(cardLayout);
     }
 
@@ -45,12 +45,8 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DocumentSnapshot snapshot = userSnapshot.get(position);
 
-        holder.context = context;
-        holder.imageUri = Uri.parse((String) snapshot.get("image_uri"));
-
         TextView authorHolder = holder.authorView;
         ImageView imageHolder = holder.imageView;
-        CheckBox likeBtnHolder = holder.likeBtnView;
 
         Glide.with(context).load(Uri.parse((String) snapshot.get("image_uri"))).centerInside().placeholder(R.drawable.stewdioplaceholder).into(imageHolder);
         authorHolder.setText((String) snapshot.get("usr"));
@@ -77,13 +73,6 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
                 dialog.show();
             }
         });
-
-        likeBtnHolder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-            }
-        });
     }
 
     @Override
@@ -93,21 +82,16 @@ public class _DiscoverAdapter extends RecyclerView.Adapter<_DiscoverAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private Context context = null;
-        private Uri imageUri;
-
         private final ImageView imageView;
         private final TextView authorView;
-        private final CheckBox likeBtnView;
 
         private String id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = (ImageView) itemView.findViewById(R.id.image_position);
-            authorView = (TextView) itemView.findViewById(R.id.author_position);
-            likeBtnView = (CheckBox) itemView.findViewById(R.id.heartbtn_position);
+            imageView = itemView.findViewById(R.id.image_view);
+            authorView = itemView.findViewById(R.id.text_view);
         }
     }
 }

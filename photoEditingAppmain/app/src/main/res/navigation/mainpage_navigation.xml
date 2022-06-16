@@ -9,7 +9,11 @@
         android:id="@+id/home_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.home_page"
         android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" />
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_home_page_to_discover_page"
+            app:destination="@id/discover_page" />
+    </fragment>
     <fragment
         android:id="@+id/discover_page"
         android:name="com.example.photoeditingapp_main.Activity_Mainpage.discover_page"

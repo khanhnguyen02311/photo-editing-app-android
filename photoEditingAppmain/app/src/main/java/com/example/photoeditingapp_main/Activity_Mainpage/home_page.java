@@ -6,17 +6,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.photoeditingapp_main.R;
+import com.example.photoeditingapp_main._Classes._DiscoverAdapter;
+import com.example.photoeditingapp_main._Classes._GlobalVariables;
+import com.example.photoeditingapp_main._Classes._MainpageAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Objects;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +34,12 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class home_page extends Fragment {
+
+    _GlobalVariables gv;
+
+    RecyclerView rvTrending, rvDiscover;
+    _MainpageAdapter trendingAdapter, discoverAdapter;
+    TextView discoverSeemore;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,42 +93,60 @@ public class home_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        gv = (_GlobalVariables) requireActivity().getApplication();
+
         TextView pageName = requireActivity().findViewById(R.id.pageName);
         pageName.setText("HOMEPAGE");
 
-        /*if (requireActivity().getIntent() != null) {
-            tv.setText(requireActivity().getIntent().getStringExtra("username"));
-        }*/
-        LinearLayout linearLayout = view.findViewById(R.id.LinearLayoutRecently);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        for(int i = 0; i < 10; i++) {
-            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
-            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
-            textView.setText("Khang Huynh");
-            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            imageView.setImageResource(R.drawable.img);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            linearLayout.addView(view1);
-        }
+        rvTrending = view.findViewById(R.id.rvTrending);
+        rvDiscover = view.findViewById(R.id.rvDiscover);
+        discoverSeemore = view.findViewById(R.id.seemore_btn);
 
-        linearLayout = view.findViewById(R.id.LinearLayoutTrending);
-        for(int i = 0; i < 10; i++) {
-            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
-            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
-            textView.setText("Khang Huynh");
-            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            imageView.setImageResource(R.drawable.img);
-            linearLayout.addView(view1);
-        }
+        rvTrending.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvDiscover.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        linearLayout = view.findViewById(R.id.LinearLayoutDiscovery);
-        for(int i = 0; i < 10; i++) {
-            View view1 = inflater.inflate(R.layout._custom_item_horizontal_scroll_view, linearLayout, false);
-            TextView textView = view1.findViewById(R.id.TextViewItemHorizontalScrollView);
-            textView.setText("Khang Huynh");
-            ImageView imageView = view1.findViewById(R.id.ImageViewItemHorizontalScrollView);
-            imageView.setImageResource(R.drawable.img);
-            linearLayout.addView(view1);
-        }
+        Log.i("NUMIMAGE", "yo");
+
+        gv.getFirestoreDB().collection("images").orderBy("like_amount", Query.Direction.DESCENDING).limit(10).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot snapshot) {
+                        if (!snapshot.isEmpty()) {
+                            Log.i("NUMIMAGE", Integer.toString(snapshot.size()));
+                            List<DocumentSnapshot> list = snapshot.getDocuments();
+                            trendingAdapter = new _MainpageAdapter(getContext(), list);
+                            rvTrending.setAdapter(trendingAdapter);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        gv.getFirestoreDB().collection("images").orderBy("timeadded", Query.Direction.DESCENDING).limit(10).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot snapshot) {
+                        if (!snapshot.isEmpty()) {
+                            List<DocumentSnapshot> list = snapshot.getDocuments();
+                            discoverAdapter = new _MainpageAdapter(getContext(), list);
+                            rvDiscover.setAdapter(discoverAdapter);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        discoverSeemore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_home_page_to_discover_page);
+            }
+        });
     }
 }

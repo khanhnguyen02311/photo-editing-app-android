@@ -291,6 +291,7 @@ public class DesignActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adjustAdapter);
+        recyclerView.addOnItemTouchListener(listener1);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -300,6 +301,7 @@ public class DesignActivity extends AppCompatActivity {
                     case 0:
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         recyclerView.setAdapter(adjustAdapter);
+                        recyclerView.removeOnItemTouchListener(listener1);
                         recyclerView.removeOnItemTouchListener(listener2);
                         recyclerView.addOnItemTouchListener(listener1);
                         break;
@@ -308,6 +310,7 @@ public class DesignActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.VERTICAL, false));
                         recyclerView.setAdapter(optionAdapter);
                         recyclerView.removeOnItemTouchListener(listener1);
+                        recyclerView.removeOnItemTouchListener(listener2);
                         recyclerView.addOnItemTouchListener(listener2);
                         break;
 

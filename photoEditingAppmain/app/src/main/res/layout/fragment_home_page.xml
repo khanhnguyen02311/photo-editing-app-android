@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -49,25 +49,25 @@
                 android:paddingHorizontal="17dp"
                 android:clipToPadding="false">
 
-                <LinearLayout
-                    android:id="@+id/LinearLayoutRecently"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecently"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="25dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"/>
 
             </HorizontalScrollView>
 
-        </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+        </com.bosphere.fadingedgelayout.FadingEdgeLayout>-->
 
 
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/app_black"
-        android:layout_marginHorizontal="20dp" />
+        android:layout_marginHorizontal="20dp" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -82,41 +82,25 @@
                 android:text="Trending"
                 android:textSize="25sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/sourcesans3_medium"
-                android:text="See more"
-                android:textColor="@color/app_teal_accent_dark"
-                android:textSize="15sp" />
-
         </RelativeLayout>
 
         <com.bosphere.fadingedgelayout.FadingEdgeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:fel_edge="left|right"
             app:fel_size_left="17dp"
             app:fel_size_right="17dp">
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTrending"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:scrollbars="none"
                 android:paddingHorizontal="17dp"
-                android:clipToPadding="false">
+                android:paddingVertical="3dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"/>
 
-                <LinearLayout
-                    android:id="@+id/LinearLayoutTrending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                </LinearLayout>
-
-            </HorizontalScrollView>
 
         </com.bosphere.fadingedgelayout.FadingEdgeLayout>
 
@@ -141,40 +125,34 @@
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/seemore_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/sourcesans3_medium"
                 android:text="See more"
-                android:textColor="@color/app_teal_accent_dark"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColor="@color/app_teal_accent_light"
                 android:textSize="15sp" />
         </RelativeLayout>
 
     <com.bosphere.fadingedgelayout.FadingEdgeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:fel_edge="left|right"
         app:fel_size_left="17dp"
         app:fel_size_right="17dp">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDiscover"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:scrollbars="none"
             android:paddingHorizontal="17dp"
-            android:clipToPadding="false">
-
-            <LinearLayout
-                android:id="@+id/LinearLayoutDiscovery"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            android:paddingVertical="3dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"/>
 
     </com.bosphere.fadingedgelayout.FadingEdgeLayout>
 
