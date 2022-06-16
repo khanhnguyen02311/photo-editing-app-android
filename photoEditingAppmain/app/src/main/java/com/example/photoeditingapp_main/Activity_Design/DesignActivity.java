@@ -290,7 +290,7 @@ public class DesignActivity extends AppCompatActivity {
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(null);
+        recyclerView.setAdapter(adjustAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
