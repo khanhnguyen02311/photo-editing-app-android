@@ -299,17 +299,12 @@ public class DesignActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                        recyclerView.setAdapter(null);
-                        break;
-
-                    case 1:
-                        recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         recyclerView.setAdapter(adjustAdapter);
                         recyclerView.removeOnItemTouchListener(listener2);
                         recyclerView.addOnItemTouchListener(listener1);
                         break;
 
-                    case 2:
+                    case 1:
                         recyclerView.setLayoutManager(new LinearLayoutManager(DesignActivity.this, LinearLayoutManager.VERTICAL, false));
                         recyclerView.setAdapter(optionAdapter);
                         recyclerView.removeOnItemTouchListener(listener1);

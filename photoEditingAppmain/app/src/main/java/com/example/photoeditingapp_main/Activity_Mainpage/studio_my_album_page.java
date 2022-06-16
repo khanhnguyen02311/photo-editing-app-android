@@ -82,8 +82,6 @@ public class studio_my_album_page extends Fragment {
 
 
         ArrayList<AlbumItem> albumItems = new ArrayList<>();
-        albumItems.add(new AlbumItem("Album 1", sliderItems1));
-        albumItems.add(new AlbumItem("Album 2", sliderItems2));
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_studio_my_album_page);
 

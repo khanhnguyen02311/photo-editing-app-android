@@ -64,7 +64,6 @@ public class MainpageActivity extends AppCompatActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 break;
-                            case R.id.credit: break;
                             default: break;
                         }
                         return true;
