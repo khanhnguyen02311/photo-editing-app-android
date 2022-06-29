@@ -10,5 +10,6 @@
 ## Framework
 Android Studio (Java) with Firebase as back-end
 
-## Install Instruction
-...
+## Install Requirements
+Android 9 (API 29) and before
+- From Android 10, there is a new update about Scoped Storage, that makes the application always retrieve URI permissions after reset app.
